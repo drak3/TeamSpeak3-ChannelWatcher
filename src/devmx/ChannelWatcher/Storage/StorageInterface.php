@@ -18,7 +18,7 @@ interface StorageInterface
      * Returns all channel ids which are empty for a given time 
      * @param $time int the time in seconds 
      */
-    public function getChannelsEmptyFor($time);
+    public function getChannelsEmptyFor($time, $now=null);
 }
 
 ?>

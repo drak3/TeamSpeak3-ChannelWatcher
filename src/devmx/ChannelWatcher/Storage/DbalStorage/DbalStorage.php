@@ -9,9 +9,11 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
 {
     
     protected $connection;
+    protected $tableName;
     
-    public function __construct(Connection $c) {
+    public function __construct(Connection $c, $tablename) {
         $this->connection = $c;
+        $this->tableName = $c->quoteIdentifier($tablename);
     }
     
     /**
@@ -20,15 +22,44 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
      * @param $time int the unix timestanp of the last seen time defaults to now 
      */
     public function update($id, $time=null) {
-        
+        $id = (int) $id;
+        $lastSeen = new \DateTime('now');
+        if($time !== null) {
+            $lastSeen->setTimestamp($time);
+        }
+        $statement = $this->connection->prepare('SELECT * FROM '.$this->tableName.' WHERE id=?');
+        $statement->bindValue(1, $id, 'integer');
+        $statement->execute();
+
+        if(count($statement->fetchAll()) > 0) {
+            $update = $this->connection->prepare('UPDATE '.$this->tableName.' SET last_seen = ? WHERE id = ?');
+            $update->bindValue(1, $lastSeen, 'datetime');
+            $update->bindValue(2, $id, 'integer');
+            $update->execute();
+        }
+        else {
+            $update = $this->connection->prepare('INSERT INTO'.$this->tableName.' (id, last_seen) VALUES (?, ?)');
+            $update->bindValue(1, $id, 'integer');
+            $update->bindValue(2, $lastSeen, 'datetime');
+            $update->execute();
+        }
     }
     
     /**
      * Returns all channel ids which are empty for a given time 
      * @param $time int the time in seconds 
      */
-    public function getChannelsEmptyFor($time) {
-        
+    public function getChannelsEmptyFor($time, $now=null) {
+        if($now === null) {
+            $now = \time();
+        }
+        $maxLastSeen = $now - $time;
+        $maxLastSeenTime = new DateTime();
+        $maxLastSeenTime->setTimestamp($maxLastSeen);
+        $query = $this->connection->prepare('SELECT id FROM '.$this->tableName.' WHERE last_seen < ?');
+        $query->bindValue(1, $maxLastSeenTime, 'datetime');
+        $query->execute();
+        return $query->fetchAll();
     }
 }
 

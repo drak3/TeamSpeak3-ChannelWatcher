@@ -3,6 +3,10 @@ parameters:
     app.version: '0.1'
 
 services:
+    command.database.create_table:
+      class: \devmx\ChannelWatcher\Command\CreateDataBaseCommand
+      calls:
+        - [setContainer, ['@service_container']]
     command.crawl:
       class: \devmx\ChannelWatcher\Command\CrawlCommand
       calls:
@@ -12,4 +16,5 @@ services:
       arguments: ['%app.name%', '%app.version%']
       calls:
         - [ add, ['@command.crawl']]
+        - [ add, ['@command.database.create_table']]
         - [setAutoExit, [false]]

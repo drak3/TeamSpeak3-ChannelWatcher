@@ -16,7 +16,6 @@ class CrawlCommand extends ContainerAwareCommand
     protected function execute(InputInterface $in, OutputInterface $out) {
         $crawler = $this->container->get('crawler');
         $crawler->crawl();
-        var_dump($this->container->get('storage')->getChannels());
     }
 }
 

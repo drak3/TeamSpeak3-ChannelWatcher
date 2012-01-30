@@ -3,6 +3,7 @@ services:
     class: \devmx\ChannelWatcher\ChannelCrawler
     arguments: ['@teamspeak.query', '@storage']
   storage:
-    class: \devmx\ChannelWatcher\Storage\InMemoryStorage
+    class: \devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage
+    arguments: ['@dbal.connection', '%dbal.tablename%']
     
       

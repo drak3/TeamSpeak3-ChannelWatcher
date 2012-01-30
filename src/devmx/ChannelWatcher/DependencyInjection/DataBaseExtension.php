@@ -1,8 +1,9 @@
 <?php
 namespace devmx\ChannelWatcher\DependencyInjection;
-use \Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
 /**
  *
  * @author drak3
@@ -29,6 +30,10 @@ class DataBaseExtension implements ExtensionInterface
 
      */
     public function load(array $config, ContainerBuilder $container) {
+        
+        $loader = new YamlFileLoader($container, $this->locator);
+        $loader->load('dbal.yml');
+        
         $config = $config[0];
         if(!isset($config['type'])) {
             throw new \InvalidArgumentException('You must specify a database type');
@@ -40,6 +45,7 @@ class DataBaseExtension implements ExtensionInterface
         
         if($driver === 'pdo_sqlite') {
             $container->setParameter('dbal.sqlite.file', '%app.storagedir%%dbal.sqlite.filename%');
+            $dbalconfig['path'] = $container->getParameter('dbal.sqlite.file');
         }
         else {
             if(!isset($config['host']) || !isset($config['port'])) {
@@ -61,18 +67,25 @@ class DataBaseExtension implements ExtensionInterface
             $dbalconfig['password'] = $config['password'];
         }
         
-        if(in_array($drive, array('pdo_oci', 'oci8' , 'pdo_mysql',))) {
+        if(in_array($driver, array('pdo_oci', 'oci8' , 'pdo_mysql',))) {
             $dbalconfig['charset'] = '%dbal.charset%';
         }
         
         if(isset($config['prefix'])) {
             $container->setParamter('dbal.prefix', $config['prefix']);
         }
+        else {
+            $container->setParameter('dbal.prefix', '');
+        }
         
-        $container->setParameter('dbal.connection_options', $dbalconfig);
+        if($container->hasParameter( 'dbal.connection.additional_params')) {
+            $dbalconfig = array_merge($dbalconfig, $container->getParameter('dbal.connection.additional_params'));
+        }
         
-        $loader = new YamlFileLoader($container, $this->locator);
-        $loader->load('database.yml');
+        
+        $container->setParameter('dbal.connection.parameter', $dbalconfig);
+        
+        
     }
     
     protected function parseDriver($type) {
