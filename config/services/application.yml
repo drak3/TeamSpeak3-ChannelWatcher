@@ -1,0 +1,15 @@
+parameters:
+    app.name: 'Teamspeak3 Channel Watcher'
+    app.version: '0.1'
+
+services:
+    command.crawl:
+      class: \devmx\ChannelWatcher\Command\CrawlCommand
+      calls:
+        - [setContainer, ['@service_container']]
+    application:
+      class: \Symfony\Component\Console\Application
+      arguments: ['%app.name%', '%app.version%']
+      calls:
+        - [ add, ['@command.crawl']]
+        - [setAutoExit, [false]]

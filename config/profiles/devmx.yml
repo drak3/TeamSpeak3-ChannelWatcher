@@ -1,0 +1,8 @@
+application:
+  enabled: true
+channelwatcher:
+  enabled: true
+teamspeak:
+  host: devmx.de
+  port: 10011
+  vServerPort: 9987

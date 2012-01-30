@@ -1,0 +1,4 @@
+vendor/
+config/profiles/devmx
+composer.phar
+composer.lock

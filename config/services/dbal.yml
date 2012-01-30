@@ -1,0 +1,7 @@
+parameters:
+  dbal.sqlite.filename: channels.sqlite
+  dbal.charset: utf8
+services:
+  dbal.connection:
+    
+  
