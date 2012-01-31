@@ -32,10 +32,14 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdate()
     {
-        $this->storage->update(1, 123);
-        $this->storage->update(1, 234);
-        $this->storage->update(2, 123);
-        $this->assertEquals(array(1=>234, 2=>123), $this->storage->getChannels());
+        //first run
+        $this->storage->update(1, true, 123);
+        $this->storage->update(2, false, 123);
+        $this->assertEquals(array(1=>123, 2=>123), $this->storage->getChannels());
+        //second run
+        $this->storage->update(1, false, 234);
+        $this->storage->update(2, true, 234);
+        $this->assertEquals(array(1=>123, 2=>234), $this->storage->getChannels());
     }
 
     /**
@@ -44,8 +48,8 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetChannelsEmptyFor()
     {
-        $this->storage->update(12, 123);
-        $this->storage->update(13, 234);        
+        $this->storage->update(12, true, 123);
+        $this->storage->update(13, true, 234);        
         $this->assertEquals(array(12), $this->storage->getChannelsEmptyFor(5, 235 ));
     }
 

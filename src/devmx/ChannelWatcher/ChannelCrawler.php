@@ -28,8 +28,10 @@ class ChannelCrawler
     }
 
     
-    public function crawl() {
-        $time = \time();
+    public function crawl($time = null) {
+        if($time === null) {
+            $time = \time();
+        }
         $channelResponse = $this->transport->query('channellist');
         $channelResponse->toException();
         $channels = $channelResponse->getItems();

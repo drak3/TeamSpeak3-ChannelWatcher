@@ -47,14 +47,24 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->crawler  = new ChannelCrawler($this->query, $this->storage, false);
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
-        $this->query->addResponse($r);
+        $this->query->addResponse($r,2);
         $this->query->connect();
-        $time = \time();
-        $this->crawler->crawl();
+        
+        //first run
+        $this->crawler->crawl(123);
         $this->assertEquals(array(
-            2 => $time,
-            3 => $time,
-            4 => $time,
+            1 => 123,
+            2 => 123,
+            3 => 123,
+            4 => 123,
+        ), $this->storage->getChannels());
+        //second run
+        $this->crawler->crawl(234);
+        $this->assertEquals(array(
+           1 => 123,
+           2 => 234,
+           3 => 234,
+           4 => 234
         ), $this->storage->getChannels());
     }
     
@@ -62,12 +72,23 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->crawler  = new ChannelCrawler($this->query, $this->storage, true);
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
         $r2 = new CommandResponse(new Command('clientlist'), $this->getClientListItems());
-        $this->query->addResponses($r, $r2);
+        $this->query->addResponse($r, 2);
+        $this->query->addResponse($r2, 2);
         $this->query->connect();
-        $time = \time();
-        $this->crawler->crawl();
+        $this->crawler->crawl(123);
         $this->assertEquals(array(
-            2 => $time,
+            1 => 123,
+            2 => 123,
+            3 => 123,
+            4 => 123,
+        ), $this->storage->getChannels());
+        //second run
+        $this->crawler->crawl(234);
+        $this->assertEquals(array(
+           1 => 123,
+           2 => 234,
+           3 => 123,
+           4 => 123
         ), $this->storage->getChannels());
     }
     
