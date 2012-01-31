@@ -72,7 +72,7 @@ class DataBaseExtension implements ExtensionInterface
         }
         
         if(isset($config['prefix'])) {
-            $container->setParamter('dbal.prefix', $config['prefix']);
+            $container->setParameter('dbal.prefix', $config['prefix']);
         }
         else {
             $container->setParameter('dbal.prefix', '');
