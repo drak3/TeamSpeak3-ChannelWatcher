@@ -43,9 +43,9 @@ class TeamspeakExtension implements \Symfony\Component\DependencyInjection\Exten
         $container->setParameter('teamspeak.port', $config['port']);
         $container->setParameter('teamspeak.vserver.port', $config['vServerPort']);
         
-        if(isset($config['loginname']) && isset($config['loginpassword'])) {
+        if(isset($config['user']) && isset($config['password'])) {
             $container->getDefinition('teamspeak.query')
-                      ->addMethodCall('login', array($config['loginname'], $config['loginpass']));
+                      ->addMethodCall('login', array($config['user'], $config['password']));
         }
         
         $hasTicked = false;

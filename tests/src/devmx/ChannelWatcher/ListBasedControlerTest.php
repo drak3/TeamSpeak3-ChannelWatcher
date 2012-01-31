@@ -1,8 +1,7 @@
 <?php
 
-namespace devmx\ChannelWatcher;
+namespace devmx\ChannelWatcher\AccessControl;
 
-require_once dirname( __FILE__ ) . '/../../../../../../projects/ChannelWatcher/src/devmx/ChannelWatcher/ControlList.php';
 
 /**
  * Test class for ControlList.
@@ -18,7 +17,7 @@ class ControlListTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanAccess($blacklist, $whitelist, $trueItems, $falseItems)
     {
-        $list = new ControlList($blacklist, $whitelist);
+        $list = new ListBasedControler($blacklist, $whitelist);
         foreach($trueItems as $item) {
             $this->assertTrue($list->canAccess($item));
         }

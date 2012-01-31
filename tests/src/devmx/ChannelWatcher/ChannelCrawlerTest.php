@@ -92,6 +92,23 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         ), $this->storage->getChannels());
     }
     
+    public function testCrawl_accessControlerAware() {
+        $this->crawler  = new ChannelCrawler($this->query, $this->storage, false);
+        $accessControler = new AccessControl\ListBasedControler(array(1));
+        $this->crawler->setControlList($accessControler);
+        $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
+        $this->query->addResponse($r,2);
+        $this->query->connect();
+        
+        //first run
+        $this->crawler->crawl(123);
+        $this->assertEquals(array(
+            2 => 123,
+            3 => 123,
+            4 => 123,
+        ), $this->storage->getChannels());
+    }
+    
     protected function getChannelListItems() {
         return array(
           array(

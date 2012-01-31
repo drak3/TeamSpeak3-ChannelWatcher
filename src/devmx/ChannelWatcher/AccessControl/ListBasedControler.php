@@ -1,11 +1,11 @@
 <?php
-namespace devmx\ChannelWatcher;
+namespace devmx\ChannelWatcher\AccessControl;
 
 /**
  *
  * @author drak3
  */
-class ControlList
+class ListBasedControler implements AccessControlerInterface
 {
     
     protected $blacklist;

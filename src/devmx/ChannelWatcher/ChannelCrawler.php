@@ -3,6 +3,7 @@ namespace devmx\ChannelWatcher;
 use devmx\Teamspeak3\Query\Transport\TransportInterface;
 use devmx\Teamspeak3\Query\Command;
 use devmx\ChannelWatcher\Storage\StorageInterface;
+use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
 /**
  *
  * @author drak3
@@ -21,10 +22,19 @@ class ChannelCrawler
     
     protected $ignoreQueryClients;
     
+    /**
+     * @var \devmx\ChannelWatcher\AccessControl\AccessControlerInterface
+     */
+    protected $accessControler;
+    
     public function __construct(TransportInterface $transport, StorageInterface $storage, $ignoreQueryClients=true) {
         $this->transport = $transport;
         $this->storage = $storage;
         $this->ignoreQueryClients = $ignoreQueryClients;
+    }
+    
+    public function setControlList(AccessControlerInterface $a) {
+        $this->accessControler = $a;
     }
 
     
@@ -47,10 +57,19 @@ class ChannelCrawler
             }
         }
         foreach($channels as $channel) {
-            $this->storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
+            if($this->canAccess($channel)) {
+                $this->storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
+            }
         }
     }
     
+    
+    protected function canAccess($channel) {
+        if($this->accessControler instanceof AccessControlerInterface) {
+            return $this->accessControler->canAccess($channel['cid']);
+        }
+        return true;
+    } 
       
     protected function hasClients($channel, $allChannels) {
         if($channel['total_clients'] > 0) {
