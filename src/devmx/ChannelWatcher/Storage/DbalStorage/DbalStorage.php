@@ -21,21 +21,20 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
      * @param $id int the id of the channel
      * @param $time int the unix timestanp of the last seen time defaults to now 
      */
-    public function update($id, $time=null) {
+    public function update($id, $hasClients, $time=null) {
         $id = (int) $id;
         $lastSeen = new \DateTime('now');
         if($time !== null) {
             $lastSeen->setTimestamp($time);
         }
-        $statement = $this->connection->prepare('SELECT * FROM '.$this->tableName.' WHERE id=?');
-        $statement->bindValue(1, $id, 'integer');
-        $statement->execute();
-
-        if(count($statement->fetchAll()) > 0) {
-            $update = $this->connection->prepare('UPDATE '.$this->tableName.' SET last_seen = ? WHERE id = ?');
-            $update->bindValue(1, $lastSeen, 'datetime');
-            $update->bindValue(2, $id, 'integer');
-            $update->execute();
+        
+        if($this->has($id)) {
+            if($hasClients) {
+                $update = $this->connection->prepare('UPDATE '.$this->tableName.' SET last_seen = ? WHERE id = ?');
+                $update->bindValue(1, $lastSeen, 'datetime');
+                $update->bindValue(2, $id, 'integer');
+                $update->execute();
+            }        
         }
         else {
             $update = $this->connection->prepare('INSERT INTO'.$this->tableName.' (id, last_seen) VALUES (?, ?)');
@@ -43,6 +42,13 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
             $update->bindValue(2, $lastSeen, 'datetime');
             $update->execute();
         }
+    }
+    
+    public function has($id) {
+        $statement = $this->connection->prepare('SELECT id FROM '.$this->tableName.' WHERE id=?');
+        $statement->bindValue(1, $id, 'integer');
+        $statement->execute();
+        return count($statement->fetchAll()) > 0;
     }
     
     /**

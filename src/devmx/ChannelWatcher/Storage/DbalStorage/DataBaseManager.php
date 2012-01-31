@@ -32,6 +32,7 @@ class DataBaseManager
         $table = $schema->createTable($tablename);
         $table->addColumn('id', 'integer', array('unsinged'=> true));
         $table->addColumn('last_seen', 'datetime');
+        $table->setPrimaryKey(array('id'));
         return $schema;
     }
 }

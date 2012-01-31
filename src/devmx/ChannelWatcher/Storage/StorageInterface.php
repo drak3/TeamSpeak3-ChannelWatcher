@@ -12,7 +12,7 @@ interface StorageInterface
      * @param $id int the id of the channel
      * @param $time int the unix timestanp of the last seen time defaults to now 
      */
-    public function update($id, $time=null);
+    public function update($id, $isVisited, $time=null);
     
     /**
      * Returns all channel ids which are empty for a given time 

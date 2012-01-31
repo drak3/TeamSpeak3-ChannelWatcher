@@ -29,6 +29,7 @@ class ChannelCrawler
 
     
     public function crawl() {
+        $time = \time();
         $channelResponse = $this->transport->query('channellist');
         $channelResponse->toException();
         $channels = $channelResponse->getItems();
@@ -44,9 +45,7 @@ class ChannelCrawler
             }
         }
         foreach($channels as $channel) {
-            if($this->hasClients( $channel , $channels )) {
-                $this->storage->update($channel['cid']);
-            }
+            $this->storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
         }
     }
     

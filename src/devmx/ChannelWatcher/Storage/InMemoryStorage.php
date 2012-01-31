@@ -18,11 +18,16 @@ class InMemoryStorage implements StorageInterface
      * @param $id int the id of the channel
      * @param $time int the unix timestanp of the last seen time defaults to now 
      */
-    public function update($id, $time=null) {
+    public function update($id, $isVisited, $time=null) {
         if($time === null) {
             $time = \time();
         }
-        $this->channels[$id] = $time;
+        if(!isset($this->channels[$id])) {
+            $this->channels[$id] = $time;
+        }
+        if($isVisited) {
+            $this->channels[$id] = $time;
+        }        
     }
     
     /**
