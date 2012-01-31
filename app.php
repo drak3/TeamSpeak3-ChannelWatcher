@@ -23,6 +23,12 @@ $profile = $_SERVER['argv'][2];
 unset($_SERVER['argv'][2]);
 
 $container = new ContainerBuilder();
+
+$container->setParameter('app.version', 0.1);
+$container->setParameter('app.name', 'Teamspeak3 ChannelWatcher');
+$container->setParameter('app.profile', $profile);
+$container->setParameter('app.storagedir', __DIR__.'/storage/%app.profile%/');
+
 $container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass());
 $locator = new FileLocator(array(__DIR__.'/config/profiles', __DIR__.'/config/services/'));
 
@@ -39,11 +45,10 @@ $container->registerExtension($dbExtension);
 $loader = new YamlFileLoader($container, $locator);
 $loader->load($profile.'.yml');
 
-$container->setParameter('app.storagedir', __DIR__.'/storage/');
+
 
 $container->compile();
 
-$container->get('dbal.connection');
 
 $container->get('application')->run();
 $end = \microtime(true);
