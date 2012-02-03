@@ -11,10 +11,15 @@ services:
       class: \devmx\ChannelWatcher\Command\CrawlCommand
       calls:
         - [setContainer, ['@service_container']]
+    command.print_unused:
+       class: \devmx\ChannelWatcher\Command\PrintUnusedCommand
+       calls:
+        - [setContainer, ['@service_container']]
     application:
       class: \Symfony\Component\Console\Application
       arguments: ['%app.name%', '%app.version%']
       calls:
         - [ add, ['@command.crawl']]
         - [ add, ['@command.database.create_table']]
+        - [ add, ['@command.print_unused']]
         - [setAutoExit, [false]]

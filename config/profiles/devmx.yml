@@ -1,7 +1,8 @@
 application:
   enabled: true
 channelwatcher:
-  enabled: true
+  deletetime:
+    days: 3
 teamspeak:
   host: devmx.de
   port: 10011

@@ -56,9 +56,9 @@ class ChannelCrawler
         return $channels;
     }
     
-    public function updateStorage(  StorageInterface $storage, $time = null, array $channels=array()) {
+    public function updateStorage(  StorageInterface $storage, \DateTime $time = null, array $channels=array()) {
         if($time === null) {
-            $time = \time();
+            $time = new \DateTime('now');
         }
         if($channels === array()) {
             $channels = $this->currentChannels;

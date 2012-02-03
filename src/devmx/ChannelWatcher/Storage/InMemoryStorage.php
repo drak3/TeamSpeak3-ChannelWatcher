@@ -18,9 +18,9 @@ class InMemoryStorage implements StorageInterface
      * @param $id int the id of the channel
      * @param $time int the unix timestanp of the last seen time defaults to now 
      */
-    public function update($id, $isVisited, $time=null) {
+    public function update($id, $isVisited, \DateTime $time=null) {
         if($time === null) {
-            $time = \time();
+            $time = new DateTime('now');
         }
         if(!isset($this->channels[$id])) {
             $this->channels[$id] = $time;
@@ -34,13 +34,14 @@ class InMemoryStorage implements StorageInterface
      * Returns all channel ids which are empty for a given time 
      * @param $time int the time in seconds 
      */
-    public function getChannelsEmptyFor($time, $now=null) {
+    public function getChannelsEmptyFor(  \DateInterval $time, \DateTime $now=null) {
         if($now === null) {
-            $now = \time();
+            $now = new DateTime('now');
         }
+        $maxLastSeen = $now->sub($time);
         $ret = array();
         foreach($this->channels as $id => $lastSeen) {
-            if($now-$lastSeen >= $time) {
+            if($lastSeen->diff($maxLastSeen)->invert === 1) {
                 $ret[] = $id;
             }
         }

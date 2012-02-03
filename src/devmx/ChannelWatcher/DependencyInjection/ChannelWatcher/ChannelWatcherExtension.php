@@ -4,6 +4,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\Definition\Processor;
 
 /**
  *
@@ -30,13 +31,29 @@ class ChannelWatcherExtension implements ExtensionInterface
      * @throws InvalidArgumentException When provided tag is not defined in this extension
 
      */
-    public function load(array $config, ContainerBuilder $container) {
-        $config = $config[0];
+    public function load(array $configs, ContainerBuilder $container) {
+        $processor = new Processor();
+        $configuration = new Configuration();
+        $config = $processor->processConfiguration($configuration, $configs);
+        
         $loader = new YamlFileLoader($container, $this->locator);
         $loader->load('channelwatcher.yml');
-        if(isset($config['crawler'])) {
-            $this->loadCrawlerConfig($config['crawler'], $container);
+        if(isset($config['deletetime'])) {
+            $container->setParameter('channelwatcher.deletetime', $this->parseTime($config['deletetime']));
         }
+    }
+    
+    protected function parseTime(array $time) {
+        $timeString = 'P';
+        $timeString .= $time['years'].'Y';
+        $timeString .= $time['months'].'M';
+        $timeString .= $time['weeks'].'W';
+        $timeString .= $time['days'].'D';
+        $timeString .= 'T';
+        $timeString .= $time['hours'].'H';
+        $timeString .= $time['minutes'].'M';
+        $timeString .= $time['seconds'].'S';
+        return new \DateInterval($timeString);
     }
         
 

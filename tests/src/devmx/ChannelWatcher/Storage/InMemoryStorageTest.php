@@ -33,13 +33,17 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
     public function testUpdate()
     {
         //first run
-        $this->storage->update(1, true, 123);
-        $this->storage->update(2, false, 123);
-        $this->assertEquals(array(1=>123, 2=>123), $this->storage->getChannels());
+        $time = new \DateTime();
+        $time->setTimeStamp(123);
+        $this->storage->update(1, true, $time);
+        $this->storage->update(2, false, $time);
+        $this->assertEquals(array(1=>$time, 2=>$time), $this->storage->getChannels());
         //second run
-        $this->storage->update(1, false, 234);
-        $this->storage->update(2, true, 234);
-        $this->assertEquals(array(1=>123, 2=>234), $this->storage->getChannels());
+        $time2 = new \DateTime();
+        $time2->setTimeStamp(234);
+        $this->storage->update(1, false, $time2);
+        $this->storage->update(2, true, $time2);
+        $this->assertEquals(array(1=>$time, 2=>$time2), $this->storage->getChannels());
     }
 
     /**
@@ -48,9 +52,14 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetChannelsEmptyFor()
     {
-        $this->storage->update(12, true, 123);
-        $this->storage->update(13, true, 234);        
-        $this->assertEquals(array(12), $this->storage->getChannelsEmptyFor(5, 235 ));
+        $time = new \DateTime();
+        $time->setTimeStamp(123);
+        $time2 = new \DateTime();
+        $time2->setTimeStamp(1234);
+        $this->storage->update(12, true, $time);
+        $this->storage->update(13, true, $time2);        
+        $interval = new \DateInterval('PT1H5S');
+        $this->assertEquals(array(12), $this->storage->getChannelsEmptyFor($interval,  $time2));
     }
 
 }

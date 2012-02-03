@@ -52,21 +52,25 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         
         //first run
         $this->crawler->crawl();
-        $this->crawler->updateStorage($this->storage, 123);
+        $time = new \DateTime();
+        $time->setTimeStamp(123);
+        $this->crawler->updateStorage($this->storage, $time);
         $this->assertEquals(array(
-            1 => 123,
-            2 => 123,
-            3 => 123,
-            4 => 123,
+            1 => $time,
+            2 => $time,
+            3 => $time,
+            4 => $time,
         ), $this->storage->getChannels());
         //second run
         $this->crawler->crawl();
-        $this->crawler->updateStorage($this->storage, 234);
+        $time2 = new \DateTime();
+        $time2->setTimestamp(234);
+        $this->crawler->updateStorage($this->storage, $time2);
         $this->assertEquals(array(
-           1 => 123,
-           2 => 234,
-           3 => 234,
-           4 => 234
+           1 => $time,
+           2 => $time2,
+           3 => $time2,
+           4 => $time2
         ), $this->storage->getChannels());
     }
     
@@ -78,21 +82,25 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->query->addResponse($r2, 2);
         $this->query->connect();
         $this->crawler->crawl();
-        $this->crawler->updateStorage($this->storage, 123);
+        $time = new \DateTime();
+        $time->setTimeStamp(123);
+        $this->crawler->updateStorage($this->storage, $time);   
         $this->assertEquals(array(
-            1 => 123,
-            2 => 123,
-            3 => 123,
-            4 => 123,
+            1 => $time,
+            2 => $time,
+            3 => $time,
+            4 => $time,
         ), $this->storage->getChannels());
         //second run
         $this->crawler->crawl();
-        $this->crawler->updateStorage($this->storage,234);
+        $time2 = new \DateTime();
+        $time2->setTimestamp(234);
+        $this->crawler->updateStorage($this->storage,$time2);
         $this->assertEquals(array(
-           1 => 123,
-           2 => 234,
-           3 => 123,
-           4 => 123
+           1 => $time,
+           2 => $time2,
+           3 => $time,
+           4 => $time
         ), $this->storage->getChannels());
     }
     
@@ -106,11 +114,13 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         
         //first run
         $this->crawler->crawl();
-        $this->crawler->updateStorage($this->storage,123);
+        $time = new \DateTime();
+        $time->setTimestamp(234);
+        $this->crawler->updateStorage($this->storage,$time);
         $this->assertEquals(array(
-            2 => 123,
-            3 => 123,
-            4 => 123,
+            2 => $time,
+            3 => $time,
+            4 => $time,
         ), $this->storage->getChannels());
     }
     

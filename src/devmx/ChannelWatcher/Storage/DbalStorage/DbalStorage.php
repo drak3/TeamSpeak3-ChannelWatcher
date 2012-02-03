@@ -21,11 +21,11 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
      * @param $id int the id of the channel
      * @param $time int the unix timestanp of the last seen time defaults to now 
      */
-    public function update($id, $hasClients, $time=null) {
+    public function update($id, $hasClients, \DateTime $lastSeen=null) {
         $id = (int) $id;
-        $lastSeen = new \DateTime('now');
-        if($time !== null) {
-            $lastSeen->setTimestamp($time);
+        
+        if($lastSeen === null) {
+            $lastSeen = new \DateTime('now');
         }
         
         if($this->has($id)) {
@@ -55,17 +55,19 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
      * Returns all channel ids which are empty for a given time 
      * @param $time int the time in seconds 
      */
-    public function getChannelsEmptyFor($time, $now=null) {
+    public function getChannelsEmptyFor(  \DateInterval $time, \DateTime $now=null) {
         if($now === null) {
-            $now = \time();
+            $now = new \DateTime('now');
         }
-        $maxLastSeen = $now - $time;
-        $maxLastSeenTime = new DateTime();
-        $maxLastSeenTime->setTimestamp($maxLastSeen);
+        $maxLastSeen = $now->sub($time);
         $query = $this->connection->prepare('SELECT id FROM '.$this->tableName.' WHERE last_seen < ?');
-        $query->bindValue(1, $maxLastSeenTime, 'datetime');
+        $query->bindValue(1, $maxLastSeen, 'datetime');
         $query->execute();
-        return $query->fetchAll();
+        $channels =  $query->fetchAll(\PDO::FETCH_NUM);
+        $channels = array_map(function($item) {
+                                return (int) $item[0]; 
+                              }, $channels);
+        return $channels;
     }
 }
 
