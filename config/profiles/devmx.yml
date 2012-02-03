@@ -6,5 +6,7 @@ teamspeak:
   host: devmx.de
   port: 10011
   vServerPort: 9987
+  nickname: drak3's crawler
+  debug: true
 database:
   type: sqlite

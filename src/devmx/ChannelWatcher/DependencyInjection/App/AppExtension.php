@@ -1,5 +1,5 @@
 <?php
-namespace devmx\ChannelWatcher\DependencyInjection;
+namespace devmx\ChannelWatcher\DependencyInjection\App;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * @author drak3
  */
-class ChannelWatcherExtension implements ExtensionInterface
+class AppExtension implements ExtensionInterface
 {
     /**
      * @var Symfony\Component\Config\FileLocator
@@ -33,10 +33,7 @@ class ChannelWatcherExtension implements ExtensionInterface
     public function load(array $config, ContainerBuilder $container) {
         $config = $config[0];
         $loader = new YamlFileLoader($container, $this->locator);
-        $loader->load('channelwatcher.yml');
-        if(isset($config['crawler'])) {
-            $this->loadCrawlerConfig($config['crawler'], $container);
-        }
+        $loader->load('application.yml');
     }
         
 
@@ -68,7 +65,7 @@ class ChannelWatcherExtension implements ExtensionInterface
      *
      */
     public function getAlias() {
-        return 'channelwatcher';
+        return 'application';
     }
 }
 

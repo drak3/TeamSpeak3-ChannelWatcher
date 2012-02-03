@@ -1,9 +1,10 @@
 <?php
-namespace devmx\ChannelWatcher\DependencyInjection;
+namespace devmx\ChannelWatcher\DependencyInjection\Teamspeak;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Config\Definition\Processor;
 
 /**
  *
@@ -30,22 +31,33 @@ class TeamspeakExtension implements \Symfony\Component\DependencyInjection\Exten
      * @throws InvalidArgumentException When provided tag is not defined in this extension
 
      */
-    function load(array $config, ContainerBuilder $container) {
-        $config = $config[0];
-        if(!isset($config['host']) && !isset($config['port'])) {
-            throw new \InvalidArgumentException('You must at least specify a host');
-        }
+    function load(array $configs, ContainerBuilder $container) {
+        $configuration = new Configuration();
+        $processor =  new Processor();
+        $config = $processor->processConfiguration($configuration, $configs);
+        
         $loader = new YamlFileLoader($container, $this->locator);
         $loader->load('teamspeak.yml');
         $container->setAlias('teamspeak.transport', 'teamspeak.transport.base');
         
         $container->setParameter('teamspeak.host', $config['host']);
         $container->setParameter('teamspeak.port', $config['port']);
-        $container->setParameter('teamspeak.vserver.port', $config['vServerPort']);
+
         
         if(isset($config['user']) && isset($config['password'])) {
             $container->getDefinition('teamspeak.query')
                       ->addMethodCall('login', array($config['user'], $config['password']));
+        }
+        
+        if(isset($config['vServerPort'])) {
+            $container->setParameter('teamspeak.vserver.port', $config['vServerPort']);
+            $container->getDefinition('teamspeak.query')
+                    ->addMethodCall('useByPort', array('%teamspeak.vserver.port%'));
+        }
+        
+        if(isset($config['nickname'])) {
+            $container->getDefinition('teamspeak.query')
+                      ->addMethodCall('query', array('clientupdate', array('client_nickname' => $config['nickname']))); //currently not implemented directly in ts3lib
         }
         
         $hasTicked = false;

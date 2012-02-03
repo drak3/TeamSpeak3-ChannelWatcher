@@ -15,7 +15,10 @@ class CrawlCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $in, OutputInterface $out) {
         $crawler = $this->container->get('crawler');
+        $time = \time();
         $crawler->crawl();
+        $this->container->get('teamspeak.query')->disconnect();
+        $crawler->updateStorage($this->container->get('storage'), $time);
     }
 }
 

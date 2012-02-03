@@ -27,9 +27,8 @@ class ChannelCrawler
      */
     protected $accessControler;
     
-    public function __construct(TransportInterface $transport, StorageInterface $storage, $ignoreQueryClients=true) {
+    public function __construct(TransportInterface $transport, $ignoreQueryClients=true) {
         $this->transport = $transport;
-        $this->storage = $storage;
         $this->ignoreQueryClients = $ignoreQueryClients;
     }
     
@@ -38,10 +37,7 @@ class ChannelCrawler
     }
 
     
-    public function crawl($time = null) {
-        if($time === null) {
-            $time = \time();
-        }
+    public function crawl() {
         $channelResponse = $this->transport->query('channellist');
         $channelResponse->toException();
         $channels = $channelResponse->getItems();
@@ -56,9 +52,20 @@ class ChannelCrawler
                 }
             }
         }
+        $this->currentChannels = $channels;
+        return $channels;
+    }
+    
+    public function updateStorage(  StorageInterface $storage, $time = null, array $channels=array()) {
+        if($time === null) {
+            $time = \time();
+        }
+        if($channels === array()) {
+            $channels = $this->currentChannels;
+        }
         foreach($channels as $channel) {
-            if($this->canAccess($channel)) {
-                $this->storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
+            if($this->canAccess( $channel )) {
+                $storage->update($channel['cid'], $this->hasClients($channel, $channels) , $time);
             }
         }
     }

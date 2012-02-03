@@ -45,13 +45,14 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCrawl()
     {
-        $this->crawler  = new ChannelCrawler($this->query, $this->storage, false);
+        $this->crawler  = new ChannelCrawler($this->query, false);
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
         $this->query->addResponse($r,2);
         $this->query->connect();
         
         //first run
-        $this->crawler->crawl(123);
+        $this->crawler->crawl();
+        $this->crawler->updateStorage($this->storage, 123);
         $this->assertEquals(array(
             1 => 123,
             2 => 123,
@@ -59,7 +60,8 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
             4 => 123,
         ), $this->storage->getChannels());
         //second run
-        $this->crawler->crawl(234);
+        $this->crawler->crawl();
+        $this->crawler->updateStorage($this->storage, 234);
         $this->assertEquals(array(
            1 => 123,
            2 => 234,
@@ -69,13 +71,14 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testCrawl_ignoreQueryClients() {
-        $this->crawler  = new ChannelCrawler($this->query, $this->storage, true);
+        $this->crawler  = new ChannelCrawler($this->query, true);
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
         $r2 = new CommandResponse(new Command('clientlist'), $this->getClientListItems());
         $this->query->addResponse($r, 2);
         $this->query->addResponse($r2, 2);
         $this->query->connect();
-        $this->crawler->crawl(123);
+        $this->crawler->crawl();
+        $this->crawler->updateStorage($this->storage, 123);
         $this->assertEquals(array(
             1 => 123,
             2 => 123,
@@ -83,7 +86,8 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
             4 => 123,
         ), $this->storage->getChannels());
         //second run
-        $this->crawler->crawl(234);
+        $this->crawler->crawl();
+        $this->crawler->updateStorage($this->storage,234);
         $this->assertEquals(array(
            1 => 123,
            2 => 234,
@@ -93,7 +97,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testCrawl_accessControlerAware() {
-        $this->crawler  = new ChannelCrawler($this->query, $this->storage, false);
+        $this->crawler  = new ChannelCrawler($this->query, false);
         $accessControler = new AccessControl\ListBasedControler(array(1));
         $this->crawler->setControlList($accessControler);
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
@@ -101,7 +105,8 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->query->connect();
         
         //first run
-        $this->crawler->crawl(123);
+        $this->crawler->crawl();
+        $this->crawler->updateStorage($this->storage,123);
         $this->assertEquals(array(
             2 => 123,
             3 => 123,

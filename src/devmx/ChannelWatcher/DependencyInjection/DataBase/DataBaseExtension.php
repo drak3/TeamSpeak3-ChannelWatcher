@@ -1,5 +1,5 @@
 <?php
-namespace devmx\ChannelWatcher\DependencyInjection;
+namespace devmx\ChannelWatcher\DependencyInjection\DataBase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
