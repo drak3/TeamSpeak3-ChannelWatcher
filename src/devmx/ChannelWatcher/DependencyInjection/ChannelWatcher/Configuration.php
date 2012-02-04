@@ -13,17 +13,26 @@ class Configuration implements ConfigurationInterface
         $root = $treeBuilder->root('channelwatcher');
         $root
             ->children()
-                ->arrayNode('deletetime')
-                ->children()
-                    ->scalarNode('years')->defaultValue(0)->end()
-                    ->scalarNode('months')->defaultValue(0)->end()
-                    ->scalarNode('weeks')->defaultValue(0)->end()
-                    ->scalarNode('days')->defaultValue(0)->end()
-                    ->scalarNode('hours')->defaultValue(0)->end()
-                    ->scalarNode('minutes')->defaultValue(0)->end()
-                    ->scalarNode('seconds')->defaultValue(0)->end()
-                ->end()
-            ->end();
+                    ->arrayNode('deleter')
+                        ->children()
+                            ->arrayNode('whitelist')
+                                ->prototype('scalar')->end()
+                            ->end()
+                            ->arrayNode('blacklist')
+                                ->prototype('scalar')->end()
+                            ->end()
+                            ->arrayNode('deletetime')
+                                ->children()
+                                    ->scalarNode('years')->defaultValue(0)->end()
+                                    ->scalarNode('months')->defaultValue(0)->end()
+                                    ->scalarNode('weeks')->defaultValue(0)->end()
+                                    ->scalarNode('days')->defaultValue(0)->end()
+                                    ->scalarNode('hours')->defaultValue(0)->end()
+                                    ->scalarNode('minutes')->defaultValue(0)->end()
+                                    ->scalarNode('seconds')->defaultValue(0)->end()
+                                ->end()
+                        ->end()
+                ->end();
         return $treeBuilder;
     }
 }

@@ -11,6 +11,10 @@ services:
       class: \devmx\ChannelWatcher\Command\CrawlCommand
       calls:
         - [setContainer, ['@service_container']]
+    command.delete:
+      class: \devmx\ChannelWatcher\Command\DeleteCommand
+      calls:
+        - [setContainer, ['@service_container']]
     command.print_unused:
        class: \devmx\ChannelWatcher\Command\PrintUnusedCommand
        calls:
@@ -22,4 +26,5 @@ services:
         - [ add, ['@command.crawl']]
         - [ add, ['@command.database.create_table']]
         - [ add, ['@command.print_unused']]
+        - [ add, ['@command.delete']]
         - [setAutoExit, [false]]

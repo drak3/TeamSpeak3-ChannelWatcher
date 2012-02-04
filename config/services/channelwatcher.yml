@@ -1,9 +1,12 @@
 services:
   crawler:
     class: \devmx\ChannelWatcher\ChannelCrawler
-    arguments: ['@teamspeak.query', '@storage']
+    arguments: ['@teamspeak.query']
   storage:
     class: \devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage
     arguments: ['@dbal.connection', '%dbal.tablename%']
+  deleter:
+   class: \devmx\ChannelWatcher\ChannelDeleter
+   arguments: ['@teamspeak.query', '@storage']
     
       

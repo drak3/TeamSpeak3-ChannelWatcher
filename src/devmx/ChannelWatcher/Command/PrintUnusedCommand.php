@@ -22,14 +22,14 @@ class PrintUnusedCommand extends ContainerAwareCommand
         else {
             $time = new \DateInterval($in->getArgument('time'));
         }
-        $unused = $this->container->get('storage')->getChannelsEmptyFor($time);
+        $unused = $this->container->get('deleter')->getIdsToDelete($time);
         $channellist = $this->container->get('teamspeak.query')->query('channellist')->toAssoc('cid');
         foreach($unused as $id) {
             if(!isset($channellist[$id])) {
                 $out->writeln("Channel with id $id is not on the server anymore, ignoring");
             }
             else {
-                $out->writeln($channellist[$id]['channel_name']);
+                $out->writeln($channellist[$id]['channel_name'].' ('.$id.')');
             }
         }
         $out->writeln(sprintf('%d in total', count($unused)));

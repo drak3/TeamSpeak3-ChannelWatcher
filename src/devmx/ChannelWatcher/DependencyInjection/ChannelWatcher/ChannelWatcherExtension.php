@@ -5,7 +5,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\Definition\Processor;
-
+use Symfony\Component\DependencyInjection\Reference;
 /**
  *
  * @author drak3
@@ -38,8 +38,25 @@ class ChannelWatcherExtension implements ExtensionInterface
         
         $loader = new YamlFileLoader($container, $this->locator);
         $loader->load('channelwatcher.yml');
+        $this->addDeleter($config['deleter'], $container);   
+    }
+    
+    protected function addDeleter($config, $container)  {
         if(isset($config['deletetime'])) {
             $container->setParameter('channelwatcher.deletetime', $this->parseTime($config['deletetime']));
+        }
+        if($config['whitelist'] !== array() || $config['blacklist'] !== array()) {
+            $args = array();
+            if($config['blacklist'] !== array()) {
+                $args[] = $config['blacklist'];
+            }
+            if($config['whitelist'] !== array()) {
+                $args[] = $config['whitelist'];
+            }
+            $container->register('channelwatcher.acl', '\devmx\ChannelWatcher\AccessControl\ListBasedControler')
+                      ->setArguments($args);
+            $container->getDefinition('deleter')
+                      ->addMethodCall('setAccessControlList', array(new Reference('channelwatcher.acl')));
         }
     }
     
