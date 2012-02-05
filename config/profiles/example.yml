@@ -1,0 +1,40 @@
+application:
+  enabled: true
+channelwatcher:
+  deleter:
+## the channel ids in the blacklist won't be deleted (but crawled)
+#    blacklist: [1,2]
+#if a whitelist is set, just channels which ids are in the whitelist are deleted 
+#    whitelist: [5]
+##the deletetime is the default value for the delete and the printUnused commands
+##after which time the channel should be deleted:
+    deletetime:
+      years: 1
+      months: 2
+      weeks: 4
+      days: 3
+      hours: 2
+      minutes: 23
+      seconds: 30
+teamspeak:
+  host: localhost
+## the query port
+  port: 10011
+  vServerPort: 9987
+## if the nickname is set, the crawler has this name when joining the server
+  nickname: drak3's crawler
+database:
+## available types: mysql, sqlite, pgsql (postgresql), mssql (microsoft sql) and oracle and all available dbal drivers
+  type: mysql
+## host is not needed for sqlite
+  host: localhost
+## port is not needed for sqlite
+  port: 3304
+## dbname is not needed for sqlite
+  dbname: devmx_channel_watcher
+## user is optional
+  user: root
+## password is optional
+  password: my_password
+## prefix is used as prefix for all tables (if prefix is watcher_, table channels becomes watcher_channels)
+  prefix: watcher_
