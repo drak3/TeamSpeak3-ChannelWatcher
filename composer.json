@@ -1,12 +1,18 @@
 
 {
     "require": {
-        "devmx/TeamSpeak3-Library": "0.3-alpha",
-        "symfony/console": "v2.1.0-dev",
-        "symfony/class-loader": "v2.1.0-dev",
-        "symfony/dependency-injection": "v2.1.0-dev",
-        "symfony/config": "v2.1.0-dev",
-        "symfony/yaml": "v2.1.0-dev",
-        "doctrine/dbal": ">=2.2.1"
-    }
+        "devmx/TeamSpeak3-Library-dev": "master-dev",
+        "symfony/console": "master-dev",
+        "doctrine/dbal": ">=2.2.1",
+        "pimple/pimple": "1.0.*"
+    },
+    "autoload": {
+        "psr-0": {"devmx": "src"}
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/devMX/TeamSpeak3-Library-dev"
+        }
+    ]
 }

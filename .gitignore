@@ -1,6 +1,5 @@
 vendor/
 config/profiles/devmx.yml
 composer.phar
-composer.lock
 storage/
 nbproject/
