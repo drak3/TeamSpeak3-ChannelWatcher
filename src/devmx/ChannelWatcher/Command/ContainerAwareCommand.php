@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
  *
  * @author drak3
  */
-class ContainerAwareCommand extends Command implements ContainerAwareInterface
+class ContainerAwareCommand extends Command
 {
 
     protected $c;

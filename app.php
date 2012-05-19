@@ -1,14 +1,7 @@
 <?php
+use devmx\ChannelWatcher\DependencyInjection\Container;
 $start = \microtime(true);
-require_once 'autoload.php';
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Compiler\MergeExtensionConfigurationPass;
-use devmx\ChannelWatcher\DependencyInjection\Teamspeak\TeamspeakExtension;
-use devmx\ChannelWatcher\DependencyInjection\App\AppExtension;
-use devmx\ChannelWatcher\DependencyInjection\ChannelWatcher\ChannelWatcherExtension;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use devmx\ChannelWatcher\DependencyInjection\DataBase\DataBaseExtension;
+require_once 'vendor/autoload.php';
 
 $usage = $_SERVER['argv'][0]." <command> <config> <options> <arguments>\n";
 
@@ -22,35 +15,22 @@ if($_SERVER['argc'] < 3) {
 $profile = $_SERVER['argv'][2];
 unset($_SERVER['argv'][2]);
 
-$container = new ContainerBuilder();
+$c = new Container();
 
-$container->setParameter('app.version', 0.1);
-$container->setParameter('app.name', 'Teamspeak3 ChannelWatcher');
-$container->setParameter('app.profile', $profile);
-$container->setParameter('app.storagedir', __DIR__.'/storage/%app.profile%/');
+$c['application.name'] = 'Teamspeak3 ChannelWatcher';
+$c['application.version'] = '0.1';
+$c['application.profile'] = $profile;
+$c['app.storagedir'] = __DIR__.'/storage/'.$profile.'/';
 
-$container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass());
-$locator = new FileLocator(array(__DIR__.'/config/profiles', __DIR__.'/config/services/'));
+$configPath = 'config/'.$profile.'.php';
 
-$tsExtension = new TeamspeakExtension($locator);
-$appExtension = new AppExtension($locator);
-$watcherExtension = new ChannelWatcherExtension($locator);
-$dbExtension = new DataBaseExtension($locator);
+if(  file_exists($configPath) && is_readable($configPath)) {
+    include($configPath);
+} else {
+    die('Unknown configuration '.$profile.PHP_EOL);
+}
 
-$container->registerExtension($tsExtension);
-$container->registerExtension($appExtension);
-$container->registerExtension($watcherExtension);
-$container->registerExtension($dbExtension);
-
-$loader = new YamlFileLoader($container, $locator);
-$loader->load($profile.'.yml');
-
-
-
-$container->compile();
-
-
-$container->get('application')->run();
+$c['application']->run();
 $end = \microtime(true);
 $taken = $end-$start;
 echo "time taken: $taken\n";

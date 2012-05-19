@@ -18,6 +18,13 @@ class Container extends \Pimple
     
     public function __construct() {
         $this['ts3'] = new \devmx\Teamspeak3\SimpleContainer;
+        $this['ts3']['query.transport'] = $this['ts3']->extend('query.transport.undecorated', function($c) {
+            $query = $c['query'];
+            if(isset($c['login.name']) && $c['login.name'] !== '') {
+                $query->login($c['login.name'], $c['login.pass']);
+            }
+            $query->useByPort($c['vserver.port']);
+        });
         $this['dbal.connection.params'] = array();
         $this['dbal.connection'] = $this->share(function($c){
             return \Doctrine\DBAL\DriverManager::getConnection($c['dbal.connection.params']);
@@ -57,10 +64,6 @@ class Container extends \Pimple
           $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_deletable']));
           return $app;
         };
-        
-        $this['application.name'] = 'devmx ChannelWatcher';
-        
-        $this['application.version'] = '0.1';
         
         $this['storage'] = function($c) {
             return $c['dbal.storage'];
