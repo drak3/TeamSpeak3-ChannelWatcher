@@ -1,0 +1,53 @@
+{
+    "hash": "3b6a33c9e297e7d00fe302bab483ded7",
+    "packages": [
+        {
+            "package": "devmx/Teamspeak3-Library-dev",
+            "version": "dev-master",
+            "source-reference": "55c56850df64a2489b7d0d8d5a6e0512173c02ec"
+        },
+        {
+            "package": "doctrine/common",
+            "version": "2.2.x-dev",
+            "source-reference": "1e0aa60d109c630d19543d999f12e2852ef8f932"
+        },
+        {
+            "package": "doctrine/dbal",
+            "version": "dev-master",
+            "source-reference": "8fe368ea2087d3c46c85e01ac3b0155060ed2737"
+        },
+        {
+            "package": "pimple/pimple",
+            "version": "dev-master",
+            "source-reference": "v1.0.0",
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
+        },
+        {
+            "package": "pimple/pimple",
+            "version": "dev-master",
+            "source-reference": "v1.0.0"
+        },
+        {
+            "package": "symfony/console",
+            "version": "dev-master",
+            "source-reference": "0e67dc701ff55d2a1899a1e638a13a4be96d19b9"
+        },
+        {
+            "package": "symfony/console",
+            "version": "dev-master",
+            "source-reference": "0e67dc701ff55d2a1899a1e638a13a4be96d19b9",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "devmx/teamspeak3-library-dev": 20,
+        "symfony/console": 20
+    }
+}
