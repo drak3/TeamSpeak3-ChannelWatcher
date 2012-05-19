@@ -14,8 +14,8 @@ class CreateDataBaseCommand extends ContainerAwareCommand
     }
     
     protected function execute(InputInterface $in, OutputInterface $out) {
-        $manager = $this->container->get('dbal.manager');
-        $manager->createTable($this->container->get('dbal.connection'), $this->container->getParameter('dbal.tablename'));
+        $manager = $this->c['dbal.db_manager'];
+        $manager->createTable($this->c['dbal.connection'], $this->c['dbal.table_name']);
     }
 }
 

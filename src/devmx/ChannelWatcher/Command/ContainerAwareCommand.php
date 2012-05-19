@@ -10,12 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
  */
 class ContainerAwareCommand extends Command implements ContainerAwareInterface
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface 
-     */
-    protected $container;
+
+    protected $c;
     
-    public function setContainer(ContainerInterface $c = null) {
+    public function setContainer($c) {
         $this->container = $c;
     }
     

@@ -17,13 +17,13 @@ class PrintUnusedCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $in, OutputInterface $out) {
         if($in->getArgument('time') === null) {
-            $time = $this->container->getParameter('channelwatcher.deletetime');
+            $time = $this->c['delete_time'];
         }
         else {
             $time = new \DateInterval($in->getArgument('time'));
         }
-        $unused = $this->container->get('deleter')->getIdsToDelete($time);
-        $channellist = $this->container->get('teamspeak.query')->query('channellist')->toAssoc('cid');
+        $unused = $this->c['deleter']->getIdsToDelete($time);
+        $channellist = $this->c['query.transport']->query('channellist')->toAssoc('cid');
         foreach($unused as $id) {
             if(!isset($channellist[$id])) {
                 $out->writeln("Channel with id $id is not on the server anymore, ignoring");

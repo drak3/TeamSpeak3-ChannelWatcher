@@ -33,7 +33,7 @@ class Container extends \Pimple
         });
         
         $this['deleter'] = $this->share(function($c) {
-            return new ChannelDeleter();
+            return new ChannelDeleter($c['ts3']['query.transport'], $c['storage']);
         });
         
         $this['crawler'] = $this->share(function($c) {

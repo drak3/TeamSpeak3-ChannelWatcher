@@ -14,11 +14,11 @@ class CrawlCommand extends ContainerAwareCommand
     }
     
     protected function execute(InputInterface $in, OutputInterface $out) {
-        $crawler = $this->container->get('crawler');
+        $crawler = $this->c['crawler'];
         $time = new \DateTime('now');
         $crawler->crawl();
-        $this->container->get('teamspeak.query')->disconnect();
-        $crawler->updateStorage($this->container->get('storage'), $time);
+        $this->c['ts3']['query.transport']->disconnect();
+        $crawler->updateStorage($this->c['storage'], $time);
     }
 }
 

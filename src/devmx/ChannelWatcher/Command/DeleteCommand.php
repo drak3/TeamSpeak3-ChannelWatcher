@@ -23,7 +23,7 @@ class DeleteCommand extends ContainerAwareCommand
     public function execute(InputInterface $in, OutputInterface $out) {
         $force = $in->getOption('force');
         if($in->getArgument('time') === null) {
-            $time = $this->container->getParameter('channelwatcher.deletetime');
+            $time = $this->c['delete_time'];
         }
         else {
             $time = new \DateInterval($in->getArgument('time'));
@@ -33,7 +33,7 @@ class DeleteCommand extends ContainerAwareCommand
         $this->getApplication()->run(new ArgvInput(array('foo', 'printUnused')), $out);
         if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>are you sure you want to delete this channels (y/n)?</question> ')) {
             $out->writeln('deleting...');
-            $this->container->get('deleter')->delete($time);
+            $this->c['deleter']->delete($time);
         }
     }
     
