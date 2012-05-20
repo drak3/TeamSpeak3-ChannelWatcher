@@ -7,5 +7,5 @@ $c = new Container();
 
 $c['app.root_dir'] = __DIR__;
 
-$c['application']->run();
+$c['app']->run();
 ?>

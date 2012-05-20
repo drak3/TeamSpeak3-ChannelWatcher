@@ -24,17 +24,17 @@ class Container extends \Pimple
         /**
          * The name of the app (used by the symfony console) 
          */
-        $c['app.name'] = 'Teamspeak3 ChannelWatcher';
+        $this['app.name'] = 'Teamspeak3 ChannelWatcher';
         
         /** 
          * Current app version 
          */
-        $c['app.version'] = '0.1';
+        $this['app.version'] = '0.1';
         
         /**
          * The current storage dir 
          */
-        $c['app.storagedir'] = function($c) {
+        $this['app.storagedir'] = function($c) {
             return $c['app.root_dir'].'/storage/'.$c['app.profile'].'/';
         };
         
@@ -42,7 +42,7 @@ class Container extends \Pimple
          * The profile loader
          * The profile loader is a function that tries to include the specific configuration 
          */
-        $c['app.profile.loader'] = function($c){
+        $this['app.profile.loader'] = function($c){
             return function() use ($c) {
                 if(  file_exists($c['app.profile.path']) && is_readable($c['app.profile.path'])) {
                     include($c['app.profile.path']);
@@ -55,7 +55,7 @@ class Container extends \Pimple
         /**
          * The path to the current profiles configuration 
          */
-        $c['app.profile.path'] = function($c) {
+        $this['app.profile.path'] = function($c) {
             return $c['app.root_dir'].'/config/'.$c['app.profile'].'.php';
         };
         
