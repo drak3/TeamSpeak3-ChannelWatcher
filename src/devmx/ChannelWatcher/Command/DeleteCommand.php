@@ -30,11 +30,17 @@ class DeleteCommand extends ContainerAwareCommand
         }
         $out->writeln('going to delete the following channels:');
         
-        $this->getApplication()->run(new ArgvInput(array('foo', 'printUnused')), $out);
+        $cmd = $this->getApplication()->find('printUnused');
+        $args = array('command'=>'printUnused');
+        $input = new \Symfony\Component\Console\Input\ArrayInput($args);
+        $cmd->run($input, $out);
         if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>are you sure you want to delete this channels (y/n)?</question> ')) {
             $out->writeln('deleting...');
             $this->c['deleter']->delete($time);
+        } else {
+            $out->writeln('aborting');
         }
+        
     }
     
 }

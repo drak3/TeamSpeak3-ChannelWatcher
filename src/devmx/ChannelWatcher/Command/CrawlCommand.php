@@ -17,7 +17,7 @@ class CrawlCommand extends ContainerAwareCommand
         $crawler = $this->c['crawler'];
         $time = new \DateTime('now');
         $crawler->crawl();
-        $this->c['ts3']['query.transport']->disconnect();
+        $this->c['ts3']['query']->quit();
         $crawler->updateStorage($this->c['storage'], $time);
     }
 }

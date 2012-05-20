@@ -4,7 +4,7 @@
         {
             "package": "devmx/Teamspeak3-Library-dev",
             "version": "dev-master",
-            "source-reference": "55c56850df64a2489b7d0d8d5a6e0512173c02ec"
+            "source-reference": "9fdefa93dd67cb690bb6f83b5eaca6d296cc8fdb"
         },
         {
             "package": "doctrine/common",

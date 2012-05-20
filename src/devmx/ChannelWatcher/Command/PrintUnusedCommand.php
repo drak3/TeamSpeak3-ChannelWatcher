@@ -12,18 +12,12 @@ class PrintUnusedCommand extends ContainerAwareCommand
 {
     protected function configure() {
         $this->setName('printUnused');
-        $this->getDefinition()->addArgument(new InputArgument('time' , InputArgument::OPTIONAL , 'the time' , null));
     }
     
     protected function execute(InputInterface $in, OutputInterface $out) {
-        if($in->getArgument('time') === null) {
-            $time = $this->c['delete_time'];
-        }
-        else {
-            $time = new \DateInterval($in->getArgument('time'));
-        }
+        $time = $this->c['delete_time'];
         $unused = $this->c['deleter']->getIdsToDelete($time);
-        $channellist = $this->c['query.transport']->query('channellist')->toAssoc('cid');
+        $channellist = $this->c['ts3']['query.transport']->query('channellist')->toAssoc('cid');
         foreach($unused as $id) {
             if(!isset($channellist[$id])) {
                 $out->writeln("Channel with id $id is not on the server anymore, ignoring");

@@ -14,7 +14,7 @@ class ContainerAwareCommand extends Command
     protected $c;
     
     public function setContainer($c) {
-        $this->container = $c;
+        $this->c = $c;
     }
     
 }

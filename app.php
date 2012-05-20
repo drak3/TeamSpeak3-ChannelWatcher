@@ -1,6 +1,6 @@
 <?php
 use devmx\ChannelWatcher\DependencyInjection\Container;
-$start = \microtime(true);
+date_default_timezone_set('Europe/Berlin');
 require_once 'vendor/autoload.php';
 
 $usage = $_SERVER['argv'][0]." <command> <config> <options> <arguments>\n";
@@ -31,7 +31,4 @@ if(  file_exists($configPath) && is_readable($configPath)) {
 }
 
 $c['application']->run();
-$end = \microtime(true);
-$taken = $end-$start;
-echo "time taken: $taken\n";
 ?>
