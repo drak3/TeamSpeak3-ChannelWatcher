@@ -10,10 +10,6 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class PrintUnusedCommand extends ProfileDependentCommand
 {
-    protected function configure() {
-        parent::configure();
-        $this->setName('printUnused');
-    }
     
     protected function execute(InputInterface $in, OutputInterface $out) {
         $time = $this->c['delete_time'];

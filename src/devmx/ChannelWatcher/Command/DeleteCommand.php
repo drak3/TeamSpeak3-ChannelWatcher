@@ -16,7 +16,6 @@ class DeleteCommand extends ProfileDependentCommand
     public function configure() {
         parent::configure();
         $this
-            ->setName('delete')
             ->addOption('force', 'f', InputOption::VALUE_NONE)
             ->addArgument('time' , InputArgument::OPTIONAL , 'the time' , null);
     }

@@ -130,7 +130,7 @@ class Container extends \Pimple
          * The crawl command 
          */
         $this['command.crawl'] = function($c) {
-            $command = new CrawlCommand();
+            $command = new CrawlCommand('crawl');
             $command->setContainer($c);
             return $command;
         };
@@ -139,7 +139,7 @@ class Container extends \Pimple
          * The database/table creation command 
          */
         $this['command.create_db'] = function($c) {
-            $command = new CreateDataBaseCommand();
+            $command = new CreateDataBaseCommand('db:create_table');
             $command->setContainer($c);
             return $command;
         };
@@ -148,7 +148,7 @@ class Container extends \Pimple
          * The printunused command 
          */
         $this['command.print_unused'] = function($c) {
-            $command = new PrintUnusedCommand();
+            $command = new PrintUnusedCommand('print_unused');
             $command->setContainer($c);
             return $command;
         };
@@ -157,7 +157,7 @@ class Container extends \Pimple
          * The delete command 
          */
         $this['command.delete'] = function($c) {
-            $command = new DeleteCommand();
+            $command = new DeleteCommand('delete');
             $command->setContainer($c);
             return $command;
         };
