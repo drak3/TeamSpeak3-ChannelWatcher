@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
  *
  * @author drak3
  */
-class PrintUnusedCommand extends ContainerAwareCommand
+class PrintUnusedCommand extends ProfileDependentCommand
 {
     protected function configure() {
         $this->setName('printUnused');

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\ArgvInput;
  *
  * @author drak3
  */
-class DeleteCommand extends ContainerAwareCommand
+class DeleteCommand extends ProfileDependentCommand
 {
     
     public function configure() {

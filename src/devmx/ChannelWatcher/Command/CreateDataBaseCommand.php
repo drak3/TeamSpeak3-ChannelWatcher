@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author drak3
  */
-class CreateDataBaseCommand extends ContainerAwareCommand
+class CreateDataBaseCommand extends ProfileDependentCommand
 {
     protected function configure() {
         $this->setName('database:create_table');

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author drak3
  */
-class CrawlCommand extends ContainerAwareCommand
+class CrawlCommand extends ProfileDependentCommand
 {
     protected function configure() {
         $this->setName('crawl');
