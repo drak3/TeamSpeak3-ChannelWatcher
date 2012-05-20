@@ -67,6 +67,25 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P1Y13W');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
+    
+    public function testUppercasedKeys() {
+        $spec = array(
+            'Weeks' => 13,
+            'yearS' => 1,
+        );
+        $interval = new \DateInterval('P1Y13W');
+        $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
+    }
+    
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidKey() {
+        $spec = array(
+            'week' => 1
+        );
+        DateConverter::convertArrayToInterval($spec);
+    } 
 
 
 }
