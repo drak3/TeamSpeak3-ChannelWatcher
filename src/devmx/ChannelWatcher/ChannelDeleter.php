@@ -3,6 +3,7 @@ namespace devmx\ChannelWatcher;
 use devmx\Teamspeak3\Query\Transport\TransportInterface;
 use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
 use devmx\ChannelWatcher\Storage\StorageInterface;
+use devmx\ChannelWatcher\Rule\RuleInterface;
 
 /**
  *
@@ -11,7 +12,7 @@ use devmx\ChannelWatcher\Storage\StorageInterface;
 class ChannelDeleter
 {
     
-    protected $accessControler = null;
+    protected $rules = array();
     
     protected $transport;
     
@@ -22,14 +23,25 @@ class ChannelDeleter
         $this->storage = $storage;
     }
     
-    public function setAccessControlList(AccessControlerInterface $list) {
-        $this->accessControler = $list;
+    public function addRule(RuleInterface $rule) {
+        $this->rules[] = $rule;
+    }
+    
+    public function setRules(array $rules) {
+        $this->rules = $rules;
+    }
+    
+    public function removeRule(RuleInterface $rule) {
+        foreach($this->rules as $name=>$r) {
+            if($r === $rule) {
+                unset($this->rules[$name]);
+            }
+        }
     }
     
     public function getIdsToDelete(\DateInterval $emptyFor, \DateTime $now = null) {
         $ids = $this->storage->getChannelsEmptyFor($emptyFor, $now);
-        $ids = array_filter($ids, array($this, 'canAccess'));
-        return $ids;
+        return $this->filter($ids);
     }
     
     public function delete(\DateInterval $emptyFor, \DateTime $now = null) {
@@ -43,11 +55,21 @@ class ChannelDeleter
         $this->transport->query('channeldelete', array('cid'=> $id));
     }
     
-    protected function canAccess($id) {
-        if($this->accessControler instanceof AccessControlerInterface) {
-            return $this->accessControler->canAccess($id);
+    protected function filter(array $ids) {
+        $channelList = $this->transport->query('channellist', array(), array('topic', 'flags', 'voice', 'limits'));
+        $channelList->toException();
+        $channelList = $channelList->toAssoc('cid');
+        foreach($channelList as $id => $channel) {
+            if(  in_array( $id, $ids )) {
+                $channelList['id']['__delete'] = true;
+            } else {
+                $channelList['id']['__delete'] = false;
+            }
         }
-        return true;
+        foreach($this->rules as $rule) {
+            $channelList = $rule->filter($channelList);
+        }
+        return array_keys($channelList);
     }
     
 }
