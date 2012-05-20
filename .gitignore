@@ -3,3 +3,4 @@ config/profiles/devmx.yml
 composer.phar
 storage/
 nbproject/
+config/local.php
