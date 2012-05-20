@@ -11,8 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProfileDependentCommand extends ContainerAwareCommand
 {
-    public function __construct($name=null) {
-        parent::construct($name);
+    protected function configure() {
         $this->addArgument('config', InputArgument::REQUIRED, 'the config of the server to interact with');
     }
     

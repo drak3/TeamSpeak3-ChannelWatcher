@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CrawlCommand extends ProfileDependentCommand
 {
     protected function configure() {
+        parent::configure();
         $this->setName('crawl');
     }
     

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class PrintUnusedCommand extends ProfileDependentCommand
 {
     protected function configure() {
+        parent::configure();
         $this->setName('printUnused');
     }
     
