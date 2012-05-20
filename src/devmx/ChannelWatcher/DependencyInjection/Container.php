@@ -168,7 +168,6 @@ class Container extends \Pimple
         $this['app'] = function($c) {
           $app = new \Symfony\Component\Console\Application($c['app.name'], $c['app.version']);
           $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete']));
-          $app->setCatchExceptions(false);
           return $app;
         };
         
