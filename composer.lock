@@ -1,10 +1,10 @@
 {
-    "hash": "3b6a33c9e297e7d00fe302bab483ded7",
+    "hash": "186bc980e2ad0c1e1616bc79f6434841",
     "packages": [
         {
             "package": "devmx/Teamspeak3-Library-dev",
             "version": "dev-master",
-            "source-reference": "9fdefa93dd67cb690bb6f83b5eaca6d296cc8fdb"
+            "source-reference": "6bdc60fa3e47c2ea06f420a0253c9d978e638335"
         },
         {
             "package": "doctrine/common",
@@ -31,12 +31,12 @@
         {
             "package": "symfony/console",
             "version": "dev-master",
-            "source-reference": "0e67dc701ff55d2a1899a1e638a13a4be96d19b9"
+            "source-reference": "1edd7b739561e87bde81ff1c2ce08bd89e92277e"
         },
         {
             "package": "symfony/console",
             "version": "dev-master",
-            "source-reference": "0e67dc701ff55d2a1899a1e638a13a4be96d19b9",
+            "source-reference": "1edd7b739561e87bde81ff1c2ce08bd89e92277e",
             "alias-pretty-version": "2.1.x-dev",
             "alias-version": "2.1.9999999.9999999-dev"
         }
