@@ -30,8 +30,8 @@ class DeleteCommand extends ProfileDependentCommand
         }
         $out->writeln('going to delete the following channels:');
         
-        $cmd = $this->getApplication()->find('printUnused');
-        $args = array('command'=>'printUnused');
+        $cmd = $this->c['command.print_unused'];
+        $args = array('config'=>$this->c['app.profile']);
         $input = new \Symfony\Component\Console\Input\ArrayInput($args);
         $cmd->run($input, $out);
         if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>are you sure you want to delete this channels (y/n)?</question> ')) {
