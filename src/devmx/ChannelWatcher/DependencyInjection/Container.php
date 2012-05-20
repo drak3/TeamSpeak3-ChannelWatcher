@@ -10,6 +10,7 @@ use devmx\ChannelWatcher\Command\PrintUnusedCommand;
 use devmx\ChannelWatcher\Command\DeleteCommand;
 use devmx\ChannelWatcher\ChannelCrawler;
 use devmx\ChannelWatcher\ChannelDeleter;
+use devmx\ChannelWatcher\DateConverter;
 
 /**
 *
@@ -69,6 +70,10 @@ class Container extends \Pimple
         $this['deleter'] = $this->share(function($c) {
             return new ChannelDeleter($c['ts3']['query.transport'], $c['storage']);
         });
+        
+        $this['delete_time'] = function($c) {
+            return DateConverter::convertArrayToInterval($c['time_to_live']);
+        };
         
         /**
          * The server crawler 
