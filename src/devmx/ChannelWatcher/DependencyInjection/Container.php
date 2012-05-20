@@ -20,6 +20,45 @@ class Container extends \Pimple
 {
     
     public function __construct() {
+        
+        /**
+         * The name of the app (used by the symfony console) 
+         */
+        $c['app.name'] = 'Teamspeak3 ChannelWatcher';
+        
+        /** 
+         * Current app version 
+         */
+        $c['app.version'] = '0.1';
+        
+        /**
+         * The current storage dir 
+         */
+        $c['app.storagedir'] = function($c) {
+            return $c['app.root_dir'].'/storage/'.$c['app.profile'].'/';
+        };
+        
+        /**
+         * The profile loader
+         * The profile loader is a function that tries to include the specific configuration 
+         */
+        $c['app.profile.loader'] = function($c){
+            return function() use ($c) {
+                if(  file_exists($c['app.profile.path']) && is_readable($c['app.profile.path'])) {
+                    include($c['app.profile.path']);
+                } else {
+                    throw new \RuntimeException('Unknown configuration '.$c['app.profile']);
+                }
+            };
+        };
+        
+        /**
+         * The path to the current profiles configuration 
+         */
+        $c['app.profile.path'] = function($c) {
+            return $c['app.root_dir'].'/config/'.$c['app.profile'].'.php';
+        };
+        
         /**
          * The ts3-subcontainer contains the preconfigured ts3container 
          */
@@ -126,8 +165,8 @@ class Container extends \Pimple
         /**
          * The whole application 
          */
-        $this['application'] = function($c) {
-          $app = new \Symfony\Component\Console\Application($c['application.name'], $c['application.version']);
+        $this['app'] = function($c) {
+          $app = new \Symfony\Component\Console\Application($c['app.name'], $c['app.version']);
           $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete']));
           $app->setCatchExceptions(false);
           return $app;
