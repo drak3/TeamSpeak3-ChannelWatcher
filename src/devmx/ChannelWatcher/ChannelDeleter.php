@@ -11,32 +11,65 @@ use devmx\ChannelWatcher\Rule\RuleInterface;
  */
 class ChannelDeleter
 {
-    
+    /**
+     * @var array of RuleInterface 
+     */
     protected $rules = array();
     
+    /**
+     * @var TransportInterface
+     */
     protected $transport;
     
+    /**
+     * @var StorageInterface 
+     */
     protected $storage;
     
+    /**
+     * Constructor
+     * @param TransportInterface $transport
+     * @param StorageInterface $storage 
+     */
     public function __construct(TransportInterface $transport, StorageInterface $storage) {
         $this->transport = $transport;
         $this->storage = $storage;
     }
     
+    /**
+     * Adds a rule
+     * @param RuleInterface $rule 
+     */
     public function addRule(RuleInterface $rule) {
         $this->rules[] = $rule;
     }
     
+    /**
+     * Sets the rules
+     * @param array $rules 
+     */
     public function setRules(array $rules) {
         $this->rules = $rules;
     }
     
+    /**
+     * Removes a specific rule
+     * @param RuleInterface $rule 
+     */
     public function removeRule(RuleInterface $rule) {
         foreach($this->rules as $name=>$r) {
             if($r === $rule) {
                 unset($this->rules[$name]);
             }
         }
+    }
+    
+    /**
+     * Return the currently selected rules
+     * @return array of RuleInterface 
+     */
+    public function getRules() {
+        return $this->rules;
     }
     
     public function getIdsToDelete(\DateInterval $emptyFor, \DateTime $now = null) {
@@ -56,20 +89,29 @@ class ChannelDeleter
     }
     
     protected function filter(array $ids) {
+        if($this->rules === array()) {
+            return $ids;
+        }
         $channelList = $this->transport->query('channellist', array(), array('topic', 'flags', 'voice', 'limits'));
         $channelList->toException();
         $channelList = $channelList->toAssoc('cid');
         foreach($channelList as $id => $channel) {
             if(  in_array( $id, $ids )) {
-                $channelList['id']['__delete'] = true;
+                $channelList[$id]['__delete'] = true;
             } else {
-                $channelList['id']['__delete'] = false;
+                $channelList[$id]['__delete'] = false;
             }
         }
         foreach($this->rules as $rule) {
             $channelList = $rule->filter($channelList);
         }
-        return array_keys($channelList);
+        $filteredIds = array();
+        foreach($channelList as $id => $c) {
+            if($c['__delete']) {
+                $filteredIds[] = $id;
+            }
+        }
+        return $filteredIds;
     }
     
 }
