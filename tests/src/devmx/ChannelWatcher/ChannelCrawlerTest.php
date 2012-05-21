@@ -41,7 +41,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     }
 
      /**
-     * @covers devmx\ChannelWatcher\Crawler::crawl
+     * @covers devmx\ChannelWatcher\ChannelCrawler::crawl
      */
     public function testCrawl()
     {
