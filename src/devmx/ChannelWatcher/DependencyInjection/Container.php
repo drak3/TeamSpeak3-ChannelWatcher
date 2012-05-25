@@ -107,7 +107,11 @@ class Container extends \Pimple
          * The deleter class 
          */
         $this['deleter'] = $this->share(function($c) {
-            return new ChannelDeleter($c['ts3']['query.transport'], $c['storage']);
+            $deleter = new ChannelDeleter($c['ts3']['query.transport'], $c['storage']);
+            foreach($c['rules'] as $r) {
+                $deleter->addRule($r);
+            }
+            return $deleter;
         });
         
         $this['delete_time'] = function($c) {
@@ -186,6 +190,45 @@ class Container extends \Pimple
         $this['storage.in_memory'] = $this->share(function($c){
             return new \devmx\ChannelWatcher\Storage\InMemoryStorage;
         });
+        
+        $this['rules'] = array();
+        
+        /**
+         * This rule saves all channels that are spacers from being deleted
+         */
+        $this['rule.save_spacer'] = function($c) {
+            return new \devmx\ChannelWatcher\Rule\SaveSpacersRule;
+        };
+        
+        /**
+         * This rules saves parents which's childs were visited
+         * Set rule.save_parent.max_level to specify the maximum nesting level under which the saving works
+         * A rule.save_parent.max_level of -1 (default) means unlimited 
+         */
+        $this['rule.save_parent'] = function($c) {
+            $r = new \devmx\ChannelWatcher\Rule\SaveParentRule();
+            if(isset($c['rule.save_parent.max_level'])) {
+                $r->setLevel($c['rule.save_parent.max_level']);
+            }
+            return $r;
+        };
+        
+        /**
+         * A rule that saves channels based on a access control list 
+         */
+        $this['rule.acl_filter'] = function($c) {
+            return new \devmx\ChannelWatcher\Rule\AccessControlerBasedRule($c['rule.acl_filter.acl']);
+        };
+        
+        /**
+         * The acl (here implemted as a white/blacklist acl) 
+         */
+        $this['rule.acl_filter.acl'] = function($c) {
+            return new \devmx\ChannelWatcher\AccessControl\ListBasedControler($c['rule.acl_filter.blacklist'], $c['rule.acl_filter.whitelist']);
+        };
+        
+        $this['rule.acl_filter.blacklist'] = array();
+        $this['rule.acl_filter.whitelist'] = null;
     }
     
 }
