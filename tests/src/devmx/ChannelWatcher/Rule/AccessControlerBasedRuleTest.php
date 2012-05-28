@@ -19,12 +19,12 @@ class AccessControlerBasedRuleTest extends \PHPUnit_Framework_TestCase
         $c1 = array('cid'=>1, '__delete' => true);
         $c2 = array('cid'=>2, '__delete' => true);
         $valueMap = array(
-            array($c1, true),
-            array($c2, false)
+            array(1, true),
+            array(2, false)
         );
         $toFilter = array(1=>$c1, 2=>$c2);
         $expected = $toFilter;
-        $expected[1]['__delete'] = false;
+        $expected[2]['__delete'] = false;
         $controler = $this->getMockForAbstractClass('\devmx\ChannelWatcher\AccessControl\AccessControlerInterface');
         $controler->expects($this->exactly(2))
                   ->method('canAccess')

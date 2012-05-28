@@ -16,7 +16,7 @@ class AccessControlerBasedRule implements RuleInterface
     
     public function filter(array $channelList) {
         foreach($channelList as $id => $channel) {
-            if($this->saver->canAccess($channel)) {
+            if(!$this->saver->canAccess($channel['cid'])) {
                 $channelList[$id]['__delete'] = false;
             }
         }
