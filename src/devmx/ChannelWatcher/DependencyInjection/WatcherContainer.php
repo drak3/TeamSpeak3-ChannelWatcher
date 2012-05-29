@@ -61,8 +61,8 @@ class WatcherContainer extends \Pimple
          * Set rule.save_parent.max_level to specify the maximum nesting level under which the saving works
          * A rule.save_parent.max_level of -1 (default) means unlimited 
          */
-        $this['rule.save_parent'] = function($c) {
-            $r = new \devmx\ChannelWatcher\Rule\SaveParentRule();
+        $this['rule.save_childs'] = function($c) {
+            $r = new \devmx\ChannelWatcher\Rule\SaveChildsRule();
             if(isset($c['rule.save_parent.max_level'])) {
                 $r->setLevel($c['rule.save_parent.max_level']);
             }

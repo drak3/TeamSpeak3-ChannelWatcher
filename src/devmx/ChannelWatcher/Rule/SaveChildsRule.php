@@ -7,7 +7,7 @@ namespace devmx\ChannelWatcher\Rule;
  * By default any parent is taken into a
  * @author drak3
  */
-class SaveParentRule implements RuleInterface
+class SaveChildsRule implements RuleInterface
 {   
     protected $level = 10E6;
     
