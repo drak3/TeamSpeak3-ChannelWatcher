@@ -90,7 +90,14 @@ class ChannelDeleter
     }
     
     protected function deleteChannel($id) {
-        $this->transport->query('channeldelete', array('cid'=> $id, 'force'=>true))->toException();
+        try {
+            $this->transport->query('channeldelete', array('cid'=> $id, 'force'=>true))->toException();
+        } catch(\devmx\Teamspeak3\Query\Exception\CommandFailedException $e) {
+            if($e->getResponse()->getErrorID() !== 768) {
+                throw $e;
+            }
+        }
+        
     }
     
     protected function filter(array $ids) {
