@@ -85,15 +85,6 @@ class ChannelCrawler
         return false;
     }
     
-    protected function getChannelsWithPID($channels, $pid) {
-        $ret = array();
-        foreach($channels as $channel) {
-            if($channel['pid'] == $pid) {
-                $ret[] = $channel;
-            }
-        }
-        return $ret;
-    }
 }
 
 ?>
