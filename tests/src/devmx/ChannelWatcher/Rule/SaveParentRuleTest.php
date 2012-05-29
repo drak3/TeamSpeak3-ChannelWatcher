@@ -184,6 +184,26 @@ class SaveParentRuleTest extends \PHPUnit_Framework_TestCase
         $expected[7]['__delete'] = false;
         $this->assertEquals($expected, $rule->filter($channelList));
     }
+    
+    /**
+     * @covers devmx\ChannelWatcher\Rule\SaveParentRule::filter
+     */
+    public function testFilter_doNotSaveChild() {
+        $channelList = array(
+            1 => array(
+                'cid' => 1,
+                'pid' => 0,
+                '__delete' => false,
+            ),
+            2 => array(
+                'cid' => 2,
+                'pid' => 1,
+                '__delete' => true
+            )
+        );
+        $rule = new SaveParentRule();
+        $this->assertEquals($channelList, $rule->filter($channelList), 'Rule must not change anything if child is going to be deleted');
+    }
 
 }
 
