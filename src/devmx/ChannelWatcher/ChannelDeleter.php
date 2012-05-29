@@ -79,8 +79,13 @@ class ChannelDeleter
     
     public function delete(\DateInterval $emptyFor, \DateTime $now = null) {
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
+        $list = $this->transport->query('channellist');
+        $list->toException();
+        $currentIDs = array_keys($list->toAssoc('cid'));
         foreach($toDelete as $id) {
-            $this->deleteChannel($id);
+            if(in_array($id, $currentIDs)){
+                $this->deleteChannel($id);
+            }
         }
     }
     

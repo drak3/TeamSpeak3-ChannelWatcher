@@ -72,7 +72,7 @@ $c['watcher']['rules'] = array(
      'port' => 3306,
      //'unix_socket' => '',
      'driver' => 'pdo_mysql',
-     'charset' => 'UTF8'
+     'charset' => 'utf8'
  );
 */
 
