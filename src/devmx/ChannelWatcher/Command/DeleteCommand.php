@@ -21,16 +21,16 @@ class DeleteCommand extends ProfileDependentCommand
     
     public function execute(InputInterface $in, OutputInterface $out) {
         $force = $in->getOption('force');
-        $time = $this->c['delete_time'];
+        $time = $this->c['watcher']['delete_time'];
         $out->writeln('going to delete the following channels:');
         
         $cmd = $this->c['command.print_unused'];
-        $args = array('config'=>$this->c['app.profile']);
+        $args = array('config'=>$this->c['profile']);
         $input = new \Symfony\Component\Console\Input\ArrayInput($args);
         $cmd->run($input, $out);
         if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>are you sure you want to delete this channels (y/N)?</question> ', false)) {
             $out->writeln('deleting...');
-            $this->c['deleter']->delete($time);
+            $this->c['watcher']['deleter']->delete($time);
         } else {
             $out->writeln('aborting');
         }

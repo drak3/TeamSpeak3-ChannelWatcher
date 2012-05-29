@@ -17,8 +17,8 @@ class ProfileDependentCommand extends ContainerAwareCommand
     
     protected function initialize(InputInterface $in, OutputInterface $out) {
         $in->validate();
-        $this->c['app.profile'] = $in->getArgument('config');
-        $this->c['app.profile.loader']();
+        $this->c['profile'] = $in->getArgument('config');
+        $this->c['profile.loader']();
     }
 }
 

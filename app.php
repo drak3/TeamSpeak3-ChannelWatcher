@@ -1,11 +1,10 @@
 <?php
-use devmx\ChannelWatcher\DependencyInjection\Container;
-date_default_timezone_set('Europe/Berlin');
+use devmx\ChannelWatcher\DependencyInjection\AppContainer;
 require_once 'vendor/autoload.php';
 
-$c = new Container();
+$c = new AppContainer;
 
-$c['app.root_dir'] = __DIR__;
+$c['root_dir'] = __DIR__;
 
-$c['app']->run();
+$c['application']->run();
 ?>
