@@ -9,7 +9,14 @@
         {
             "package": "doctrine/common",
             "version": "dev-master",
-            "source-reference": "f8e2aadf388ab1e6b36263a73d5e314c477f96c7"
+            "source-reference": "4ac23ae8737fe7b95a7dd0f1346dbd48c7a503b0"
+        },
+        {
+            "package": "doctrine/common",
+            "version": "dev-master",
+            "source-reference": "4ac23ae8737fe7b95a7dd0f1346dbd48c7a503b0",
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
         },
         {
             "package": "doctrine/common",
@@ -21,19 +28,21 @@
         {
             "package": "doctrine/dbal",
             "version": "dev-master",
-            "source-reference": "0b9cf40ede89ce20ee97e9617597e1c3ef0c43a4",
+            "source-reference": "e537745358e75bb4162939cc9e56aa7a986ea618"
+        },
+        {
+            "package": "doctrine/dbal",
+            "version": "dev-master",
+            "source-reference": "e537745358e75bb4162939cc9e56aa7a986ea618",
             "alias-pretty-version": "2.3.x-dev",
             "alias-version": "2.3.9999999.9999999-dev"
         },
         {
             "package": "doctrine/dbal",
             "version": "dev-master",
-            "source-reference": "0b9cf40ede89ce20ee97e9617597e1c3ef0c43a4"
-        },
-        {
-            "package": "pimple/pimple",
-            "version": "dev-master",
-            "source-reference": "v1.0.0"
+            "source-reference": "0b9cf40ede89ce20ee97e9617597e1c3ef0c43a4",
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
         },
         {
             "package": "pimple/pimple",
@@ -43,14 +52,26 @@
             "alias-version": "1.0.9999999.9999999-dev"
         },
         {
+            "package": "pimple/pimple",
+            "version": "dev-master",
+            "source-reference": "v1.0.0"
+        },
+        {
             "package": "symfony/console",
             "version": "dev-master",
-            "source-reference": "1edd7b739561e87bde81ff1c2ce08bd89e92277e"
+            "source-reference": "22be75777fe18315637abe092de5aa5c7f4ed3cd"
         },
         {
             "package": "symfony/console",
             "version": "dev-master",
             "source-reference": "1edd7b739561e87bde81ff1c2ce08bd89e92277e",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/console",
+            "version": "dev-master",
+            "source-reference": "22be75777fe18315637abe092de5aa5c7f4ed3cd",
             "alias-pretty-version": "2.1.x-dev",
             "alias-version": "2.1.9999999.9999999-dev"
         }
