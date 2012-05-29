@@ -29,7 +29,7 @@ class AppContainer extends \Pimple
         /**
          * The ts3-subcontainer contains the preconfigured ts3container 
          */
-        $this['ts3'] = new \devmx\Teamspeak3\SimpleContainer;
+        $this['ts3'] = new \devmx\Teamspeak3\SimpleContainer();
         
         $this['watcher'] = new WatcherContainer();
                 
@@ -57,7 +57,7 @@ class AppContainer extends \Pimple
          * The table name for the dbal storage
          */
         $this['db']['table_name'] = $this->share(function($c) use ($that) {
-           return 'devmx_channel_watcher_channels_'.$that['profile']; 
+           return 'devmx_ts3_channelwatcher_channels_'.$that['profile']; 
         });
         
         /**
