@@ -13,6 +13,7 @@ use devmx\ChannelWatcher\Command\CreateDataBaseCommand;
 class AppContainer extends \Pimple
 {
     public function __construct() {
+        $that = $this;
         /**
          * The name of the app (used by the symfony console) 
          */
@@ -31,9 +32,7 @@ class AppContainer extends \Pimple
         $this['ts3'] = new \devmx\Teamspeak3\SimpleContainer;
         
         $this['watcher'] = new WatcherContainer();
-        
-        $that = $this;
-        
+                
         $this['watcher']['ts3.transport'] = function() use ($that) {
             return $that['ts3']['query.transport'];
         };
@@ -53,6 +52,13 @@ class AppContainer extends \Pimple
             $transport->query('use', array('port'=>$c['vserver.port']), array('virtual'));
             return $transport;
         }));
+        
+        /**
+         * The table name for the dbal storage
+         */
+        $this['db']['table_name'] = $this->share(function($c) use ($that) {
+           return 'devmx_channel_watcher_channels_'.$that['profile']; 
+        });
         
         /**
          * The channel storage
