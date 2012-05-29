@@ -4,6 +4,7 @@ use devmx\Teamspeak3\Query\Transport\TransportInterface;
 use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
 use devmx\ChannelWatcher\Storage\StorageInterface;
 use devmx\ChannelWatcher\Rule\RuleInterface;
+use devmx\Teamspeak3\Query\CommandAwareQuery;
 
 /**
  *
@@ -19,7 +20,7 @@ class ChannelDeleter
     /**
      * @var TransportInterface
      */
-    protected $transport;
+    protected $query;
     
     /**
      * @var StorageInterface 
@@ -32,7 +33,12 @@ class ChannelDeleter
      * @param StorageInterface $storage 
      */
     public function __construct(TransportInterface $transport, StorageInterface $storage) {
-        $this->transport = $transport;
+        if($transport instanceof CommandAwareQuery ) {
+            $this->query = $transport;
+        } else {
+            $this->query = new CommandAwareQuery($transport);
+        }
+        $this->query->exceptionOnError(true);
         $this->storage = $storage;
     }
     
@@ -79,8 +85,7 @@ class ChannelDeleter
     
     public function delete(\DateInterval $emptyFor, \DateTime $now = null) {
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
-        $list = $this->transport->query('channellist');
-        $list->toException();
+        $list = $this->query->channelList();
         $currentIDs = array_keys($list->toAssoc('cid'));
         foreach($toDelete as $id) {
             if(in_array($id, $currentIDs)){
@@ -91,11 +96,12 @@ class ChannelDeleter
     
     protected function deleteChannel($id) {
         try {
-            $this->transport->query('channeldelete', array('cid'=> $id, 'force'=>true))->toException();
+            $this->query->channelDelete( $id, false );
         } catch(\devmx\Teamspeak3\Query\Exception\CommandFailedException $e) {
             if($e->getResponse()->getErrorID() !== 768) {
                 throw $e;
             }
+            //we can savely ignore a invalid channel id, as this is most likely caused by a already deleted subchannel
         }
         
     }
@@ -104,9 +110,7 @@ class ChannelDeleter
         if($this->rules === array()) {
             return $ids;
         }
-        $channelList = $this->transport->query('channellist', array(), array('topic', 'flags', 'voice', 'limits'));
-        $channelList->toException();
-        $channelList = $channelList->toAssoc('cid');
+        $channelList = $this->query->channelList(true, true , true , true , true)->toAssoc('cid');
         foreach($channelList as $id => $channel) {
             if(  in_array( $id, $ids )) {
                 $channelList[$id]['__delete'] = true;
