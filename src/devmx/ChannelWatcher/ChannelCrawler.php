@@ -82,12 +82,6 @@ class ChannelCrawler
         if($channel['total_clients'] > 0) {
             return true;
         }
-        $childs = $this->getChannelsWithPID($allChannels , $channel['cid']);
-        foreach($childs as $child) {
-            if($this->hasClients( $child, $allChannels )) {
-                return true;
-            }
-        }
         return false;
     }
     

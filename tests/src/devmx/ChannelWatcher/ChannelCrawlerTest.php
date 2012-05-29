@@ -69,7 +69,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(
            1 => $time,
            2 => $time2,
-           3 => $time2,
+           3 => $time,
            4 => $time2
         ), $this->storage->getChannels());
     }
@@ -123,7 +123,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
             4 => $time,
         ), $this->storage->getChannels());
     }
-    
+        
     protected function getChannelListItems() {
         return array(
           array(
