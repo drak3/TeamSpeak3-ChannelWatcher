@@ -69,6 +69,10 @@ class WatcherContainer extends \Pimple
             return $r;
         };
         
+        $this['rule.save_parent'] = function($c) {
+            return new devmx\ChannelWatcher\Rule\SaveParentRule();
+        };
+        
         /**
          * A rule that saves channels based on a access control list 
          */
