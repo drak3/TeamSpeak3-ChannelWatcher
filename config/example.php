@@ -44,25 +44,25 @@ $c['watcher']['rule.acl_filter.blacklist'] = array();
  * All rules that should be applied before deleting the channels 
  */
 $c['watcher']['rules'] = array(
+  // this rule saves all channels that have visited parentes
+    //$c['watcher']['rule.save_childs']  
+    
   // This rule saves all channels that have visited childs  
     //$c['watcher']['rule.save_parent'],
- 
-  // this rules saves all spacers
-    //$c['watcher']['rule.save_spacer'],
     
   // this rule saves channels according to the specified black/whitelist
     //$c['watcher']['rule.acl_filter'],
-  
-  // this rule saves all channels that have visited parentes
-    //$c['watcher']['rule.save_childs']
+      
+  // this rules saves all spacers
+    //$c['watcher']['rule.save_spacer'],
 );
 
 //*********** Database Configuration ***********\\
+// See http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html for configuration details
 
 /**
  * Uncomment the following to use MYSQL as database 
  */
-
 /*
  $c['db']['connection.params'] = array(
      'dbname' => '',
@@ -86,4 +86,31 @@ $c['db']['connection.params'] = array(
 );
  */
 
+/**
+ * Uncomment the following lines to use POSTGRESQL as database 
+ */
+/*
+$c['db']['connection.params'] = array(
+    'dbname' => '',
+    'host' => '',
+    'port' => 0,
+    'user' => '',
+    'password' => '',
+    'driver' => 'pdo_pgsql',
+);
+*/
+
+/**
+ * Uncomment the following lines to use MSSQLSRV as database 
+ */
+/*
+$c['db']['connection.params'] = array(
+  'dbname' => '',
+  'host' => '',
+  'port' => 0,
+  'user' => '',
+  'password' => '',
+  'driver' => 'pdo_sqlsrv'
+);
+*/
 ?>
