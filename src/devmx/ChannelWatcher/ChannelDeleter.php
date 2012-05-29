@@ -85,7 +85,7 @@ class ChannelDeleter
     }
     
     protected function deleteChannel($id) {
-        $this->transport->query('channeldelete', array('cid'=> $id));
+        $this->transport->query('channeldelete', array('cid'=> $id, 'force'=>true))->toException();
     }
     
     protected function filter(array $ids) {
