@@ -127,7 +127,7 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
         $this->storage->expects($this->once())
                       ->method('getChannelsEmptyFor')
                       ->will($this->returnValue($idsToDelete));
-        $this->transport->addResponse(new CommandResponse(new Command('channellist', array(), array('topic', 'flags', 'voice', 'limits')), $channelList));
+        $this->transport->addResponse(new CommandResponse(new Command('channellist', array(), array('topic', 'flags', 'voice', 'limits', 'icon')), $channelList));
         $this->transport->connect();
         $rule->expects($this->once())
              ->method('filter')
