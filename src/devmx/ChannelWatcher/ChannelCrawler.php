@@ -4,6 +4,7 @@ use devmx\Teamspeak3\Query\Transport\TransportInterface;
 use devmx\Teamspeak3\Query\Command;
 use devmx\ChannelWatcher\Storage\StorageInterface;
 use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
+use devmx\Teamspeak3\Query\CommandAwareQuery;
 /**
  *
  * @author drak3
@@ -11,9 +12,9 @@ use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
 class ChannelCrawler
 {
     /**
-     * @var \devmx\Teamspeak3\Query\Transport\TransportInterface
+     * @var \devmx\Teamspeak3\Query\CommandAwareQuery
      */
-    protected $transport;
+    protected $query;
     
     /**
      * @var \devmx\ChannelWatcher\Storage\StorageInterface
@@ -28,7 +29,12 @@ class ChannelCrawler
     protected $accessControler;
     
     public function __construct(TransportInterface $transport, $ignoreQueryClients=true) {
-        $this->transport = $transport;
+        if($transport instanceof CommandAwareQuery ) {
+            $this->query = $transport;
+        } else {
+            $this->query = new CommandAwareQuery($transport);
+        }
+        $this->query->exceptionOnError(true);
         $this->ignoreQueryClients = $ignoreQueryClients;
     }
     
@@ -38,13 +44,11 @@ class ChannelCrawler
 
     
     public function crawl() {
-        $channelResponse = $this->transport->query('channellist');
-        $channelResponse->toException();
+        $channelResponse = $this->query->channelList();
         $channels = $channelResponse->getItems();
         if($this->ignoreQueryClients) {
             $channels = $channelResponse->toAssoc('cid');
-            $clients = $this->transport->query('clientlist');
-            $clients->toException();
+            $clients = $this->query->clientList();
             $clients = $clients->getItems();
             foreach($clients as $client) {
                 if($client['client_type'] === 1) {
