@@ -70,7 +70,7 @@ class WatcherContainer extends \Pimple
         };
         
         $this['rule.save_parent'] = function($c) {
-            return new devmx\ChannelWatcher\Rule\SaveParentRule();
+            return new \devmx\ChannelWatcher\Rule\SaveParentRule();
         };
         
         /**
