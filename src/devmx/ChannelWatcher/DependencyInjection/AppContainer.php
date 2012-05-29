@@ -132,12 +132,18 @@ class AppContainer extends \Pimple
             return $command;
         };
         
+        $this['command.init'] = function($c) {
+            $command = new \devmx\ChannelWatcher\Command\InitCommand('init');
+            $command->setContainer($c);
+            return $command;
+        };
+        
         /**
          * The whole application 
          */
         $this['application'] = function($c) {
           $app = new \Symfony\Component\Console\Application($c['name'], $c['version']);
-          $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete']));
+          $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init']));
           return $app;
         };
     }
