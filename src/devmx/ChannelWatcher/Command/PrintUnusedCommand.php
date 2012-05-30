@@ -14,7 +14,7 @@ class PrintUnusedCommand extends ProfileDependentCommand
     protected function execute(InputInterface $in, OutputInterface $out) {
         $time = $this->c['watcher']['delete_time'];
         $unused = $this->c['watcher']['deleter']->getIdsToDelete($time);
-        $channellist = $this->c['ts3']['query.transport']->query('channellist')->toAssoc('cid');
+        $channellist = $this->c['ts3']['query']->channelList()->toAssoc('cid');
         foreach($unused as $id) {
             if(!isset($channellist[$id])) {
                 $out->writeln("Channel with id $id is not on the server anymore, ignoring");
