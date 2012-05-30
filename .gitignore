@@ -4,3 +4,4 @@ composer.phar
 storage/
 nbproject/
 config/local.php
+doc/build/
