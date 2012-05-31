@@ -64,4 +64,5 @@ Further documentation
 ---------------------
 See :doc:`Troubleshooting <troubleshooting>` when facing any errors.
 See :doc:`The configuration documentation <configuration>` for a detailed description of the configuration possibilities.
+
 .. _here: http://devmx.de/software/teamspeak3-channel-watcher
