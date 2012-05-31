@@ -5,9 +5,9 @@ Installation
 ------------
 Simply download and unpack the archive provided here_.
 Make sure that all prerequisites are met:
-* php version greater than 5.3.2
-* enabled fsockopen()
-* ability to run php on the command line 
+ - php version greater than 5.3.2
+ - enabled fsockopen()
+ - ability to run php on the command line 
 
 Configuration
 -------------
@@ -38,6 +38,6 @@ After configuring everything, type the following command into the command line: 
 where <config_name> gets replaced with the name of the configuration file created in the previous step but WITHOUT the .php suffix.
 
 .. note::
-    When on windows, it might be neccessary to invoke php with its full path e.g C:\xampp\php\php.exe.
+    When on windows, it might be neccessary to invoke php with its full path e.g ``C:\xampp\php\php.exe app.php ...``.
 
 .. _here: http://devmx.de/software/teamspeak3-channel-watcher
