@@ -16,7 +16,7 @@ Table of Contents
    :maxdepth: 2
 
    getting-started
-   troubleshooting
    configuration
+   troubleshooting
 
 
