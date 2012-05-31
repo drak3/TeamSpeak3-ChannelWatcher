@@ -1,6 +1,13 @@
 Getting Started
 ===============
 
+What is the TeamSpeak3-ChannelWatcher?
+--------------------------------------
+
+The TeamSpeak3-ChannelWatcher is a tool to automatically delete unused channels.
+It consists mainly of two parts: the crawler, and the deleter. The crawler visits your server and records which channels are visited. 
+The deleter uses this data to savely remove unused channels.
+
 Installation
 ------------
 Simply download and unpack the archive provided here_ and make sure that all prerequisites are met:
@@ -43,12 +50,18 @@ The command should take some time and then end without printing anything. When t
 
 Regular crawls
 ~~~~~~~~~~~~~~
-After making sure that the crawl command works you should do regular crawls. This can for example be done by a cron job.
-We propose one crawl each 5 minutes. 
+After making sure that the crawl command works you should do regular crawls. (This can for example be done on Linux by a cron job.)
+We propose one crawl each 5 minutes so the deleter has enough data to safely decide which channels should be deleted.
 
 
 Deleting channels
 ~~~~~~~~~~~~~~~~~
 
+To delete channels simply run ``php app.php delete <config_name>``. This will print out all channels that will be deleted and ask for a confirmation.
+Please make sure there are no channels listed which should not be deleted, we give no warranty for accidentally deleted channels.
 
+Further documentation
+---------------------
+See :doc:`Troubleshooting <troubleshooting>` when facing any errors.
+See :doc:`The configuration documentation <configuration>` for a detailed description of the configuration possibilities.
 .. _here: http://devmx.de/software/teamspeak3-channel-watcher
