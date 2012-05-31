@@ -15,6 +15,22 @@ Troubleshooting
 Errors
 ------
 
+SQLite: storage not writable
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you are SQLite-user and you get an error that the directory ``storage`` is not writable, be sure that you set chmod (on Linux-based machines) correctly.
+Therefore the user who runs the TeamSpeak3 ChannelWatcher should be owner of the application files. You can set the owner with this script.
+Replace ``<user>`` with the username of the user who runs the TeamSpeak3 Channelwatcher.
+
+.. code-block:: bash
+
+    $ chown -R <user>:<user> .
+
+Also be sure that the user has writing permissions on the directory ``storage``
+
+.. code-block:: bash
+
+    $ chmod -R 640 ./storage
+
 
 Configuration
 -------------
