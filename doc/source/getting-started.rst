@@ -34,9 +34,9 @@ The first run
 -------------
 
 After configuring everything, type the following command into the command line: ``php app.php crawl <config_name>``
-.. note::
 
-    When on windows, it might be neccessary to invoke php with its full path e.g ``C:\xampp\php\php.exe app.php ...``.
+.. Tip::
+   When on windows, it might be neccessary to invoke php with its full path e.g ``C:\xampp\php\php.exe app.php ...``.
 
 where <config_name> must be replaced with the name of the configuration file created in the previous step but WITHOUT the .php suffix.
 The command should take some time and then end without printing anything. When the app throws any errors see the :doc:`Troubleshooting page<troubleshooting>`
