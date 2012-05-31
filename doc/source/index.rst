@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Teamspeak3-ChannelWatcher's documentation!
+Index
 =====================================================
 
 Read the :doc:`Getting Started <getting-started>` guide for a introduction to the ChannelWatcher
@@ -16,5 +16,7 @@ Table of Contents
    :maxdepth: 2
 
    getting-started
+   troubleshooting
+   configuration
 
 

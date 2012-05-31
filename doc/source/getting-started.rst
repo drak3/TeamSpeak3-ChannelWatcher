@@ -3,8 +3,7 @@ Getting Started
 
 Installation
 ------------
-Simply download and unpack the archive provided here_.
-Make sure that all prerequisites are met:
+Simply download and unpack the archive provided here_ and make sure that all prerequisites are met:
  - php version greater than 5.3.2
  - enabled fsockopen()
  - ability to run php on the command line 
@@ -34,10 +33,17 @@ For other databases see :doc:`The configuration documentation <configuration>`.
 The first run
 -------------
 
-After configuring everything, type the following command into the command line: ``php app.php crawl <config_name>`` 
-where <config_name> gets replaced with the name of the configuration file created in the previous step but WITHOUT the .php suffix.
-
+After configuring everything, type the following command into the command line: ``php app.php crawl <config_name>``
 .. note::
+
     When on windows, it might be neccessary to invoke php with its full path e.g ``C:\xampp\php\php.exe app.php ...``.
+
+where <config_name> must be replaced with the name of the configuration file created in the previous step but WITHOUT the .php suffix.
+The command should take some time and then end without printing anything. When the app throws any errors see the :doc:`Troubleshooting page<troubleshooting>`
+
+
+Regular crawls
+~~~~~~~~~~~~~~
+
 
 .. _here: http://devmx.de/software/teamspeak3-channel-watcher
