@@ -42,11 +42,34 @@ $c['ts3']['login.pass'] = '<your-password>';
 
 Deletion Time
 -------------
+You can configure the time which needs to pass until the TeamSpeak3 ChannelDeleter starts deleting channels in this block:
 
+.. code-block:: php
+
+    <?php
+
+        $c['watcher']['time_to_live'] = array(
+        'years'     => 0,
+        'months'    => 0,
+        'weeks'     => 0,
+        'days'      => 0,
+        'hours'     => 0,
+        'minutes'   => 0,
+        'seconds'   => 0,
+        );
+
+    ?>
+
+You can see seven time intervals followed by an arrow and a number. Specify the number of the time intervals to set the deletion time. All intervals will be summed up to generate the deletion time.
+For example if you set ``years`` to 1 and all others to ``0``, the ChannelDeleter will delete channels if nobody was in them for one year.
+If you set ``weeks`` to ``1`` and ``months`` to ``1`` it will start deleting channels after one month and a week emptiness.
 
 Blacklist
 ---------
+With the help of the blacklist option you can specify channels by their ids which should NOT be deleted by the ChannelDeleter.
 
+$c['watcher']['rule.acl_filter.blacklist'] = array(<channel-id>, <another-id>);
+    Specify the channels by their ids and seperate them with commas. For example: ``[...]array(1, 2, 3, 4);`` will let the ChannelDeleter ignore the channels with id 1, 2, 3 and 4.
 
 Rules
 -----
