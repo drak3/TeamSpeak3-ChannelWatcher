@@ -50,7 +50,7 @@ and remove fsockopen, that it looks like the following
     
     disable_functions =
 
-Be sure that you edit the configuration file of the cli and not the webservers one.
+Be sure that you edit the configuration file of the cli and not the one of the webserver.
 
 Whitelisting IP-Adress
 ~~~~~~~~~~~~~~~~~~~~~~
