@@ -15,6 +15,16 @@ Simply download and unpack the archive provided here_ and make sure that all pre
  - enabled fsockopen()
  - ability to run php on the command line 
 
+Also you need TeamSpeak3-Query access. The user of the Query needs at least the following query-permissions:
+ - b_virtualserver_select (use)
+ - b_serverquery_login (login)
+ - b_virtualserver_client_list (clientlist)
+ - b_virtualserver_channel_list (channellist)
+ - b_channel_delete_permanent (channeldelete)
+ - b_channel_delete_semi_permanent (channeldelete)
+ - b_channel_delete_temporary (channeldelete)
+ - b_channel_delete_flag_force (channeldelete)
+
 Configuration
 -------------
 A configuration file is a plain php file where all important options can be set. (See :doc:`The configuration documentation <configuration>` for more details.)
@@ -64,4 +74,5 @@ Further documentation
 ---------------------
 See :doc:`Troubleshooting <troubleshooting>` when facing any errors.
 See :doc:`The configuration documentation <configuration>` for a detailed description of the configuration possibilities.
+
 .. _here: http://devmx.de/software/teamspeak3-channel-watcher
