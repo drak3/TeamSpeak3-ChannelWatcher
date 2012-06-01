@@ -98,7 +98,7 @@ class ChannelDeleter
         try {
             $this->query->channelDelete( $id, false );
         } catch(\devmx\Teamspeak3\Query\Exception\CommandFailedException $e) {
-            if($e->getResponse->getErrorID() === 772) {
+            if($e->getResponse()->getErrorID() === 772) {
                 //catching the cause that there was someone in the channel we tried to delete
                 throw new Deleter\ChannelNotEmptyException($e->getResponse());
             }
