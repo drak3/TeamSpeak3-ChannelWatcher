@@ -83,20 +83,20 @@ class ChannelDeleter
         return $this->filter($ids);
     }
     
-    public function delete(\DateInterval $emptyFor, \DateTime $now = null) {
+    public function delete(\DateInterval $emptyFor, $force=false, \DateTime $now = null) {
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
         $list = $this->query->channelList();
         $currentIDs = array_keys($list->toAssoc('cid'));
         foreach($toDelete as $id) {
             if(in_array($id, $currentIDs)){
-                $this->deleteChannel($id);
+                $this->deleteChannel($id, $force);
             }
         }
     }
     
-    protected function deleteChannel($id) {
+    protected function deleteChannel($id, $force) {
         try {
-            $this->query->channelDelete( $id, false );
+            $this->query->channelDelete( $id, $force );
         } catch(\devmx\Teamspeak3\Query\Exception\CommandFailedException $e) {
             if($e->getResponse()->getErrorID() === 772) {
                 //catching the cause that there was someone in the channel we tried to delete
