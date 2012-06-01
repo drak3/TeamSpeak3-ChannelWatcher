@@ -24,6 +24,8 @@ class AppContainer extends \Pimple
          */
         $this['version'] = '0.1';
         
+        $this['debug'] = false;
+        
         $this['db'] = new DbalContainer();
         
         /**
@@ -144,6 +146,13 @@ class AppContainer extends \Pimple
         $this['application'] = function($c) {
           $app = new \Symfony\Component\Console\Application($c['name'], $c['version']);
           $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init']));
+          //as of here, the app is responsible for error handling
+          if($c['debug']) {
+              error_reporting(-1);
+              $app->setCatchExceptions(false);
+          } else {
+              error_reporting(0);
+          }
           return $app;
         };
     }
