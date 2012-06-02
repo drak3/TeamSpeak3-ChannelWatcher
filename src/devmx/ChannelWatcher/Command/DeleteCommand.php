@@ -43,13 +43,16 @@ class DeleteCommand extends ProfileDependentCommand
         $deleteNonEmpty = $in->getOption('delete-non-empty');
         
         $time = $this->c['watcher']['delete_time'];
-        $out->writeln('going to delete the following channels:');
         
-        $cmd = $this->c['command.print_unused'];
-        $args = array('config'=>$this->c['profile']);
-        $input = new \Symfony\Component\Console\Input\ArrayInput($args);
-        $cmd->run($input, $out);
-        if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>are you sure you want to delete this channels (y/N)?</question> ', false)) {
+        if($this->c['watcher']['deleter']->getIDsToDelete($time) === array()) {
+            $out->writeln('Nothing to delete...');
+            return 0;
+        }       
+            
+        $out->writeln('going to delete the following channels:');
+        $this->runPrintUnused($out);
+
+        if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>Are you sure you want to delete this channels (y/N)?</question> ', false)) {
             $out->writeln('deleting...');
             if($deleteNonEmpty) {
                 $this->c['watcher']['deleter']->delete($time, true);
@@ -66,6 +69,13 @@ class DeleteCommand extends ProfileDependentCommand
         
     }
     
+    
+    private function runPrintUnused(OutputInterface $out) {
+        $cmd = $this->c['command.print_unused'];
+        $args = array('config'=>$this->c['profile']);
+        $input = new \Symfony\Component\Console\Input\ArrayInput($args);
+        $cmd->run($input, $out);
+    }
 }
 
 ?>
