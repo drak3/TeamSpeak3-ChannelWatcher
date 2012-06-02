@@ -32,20 +32,19 @@ use Symfony\Component\Console\Input\ArgvInput;
  *
  * @author drak3
  */
-class DeleteCommand extends ProfileDependentCommand
-{
-    
+class DeleteCommand extends ProfileDependentCommand {
+
     public function configure() {
         parent::configure();
         $this
-            ->addOption('force', 'f', InputOption::VALUE_NONE)
-            ->addOption('delete-non-empty', null, InputOption::VALUE_NONE);
+                ->addOption('force', 'f', InputOption::VALUE_NONE)
+                ->addOption('delete-non-empty', null, InputOption::VALUE_NONE);
     }
-    
+
     public function execute(InputInterface $in, OutputInterface $out) {
         $force = $in->getOption('force');
         $deleteNonEmpty = $in->getOption('delete-non-empty');
-        
+
         $time = $this->c['watcher']['delete_time'];
         $deleter = $this->c['watcher']['deleter'];
         

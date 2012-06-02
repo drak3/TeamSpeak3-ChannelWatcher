@@ -31,24 +31,24 @@ use devmx\ChannelWatcher\Command\CreateDataBaseCommand;
  *
  * @author drak3
  */
-class AppContainer extends \Pimple
-{
+class AppContainer extends \Pimple {
+
     public function __construct() {
         $that = $this;
         /**
          * The name of the app (used by the symfony console) 
          */
         $this['name'] = 'Teamspeak3 ChannelWatcher';
-        
-        /** 
+
+        /**
          * Current app version 
          */
         $this['version'] = '0.1';
-        
+
         $this['debug'] = false;
-        
+
         $this['db'] = new DbalContainer();
-        
+
         /**
          * The ts3-subcontainer contains the preconfigured ts3container 
          */
@@ -67,15 +67,15 @@ class AppContainer extends \Pimple
         };
         
         $this['watcher'] = new WatcherContainer();
-                
+
         $this['watcher']['ts3.transport'] = function() use ($that) {
-            return $that['ts3']['query.transport'];
-        };
-        
+                    return $that['ts3']['query.transport'];
+                };
+
         $this['watcher']['storage'] = function() use ($that) {
-            return $that['db']['storage'];
-        };
-        
+                    return $that['db']['storage'];
+                };
+
         /**
          * The query.transport is preconfigured so it is logged in and on the right server on use 
          */
@@ -92,103 +92,104 @@ class AppContainer extends \Pimple
          * The table name for the dbal storage
          */
         $this['db']['table_name'] = $this->share(function($c) use ($that) {
-           return 'devmx_ts3_channelwatcher_channels_'.$that['profile']; 
-        });
-        
+                    return 'devmx_ts3_channelwatcher_channels_' . $that['profile'];
+                });
+
         /**
          * The channel storage
          * (db storage by default) 
          */
         $this['storage'] = function($c) {
-            return $c['db']['storage'];
-        };
-        
+                    return $c['db']['storage'];
+                };
+
         /**
          * The current storage dir 
          */
         $this['storagedir'] = function($c) {
-            return $c['root_dir'].'/storage/'.$c['profile'].'/';
-        };
-        
+                    return $c['root_dir'] . '/storage/' . $c['profile'] . '/';
+                };
+
         /**
          * The profile loader
          * The profile loader is a function that tries to include the specific configuration 
          */
-        $this['profile.loader'] = function($c){
-            return function() use ($c) {
-                if(  file_exists($c['profile.path']) && is_readable($c['profile.path'])) {
-                    include($c['profile.path']);
-                } else {
-                    throw new \RuntimeException('Unknown configuration '.$c['profile']);
-                }
-            };
-        };
-        
+        $this['profile.loader'] = function($c) {
+                    return function() use ($c) {
+                                if (file_exists($c['profile.path']) && is_readable($c['profile.path'])) {
+                                    include($c['profile.path']);
+                                } else {
+                                    throw new \RuntimeException('Unknown configuration ' . $c['profile']);
+                                }
+                            };
+                };
+
         /**
          * The path to the current profiles configuration 
          */
         $this['profile.path'] = function($c) {
-            return $c['root_dir'].'/config/'.$c['profile'].'.php';
-        };
-        
+                    return $c['root_dir'] . '/config/' . $c['profile'] . '.php';
+                };
+
         /**
          * The crawl command 
          */
         $this['command.crawl'] = function($c) {
-            $command = new CrawlCommand('crawl');
-            $command->setContainer($c);
-            return $command;
-        };
-        
+                    $command = new CrawlCommand('crawl');
+                    $command->setContainer($c);
+                    return $command;
+                };
+
         /**
          * The database/table creation command 
          */
         $this['command.create_db'] = function($c) {
-            $command = new CreateDataBaseCommand('db:create_table');
-            $command->setContainer($c);
-            return $command;
-        };
-        
+                    $command = new CreateDataBaseCommand('db:create_table');
+                    $command->setContainer($c);
+                    return $command;
+                };
+
         /**
          * The printunused command 
          */
         $this['command.print_unused'] = function($c) {
-            $command = new PrintUnusedCommand('print_unused');
-            $command->setContainer($c);
-            return $command;
-        };
-        
+                    $command = new PrintUnusedCommand('print_unused');
+                    $command->setContainer($c);
+                    return $command;
+                };
+
         /**
          * The delete command 
          */
         $this['command.delete'] = function($c) {
-            $command = new DeleteCommand('delete');
-            $command->setContainer($c);
-            return $command;
-        };
-        
+                    $command = new DeleteCommand('delete');
+                    $command->setContainer($c);
+                    return $command;
+                };
+
         $this['command.init'] = function($c) {
-            $command = new \devmx\ChannelWatcher\Command\InitCommand('init');
-            $command->setContainer($c);
-            return $command;
-        };
-        
+                    $command = new \devmx\ChannelWatcher\Command\InitCommand('init');
+                    $command->setContainer($c);
+                    return $command;
+                };
+
         /**
          * The whole application 
          */
         $this['application'] = function($c) {
-          $app = new \Symfony\Component\Console\Application($c['name'], $c['version']);
-          $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init']));
-          //as of here, the app is responsible for error handling
-          if($c['debug']) {
-              error_reporting(-1);
-              $app->setCatchExceptions(false);
-          } else {
-              error_reporting(0);
-          }
-          return $app;
-        };
+                    $app = new \Symfony\Component\Console\Application($c['name'], $c['version']);
+                    $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init']));
+                    //as of here, the app is responsible for error handling
+                    if ($c['debug']) {
+                        error_reporting(-1);
+                        $app->setCatchExceptions(false);
+                    } else {
+                        error_reporting(0);
+                    }
+                    return $app;
+                };
     }
+
 }
 
 ?>

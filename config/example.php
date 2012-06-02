@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>
@@ -45,13 +46,13 @@ $c['ts3']['vserver.port'] = 9987;
  * The time after which channels should be deleted 
  */
 $c['watcher']['time_to_live'] = array(
-    'years' => 0,
-    'months' => 0,
-    'weeks' => 0,
-    'days' => 0,
-    'hours' => 0,
-    'minutes' => 0,
-    'seconds' => 0,
+    'years' =>      0,
+    'months'=>      0,
+    'weeks' =>      0,
+    'days'  =>      0,
+    'hours' =>      0,
+    'minutes' =>    0,
+    'seconds' =>    0,
 );
 
 /**
