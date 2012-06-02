@@ -60,6 +60,7 @@ class DeleteCommand extends ProfileDependentCommand {
             
         $out->writeln('going to delete the following channels:');
         $this->runPrintUnused($out);
+        $out->write($this->getDisclaimer());
 
         if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>Are you sure you want to delete this channels (y/N)?</question> ', false)) {
             $out->writeln('deleting...');
@@ -77,6 +78,13 @@ class DeleteCommand extends ProfileDependentCommand {
         $args = array('config'=>$this->c['profile']);
         $input = new \Symfony\Component\Console\Input\ArrayInput($args);
         $cmd->run($input, $out);
+    }
+    
+    protected function getDisclaimer() {
+        return <<<EOF
+Please make sure that there are no channels showed in the list that should not be deleted.
+We take ABSOLUTELY NO WARRANTY for accidentaly deleted channels.
+EOF;
     }
 }
 
