@@ -16,29 +16,37 @@
  * along with the Teamspeak3-ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-namespace devmx\ChannelWatcher\Rule;
-use devmx\ChannelWatcher\ChannelTree;
+namespace devmx\ChannelWatcher;
 
 /**
- *
+ * TODO: replace this with node implementation
  * @author drak3
  */
-class SaveParentRule implements RuleInterface
+class ChannelTree
 {
-    public function filter(array $list) {
-        $channels = new ChannelTree($list);
-        foreach($list as $cid => $channel) {
-            if($this->channelHasSaveChild($channel, $channels)) {
-                $list[$cid]['__delete'] = false;
-            }
-        }
-        return $list;
+    protected $channels;
+    
+    public function __construct(array $channels) {
+        $this->channels = $channels;
     }
     
-    protected function channelHasSaveChild(array $channel, $channels) {
-        return $channels->channelHasChildWith($channel['cid'], function($channel) {
-            return $channel['__delete'] === false;
-        });
+    public function channelHasChildWith($cid, $predicate) {
+        foreach($this->getChildsOf($cid) as $child) {
+            if($predicate($child) || $this->channelHasChildWith( $child['cid'], $predicate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function getChildsOf($cid) {
+        $ret = array();
+        foreach($this->channels as $channel) {
+            if($channel['pid'] === $cid) {
+                $ret[] = $channel;
+            }
+        }
+        return $ret;
     }
 }
 

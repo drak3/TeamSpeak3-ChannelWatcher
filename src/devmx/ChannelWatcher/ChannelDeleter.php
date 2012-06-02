@@ -83,6 +83,24 @@ class ChannelDeleter
         return $this->filter($ids);
     }
     
+    public function willDeleteNonEmptyChannel(\DateInterval $emptyFor, \DateTime $now=null) {
+        $ids = $this->getIdsToDelete($emptyFor, $now);
+        $channels = $this->query->channelList()->toAssoc('cid');
+        foreach($ids as $cid) {
+            if($this->channelHasClients($channels[$cid], $channels)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    protected function channelHasClients(array $channel, array $channels) {
+        $tree = new ChannelTree($channels);
+        return($channel['total_clients'] > 0 || $tree->channelHasChildWith($channel['cid'], function($channel){
+            $channel['total_clients'] > 0;
+        }));
+    }
+    
     public function delete(\DateInterval $emptyFor, $force=false, \DateTime $now = null) {
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
         $list = $this->query->channelList();

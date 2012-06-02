@@ -43,30 +43,29 @@ class DeleteCommand extends ProfileDependentCommand
         $deleteNonEmpty = $in->getOption('delete-non-empty');
         
         $time = $this->c['watcher']['delete_time'];
+        $deleter = $this->c['watcher']['deleter'];
         
-        if($this->c['watcher']['deleter']->getIDsToDelete($time) === array()) {
+        if($deleter->getIDsToDelete($time) === array()) {
             $out->writeln('Nothing to delete...');
             return 0;
-        }       
+        }
+        
+        if($deleter->willDeleteNonEmptyChannel($time) && !$deleteNonEmpty) {
+            $out->writeln('<error>Some of the channels to delete have clients in it, please make sure the deletion is valid and rerun with --delete-non-empty</error>');
+            return 1;
+        }
             
         $out->writeln('going to delete the following channels:');
         $this->runPrintUnused($out);
 
         if($force || $this->getHelper('dialog')->askConfirmation($out, '<question>Are you sure you want to delete this channels (y/N)?</question> ', false)) {
             $out->writeln('deleting...');
-            if($deleteNonEmpty) {
-                $this->c['watcher']['deleter']->delete($time, true);
-            } else {
-                try{
-                    $this->c['watcher']['deleter']->delete($time, false);
-                } catch(\devmx\ChannelWatcher\Deleter\ChannelNotEmptyException $e) {
-                    $out->writeln(sprintf('<error>Cannot delete non empty channel with id %s. Make sure the deletion is correct and rerun with --delete-non-empty', $e->getResponse()->getCommand()->getParameter('cid')));
-                }                
-            }            
+            $deleter->delete($time, true);
         } else {
             $out->writeln('aborting');
+            return 1;
         }
-        
+        return 0;
     }
     
     
