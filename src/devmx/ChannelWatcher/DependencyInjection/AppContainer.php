@@ -50,6 +50,18 @@ class AppContainer extends \Pimple
          */
         $this['ts3'] = new \devmx\Teamspeak3\SimpleContainer();
         
+        $this['ts3']['debug'] = function($c) use ($that) {
+            return $that['debug'];
+        };
+        
+        $this['ts3']['query.transport.decorators']['order'] = function($c) use ($that) {
+            if($that['debug']) {
+                return array('debugging', 'caching.in_memory', 'profiling');
+            } else {
+                return array('caching.in_memory');
+            }
+        };
+        
         $this['watcher'] = new WatcherContainer();
                 
         $this['watcher']['ts3.transport'] = function() use ($that) {
@@ -63,7 +75,7 @@ class AppContainer extends \Pimple
         /**
          * The query.transport is preconfigured so it is logged in and on the right server on use 
          */
-        $this['ts3']['query.transport'] = $this['ts3']->share($this['ts3']->extend('query.transport.undecorated', function($transport, $c) {
+        $this['ts3']['query.transport'] = $this['ts3']->share($this['ts3']->extend('query.transport', function($transport, $c) {
             $transport->connect();
             if(isset($c['login.name']) && $c['login.name'] !== '') {
                 $transport->query('login', array('client_login_name'=>$c['login.name'], 'client_login_password' =>$c['login.pass']));
@@ -71,7 +83,7 @@ class AppContainer extends \Pimple
             $transport->query('use', array('port'=>$c['vserver.port']), array('virtual'));
             return $transport;
         }));
-        
+                
         /**
          * The table name for the dbal storage
          */

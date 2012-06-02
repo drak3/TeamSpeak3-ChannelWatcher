@@ -27,5 +27,7 @@ $c['debug'] = false;
 
 $c['root_dir'] = __DIR__;
 
-$c['application']->run();
+$app = $c['application'];
+$app->setAutoExit(false);
+$app->run();
 ?>

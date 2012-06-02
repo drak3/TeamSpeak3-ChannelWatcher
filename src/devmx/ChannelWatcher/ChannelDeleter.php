@@ -132,7 +132,7 @@ class ChannelDeleter
         if($this->rules === array()) {
             return $ids;
         }
-        $channelList = $this->query->channelList(true, true , true , true , true)->toAssoc('cid');
+        $channelList = $this->query->channelList()->toAssoc('cid');
         foreach($channelList as $id => $channel) {
             if(  in_array( $id, $ids )) {
                 $channelList[$id]['__delete'] = true;
