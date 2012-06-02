@@ -19,6 +19,7 @@
  * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
+
 use devmx\ChannelWatcher\DependencyInjection\AppContainer;
 
 //we want to catch the early errors, as they are not handled by the application

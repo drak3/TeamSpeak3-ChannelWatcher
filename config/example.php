@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>

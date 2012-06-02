@@ -1,4 +1,25 @@
 <?php
+
+/**
+ * This file is part of the Teamspeak3 ChannelWatcher.
+ * Copyright (C) 2012 drak3 <drak3@live.de>
+ * Copyright (C) 2012 Maxe <maxe.nr@live.de>
+ * 
+ * The Teamspeak3 ChannelWatcher is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The Teamspeak3 ChannelWatcher is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 namespace devmx\ChannelWatcher;
 use devmx\Teamspeak3\Query\Transport\TransportInterface;
 use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
@@ -83,20 +104,38 @@ class ChannelDeleter
         return $this->filter($ids);
     }
     
-    public function delete(\DateInterval $emptyFor, \DateTime $now = null) {
+    public function willDeleteNonEmptyChannel(\DateInterval $emptyFor, \DateTime $now=null) {
+        $ids = $this->getIdsToDelete($emptyFor, $now);
+        $channels = $this->query->channelList()->toAssoc('cid');
+        foreach($ids as $cid) {
+            if($this->channelHasClients($channels[$cid], $channels)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    protected function channelHasClients(array $channel, array $channels) {
+        $tree = new ChannelTree($channels);
+        return($channel['total_clients'] > 0 || $tree->channelHasChildWith($channel['cid'], function($channel){
+            $channel['total_clients'] > 0;
+        }));
+    }
+    
+    public function delete(\DateInterval $emptyFor, $force=false, \DateTime $now = null) {
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
         $list = $this->query->channelList();
         $currentIDs = array_keys($list->toAssoc('cid'));
         foreach($toDelete as $id) {
             if(in_array($id, $currentIDs)){
-                $this->deleteChannel($id);
+                $this->deleteChannel($id, $force);
             }
         }
     }
     
-    protected function deleteChannel($id) {
+    protected function deleteChannel($id, $force) {
         try {
-            $this->query->channelDelete( $id, false );
+            $this->query->channelDelete( $id, $force );
         } catch(\devmx\Teamspeak3\Query\Exception\CommandFailedException $e) {
             if($e->getResponse()->getErrorID() === 772) {
                 //catching the cause that there was someone in the channel we tried to delete
@@ -114,7 +153,7 @@ class ChannelDeleter
         if($this->rules === array()) {
             return $ids;
         }
-        $channelList = $this->query->channelList(true, true , true , true , true)->toAssoc('cid');
+        $channelList = $this->query->channelList()->toAssoc('cid');
         foreach($channelList as $id => $channel) {
             if(  in_array( $id, $ids )) {
                 $channelList[$id]['__delete'] = true;
