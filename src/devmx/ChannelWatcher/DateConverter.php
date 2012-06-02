@@ -27,6 +27,17 @@ namespace devmx\ChannelWatcher;
  * @author drak3
  */
 class DateConverter {
+    
+    
+    public static function convertIntervalToSeconds(\DateInterval $interval) {
+         return ($interval->s)
+         + ($interval->i * 60)
+         + ($interval->h * 60 * 60)
+         + ($interval->d * 60 * 60 * 24)
+         + ($interval->m * 60 * 60 * 24 * 30)
+         + ($interval->y * 60 * 60 * 24 * 365);
+
+    }
 
     protected static $dateIntervalProperties = array(
         'years' => 'y',

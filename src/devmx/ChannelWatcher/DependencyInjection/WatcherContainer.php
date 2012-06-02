@@ -25,6 +25,7 @@ namespace devmx\ChannelWatcher\DependencyInjection;
 use devmx\ChannelWatcher\ChannelCrawler;
 use devmx\ChannelWatcher\DateConverter;
 use devmx\ChannelWatcher\ChannelDeleter;
+use devmx\ChannelWatcher\Watcher\CrawlingWatcher;
 
 /**
  *
@@ -57,6 +58,12 @@ class WatcherContainer extends \Pimple {
         $this['crawler'] = $this->share(function($c) {
                     return new ChannelCrawler($c['ts3.transport'], $c['storage'], $c['ignore_query_clients']);
                 });
+                
+        $this['watcher'] = $this->share(function($c) {
+            return new CrawlingWatcher($c['crawler'], $c['watcher.crawl_time']);
+        });
+        
+        $this['watcher.crawl_time'] = new \DateInterval('PT5S');
 
         /**
          * If query clients should be ignored when checking if a channel is empty 
