@@ -89,17 +89,8 @@ class ChannelCrawler {
             $channels = $this->currentChannels;
         }
         foreach ($channels as $channel) {
-            if ($this->canAccess($channel)) {
-                $storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
-            }
+            $storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
         }
-    }
-
-    protected function canAccess($channel) {
-        if ($this->accessControler instanceof AccessControlerInterface) {
-            return $this->accessControler->canAccess($channel['cid']);
-        }
-        return true;
     }
 
     protected function hasClients($channel, $allChannels) {

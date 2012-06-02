@@ -103,27 +103,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
            4 => $time
         ), $this->storage->getChannels());
     }
-    
-    public function testCrawl_accessControlerAware() {
-        $this->crawler  = new ChannelCrawler($this->query, false);
-        $accessControler = new AccessControl\ListBasedControler(array(1));
-        $this->crawler->setControlList($accessControler);
-        $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
-        $this->query->addResponse($r,2);
-        $this->query->connect();
-        
-        //first run
-        $this->crawler->crawl();
-        $time = new \DateTime();
-        $time->setTimestamp(234);
-        $this->crawler->updateStorage($this->storage,$time);
-        $this->assertEquals(array(
-            2 => $time,
-            3 => $time,
-            4 => $time,
-        ), $this->storage->getChannels());
-    }
-        
+         
     protected function getChannelListItems() {
         return array(
           array(
