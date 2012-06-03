@@ -1,7 +1,11 @@
 Configuration
 =============
 
-You will find any configuration parameters of ``example.php`` in ``config/`` described here.
+The configuration is a plain php file where every aspect of the application can be configured.
+In this document the most important configuration options are covered. For a more technical overview see the `Technical Overview`_, for a complete list of all configuration options see `the source code`_
+
+.. _the source code: https://github.com/devMX/TeamSpeak3-ChannelWatcher/tree/bfe40d90f9ab1bc9a1ff6cb0ba9501fbdc726338/src/devmx/ChannelWatcher/DependencyInjection
+.. _Technical Overview: technical-overview
 
 Connection
 ----------
