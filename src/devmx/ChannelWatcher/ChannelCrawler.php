@@ -91,6 +91,7 @@ class ChannelCrawler {
         foreach ($channels as $channel) {
             $storage->update($channel['cid'], $this->hasClients($channel, $channels), $time);
         }
+        $storage->updateLastCrawlTime($time);
     }
 
     protected function hasClients($channel, $allChannels) {

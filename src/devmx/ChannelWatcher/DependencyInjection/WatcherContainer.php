@@ -50,7 +50,14 @@ class WatcherContainer extends \Pimple {
 
         $this['delete_time'] = function($c) {
                     return DateConverter::convertArrayToInterval($c['time_to_live']);
-                };
+        };
+        
+        /**
+         * The number of crawls that must be performed per hour
+         * Defaults to 2 crawls per hour (= 1 crawl each half an hour)
+         * If there are less crawls, the data is considered invalid and an error is triggered.
+         */
+        $this['minimum_crawls_per_hour'] = 2;
 
         /**
          * The server crawler 

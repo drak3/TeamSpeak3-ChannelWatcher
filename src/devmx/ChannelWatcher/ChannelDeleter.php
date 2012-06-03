@@ -123,7 +123,10 @@ class ChannelDeleter {
         }));
     }
     
-    public function delete(\DateInterval $emptyFor, $force=false, \DateTime $now = null) {
+    public function delete(\DateInterval $emptyFor, $minimumCrawlsPerHour=null, $force=false, \DateTime $now = null) {
+        if($minimumCrawlsPerHour !== null) {
+            $this->checkDataValidity($emptyFor, $minimumCrawlsPerHour, $now);
+        }        
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
         $list = $this->query->channelList();
         $currentIDs = array_keys($list->toAssoc('cid'));
@@ -171,6 +174,16 @@ class ChannelDeleter {
             }
         }
         return $filteredIds;
+    }
+    
+    public function checkDataValidity(\DateInterval $crawlsSince, $minimumCrawlsPerHour, $now=null) {
+        $crawls = $this->storage->getCrawlDatesOccuredIn($crawlsSince , $now);
+        $seconds = DateConverter::convertIntervalToSeconds($crawlsSince);
+        $hours = $seconds / 60 * 60;
+        $crawlsPerHour = count($crawls) / $hours;
+        if($crawlsPerHour < $minimumCrawlsPerHour) {
+            throw new Deleter\NotEnoughCrawlsException(sprintf('There were just %.1f crawls per hour. At least %.1f crawls per hour are needed', $crawlsPerHour, $minimumCrawlsPerHour));
+        }
     }
 
 }

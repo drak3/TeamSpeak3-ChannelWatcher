@@ -30,7 +30,7 @@ class DbalContainer extends \Pimple {
 
     public function __construct() {
 
-        //depends on table_name
+        //depends on prefix
 
         /**
          * The db connection
@@ -51,7 +51,7 @@ class DbalContainer extends \Pimple {
          * The DbalStorage that provides a simple interface to the channel stats 
          */
         $this['storage'] = $this->share(function($c) {
-                    return new \devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage($c['connection'], $c['table_name']);
+                    return new \devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage($c['connection'], $c['prefix']);
                 });
     }
 

@@ -23,7 +23,7 @@
 namespace devmx\ChannelWatcher\Storage;
 
 /**
- *
+ * @deprecated
  * @author drak3
  */
 class InMemoryStorage implements StorageInterface {
@@ -71,6 +71,14 @@ class InMemoryStorage implements StorageInterface {
 
     public function getChannels() {
         return $this->channels;
+    }
+    
+    public function updateLastCrawlTime($now = null) {
+        
+    }
+    
+    public function getCrawlDatesOccuredIn(\DateInterval $time, \DateTime $now = null) {
+        
     }
 
 }

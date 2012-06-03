@@ -31,8 +31,8 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class DataBaseManager {
 
-    public function createTable(Connection $c, $tableName) {
-        $schema = $this->getSchema($tableName);
+    public function createTable(Connection $c, $prefix) {
+        $schema = $this->getSchema($prefix);
         $currentSchema = clone $c->getSchemaManager()->createSchema();
         $sql = $currentSchema->getMigrateToSql($schema, $c->getDatabasePlatform());
         foreach ($sql as $statement) {
@@ -49,13 +49,26 @@ class DataBaseManager {
         }
     }
 
-    public function getSchema($tablename) {
+    public function getSchema($prefix) {
         $schema = new Schema();
-        $table = $schema->createTable($tablename);
-        $table->addColumn('id', 'integer', array('unsinged' => true));
-        $table->addColumn('last_seen', 'datetime');
-        $table->setPrimaryKey(array('id'));
+        $channelTable = $schema->createTable(self::getChannelTableName( $prefix ));
+        $channelTable->addColumn('id', 'integer', array('unsinged' => true));
+        $channelTable->addColumn('last_seen', 'datetime');
+        $channelTable->setPrimaryKey(array('id'));
+        
+        $crawlDataTable = $schema->createTable(self::getCrawlDateTableName($prefix));
+        $crawlDataTable->addColumn('id', 'integer', array('unsinged' => true));
+        $crawlDataTable->addColumn('crawl_time', 'datetime');
+        $crawlDataTable->setPrimaryKey(array('id'));
         return $schema;
+    }
+    
+    public static function getChannelTableName($prefix) {
+        return $prefix.'channels';
+    }
+    
+    public static function getCrawlDateTableName($prefix) {
+        return $prefix.'crawl_data';
     }
 
 }

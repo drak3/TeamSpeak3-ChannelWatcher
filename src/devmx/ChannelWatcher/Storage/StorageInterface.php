@@ -40,6 +40,10 @@ interface StorageInterface {
      * @param $time int the time in seconds 
      */
     public function getChannelsEmptyFor(\DateInterval $time, \DateTime $now = null);
+    
+    public function updateLastCrawlTime($now = null);
+    
+    public function getCrawlDatesOccuredIn(\DateInterval $time, \DateTime $now = null);
 }
 
 ?>

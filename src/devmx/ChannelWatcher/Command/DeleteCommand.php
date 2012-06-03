@@ -38,13 +38,15 @@ class DeleteCommand extends ProfileDependentCommand {
         parent::configure();
         $this
                 ->addOption('force', 'f', InputOption::VALUE_NONE)
-                ->addOption('delete-non-empty', null, InputOption::VALUE_NONE);
+                ->addOption('delete-non-empty', null, InputOption::VALUE_NONE)
+                ->addOption('trust-crawls', null, InputOption::VALUE_NONE);
     }
 
     public function execute(InputInterface $in, OutputInterface $out) {
         $force = $in->getOption('force');
         $deleteNonEmpty = $in->getOption('delete-non-empty');
-
+        $trustCrawls = $in->getOption('trust-crawls');
+        
         $time = $this->c['watcher']['delete_time'];
         $deleter = $this->c['watcher']['deleter'];
         
@@ -53,6 +55,16 @@ class DeleteCommand extends ProfileDependentCommand {
             return 0;
         }
         
+        if(!$trustCrawls) {
+            try {
+                $deleter->checkDataValidity($time, $this->c['watcher']['minimum_crawls_per_hour']);
+            } catch(\devmx\ChannelWatcher\Deleter\NotEnoughCrawlsException $e) {
+                $out->writeln('<error>'.$e->getMessage().'</error>');
+                $out->writeln('Rerun with --trust-crawls if you want to delete based on this insufficent data');
+                return 1;
+            }
+        }
+               
         if($deleter->willDeleteNonEmptyChannel($time) && !$deleteNonEmpty) {
             $out->writeln('<error>Some of the channels to delete have clients in it, please make sure the deletion is valid and rerun with --delete-non-empty</error>');
             return 1;

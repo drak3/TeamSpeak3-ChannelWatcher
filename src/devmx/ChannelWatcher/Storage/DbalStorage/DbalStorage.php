@@ -32,10 +32,12 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
 
     protected $connection;
     protected $tableName;
+    protected $crawlDateTableName;
 
-    public function __construct(Connection $c, $tablename) {
+    public function __construct(Connection $c, $prefix) {
         $this->connection = $c;
-        $this->tableName = $c->quoteIdentifier($tablename);
+        $this->tableName = $c->quoteIdentifier(DataBaseManager::getChannelTableName( $prefix ));
+        $this->crawlDateTableName = $c->quoteIdentifier(DataBaseManager::getCrawlDateTableName( $prefix ));
     }
 
     /**
@@ -64,6 +66,15 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
             $update->execute();
         }
     }
+    
+    public function updateLastCrawlTime($now = null) {
+        if($now === null) {
+            $now = new \DateTime('now');
+        }
+        $insertQuery = $this->connection->prepare('INSERT INTO '. $this->crawlDateTableName. ' (crawl_time) VALUES (?)' );
+        $insertQuery->bindValue(1, $now, 'datetime');
+        $insertQuery->execute();
+    }
 
     public function has($id) {
         $statement = $this->connection->prepare('SELECT id FROM ' . $this->tableName . ' WHERE id=?');
@@ -89,6 +100,20 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
                     return (int) $item[0];
                 }, $channels);
         return $channels;
+    }
+    
+    public function getCrawlDatesOccuredIn(\DateInterval $time, \DateTime $now = null) {
+        if ($now === null) {
+            $now = new \DateTime('now');
+        }
+        $query = $this->connection->prepare('SELECT * FROM ' . $this->crawlDateTableName . ' WHERE crawl_time < ?');
+        $query->bindValue(1, $now, 'datetime');
+        $query->execute();
+        $dates = $query->fetchAll(\PDO::FETCH_NUM);
+        $dates = array_map(function($item) {
+                    return (int) $item[0];
+                }, $dates);
+        return $dates;
     }
 
 }

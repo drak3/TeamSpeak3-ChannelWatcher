@@ -91,9 +91,9 @@ class AppContainer extends \Pimple {
         /**
          * The table name for the dbal storage
          */
-        $this['db']['table_name'] = $this->share(function($c) use ($that) {
-                    return 'devmx_ts3_channelwatcher_channels_' . $that['profile'];
-                });
+        $this['db']['prefix'] = $this->share(function($c) use ($that) {
+                    return 'devmx_ts3_channelwatcher_'.$that['profile'].'__';
+        });
 
         /**
          * The channel storage
@@ -144,7 +144,7 @@ class AppContainer extends \Pimple {
          * The database/table creation command 
          */
         $this['command.create_db'] = function($c) {
-                    $command = new CreateDataBaseCommand('db:create_table');
+                    $command = new CreateDataBaseCommand('db:migrate');
                     $command->setContainer($c);
                     return $command;
                 };
