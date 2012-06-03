@@ -60,6 +60,7 @@ class DataBaseManager {
         $crawlDataTable->addColumn('id', 'integer', array('unsinged' => true));
         $crawlDataTable->addColumn('crawl_time', 'datetime');
         $crawlDataTable->setPrimaryKey(array('id'));
+        $crawlDataTable->getColumn('id')->setAutoincrement(true);
         return $schema;
     }
     
