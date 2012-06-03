@@ -30,7 +30,7 @@ class DbalContainer extends \Pimple {
 
     public function __construct() {
 
-        //depends on prefix
+        //depends on prefix and connection.params
 
         /**
          * The db connection
