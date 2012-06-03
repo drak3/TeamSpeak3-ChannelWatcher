@@ -9,7 +9,13 @@
         {
             "package": "doctrine/common",
             "version": "dev-master",
-            "source-reference": "25e7b91a41dda2adfff529a814a4f9f90a30fa62"
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
+        },
+        {
+            "package": "doctrine/common",
+            "version": "dev-master",
+            "source-reference": "3137686dda79d9d46fb69ad05c053d6ad73c182d"
         },
         {
             "package": "doctrine/common",
