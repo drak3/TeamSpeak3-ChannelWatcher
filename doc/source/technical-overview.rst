@@ -67,16 +67,21 @@ The main container is the ``AppContainer`` which aggregates multiple sub-contain
  - The ``db`` container contains object definitions for Doctrine-DBAL related services. It is defined in the ``DbalContainer`` class.
  - The ``watcher`` container contains object definitions for services related to the ``deleter`` and the ``crawler`` It is defined in the ``WatcherContainer`` class.
 
-All container definitions (except of the ``ts3`` container, which is part of the TeamSpeak3-Library) can be found in the \devmx\ChannelWatcher\DependencyInjection namespace
+All container definitions (except of the ``ts3`` container, which is part of the TeamSpeak3-Library) can be found in the ``\devmx\ChannelWatcher\DependencyInjection`` namespace.
 
+Configuration
+~~~~~~~~~~~~~
+The config file does nothing more than changing the preconfigured Pimple container, therefore one can change nearly anything from within the configfile,
+such as using a completely different storage, or even switch a library.
 
 The ChannelCrawler
 ------------------
-to be written...
+As mentioned above, the ChannelCrawler is responsible for filling the storage. It is implemented by the ``\devmx\ChannelWatcher\ChannelCrawler`` class
+and relies on a storage and on TeamSpeak3-Query.
 
 The ChannelWatcher
 ~~~~~~~~~~~~~~~~~~
-to be written...
+The ChannelWatcher is currently just a thin wrapper around the ChannelCrawler: He crawls and sleeps in an infinite loop.
 
 The ChannelDeleter
 ------------------
