@@ -18,5 +18,6 @@ Table of Contents
    getting-started
    configuration
    troubleshooting
+   technical-overview
 
 
