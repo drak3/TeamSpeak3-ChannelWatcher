@@ -66,7 +66,7 @@ $c['watcher']['rule.acl_filter.blacklist'] = array();
  */
 $c['watcher']['rules'] = array(
         // this rule saves all channels that have visited parentes
-        //$c['watcher']['rule.save_childs'],  
+        //$c['watcher']['rule.save_childs'],
         // This rule saves all channels that have visited childs  
         //$c['watcher']['rule.save_parent'],
         // this rule saves channels according to the specified black/whitelist
