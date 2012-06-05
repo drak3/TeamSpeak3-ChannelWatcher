@@ -41,7 +41,6 @@ class InitCommand extends ProfileDependentCommand {
         $createTableCommand = $this->c['command.create_db'];
         $args = array('config' => $this->c['profile']);
         $input = new \Symfony\Component\Console\Input\ArrayInput($args);
-        $createTableCommand->run($input, $out);
         $out->writeln("Creating database table");
         $createTableCommand->run($input, $out);
     }

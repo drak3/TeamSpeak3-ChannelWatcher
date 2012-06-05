@@ -31,6 +31,12 @@ Also be sure that the user has writing permissions on the directory ``storage``
 
     $ chmod -R 640 ./storage
 
+PDOException: could not find driver
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This error is most likely caused by a missing installation of the database driver.
+Try to install the missing packages on your system and enable them in your php.ini.
+(For example on debian you need the package php5-sqlite to run the TeamSpeak3-ChannelWatcher with a SQLite database)
+
 
 Configuration
 -------------
