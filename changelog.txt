@@ -1,0 +1,12 @@
+#########################################
+# TeamSpeak3 ChannelWatcher - Changelog #
+#########################################
+
+! Major Change
++ Add
+- Removal
+~ Minor Change
+* Fix
+
+v1.0.0-beta.2
+* Issue #35: Missing comma in example.php
