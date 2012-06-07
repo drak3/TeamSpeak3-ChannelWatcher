@@ -1,10 +1,10 @@
 #!/bin/bash
 
-cd ../Build
+cd ../Build/TeamSpeak3-ChannelWatcher
 
 rm -rf *
 
-cp -rf ../TeamSpeak3-ChannelWatcher/* .
+cp -rf ../../TeamSpeak3-ChannelWatcher/* .
 
 rm -rf doc
 rm -rf tests
@@ -21,5 +21,7 @@ rm -r .git*
 rm -rf nbproject
 
 read -p "Version:" version
+
+cd ../
 
 zip -r "devMX TeamSpeak3 Webviewer v$version.zip" .

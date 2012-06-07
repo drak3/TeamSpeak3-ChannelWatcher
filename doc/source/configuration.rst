@@ -103,34 +103,33 @@ Rules control the ChannelDeleter's behavior on crawling and deleting channels. F
 To enable a rule simply uncomment (remove the ``//``) the appropriate line.
 
 ``$c['watcher']['rule.save_childs']``
-This rule will save any sub-channel if it parent was visited:
-Consider the following example (* means visited):
+    This rule will save any sub-channel if it parent was visited:
+    Consider the following example (* means visited):
 
-  .. code-block:: text   
- 
-    -überclan *
-        -raid1
-            -healer
+    .. code-block:: text   
+
+        -überclan *
+            -raid1
+                -healer
     
 With the save_childs rule enabled, the raid1 and the healer channel won't be deleted
     
 ``$c['watcher']['rule.save_parent']``
+    This rule will save the parents of a channel if the channel itself was visited
+    Considering the example from above, but this time just the "healer" channel is visited:
 
-This rule will save the parents of a channel if the channel itself was visited
-Considering the example from above, but this time just the "healer" channel is visited:
+    .. code-block:: text
 
-  .. code-block:: text
+        -überclan
+            -raid1
+                -healer*
 
-    -überclan
-        -raid1
-            -healer*
-            
-With the save_parent rules enabled, the "überclan" and the "raid1" channel will be saved
+    With the save_parent rules enabled, the "überclan" and the "raid1" channel will be saved
     
-$c['watcher']['rule.acl_filter']
+``$c['watcher']['rule.acl_filter']``
     This rule enables the blacklist. To learn more about blacklists see :ref:`blacklist`.
     
-$c['watcher']['rule.save_spacer']
+``$c['watcher']['rule.save_spacer']``
     This rule saves all spacers from being deleted
 
 Database

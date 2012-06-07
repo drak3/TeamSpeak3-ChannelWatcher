@@ -11,7 +11,7 @@ The deleter uses this data to savely remove unused channels.
 Installation
 ------------
 Simply download and unpack the archive provided here_ and make sure that all prerequisites are met:
- - php version greater than 5.3.7
+ - php version greater than 5.3.7 (details for upgrading see :ref:`update-php`)
  - enabled fsockopen()
  - ability to run php on the command line 
 
