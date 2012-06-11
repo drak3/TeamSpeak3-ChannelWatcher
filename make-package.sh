@@ -20,6 +20,9 @@ rm -r .travis*
 rm -r .git*
 rm -rf nbproject
 
+#delete this script too
+rm make-package.sh
+
 read -p "Version:" version
 
 cd ../
