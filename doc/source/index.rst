@@ -19,5 +19,6 @@ Table of Contents
    configuration
    troubleshooting
    technical-overview
+   releases
 
 
