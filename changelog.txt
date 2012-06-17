@@ -8,6 +8,9 @@
 ~ Minor Change
 * Fix
 
+v1.0.0
+* removed build script from build (thanks to Ar2rJke from forum.teamspeak.com for reporting)
+
 v1.0.0-beta.2
 * Issue #35: Missing comma in example.php
 * db:migrate command was run twice when running the init command. This caused problems with SQLite databases
