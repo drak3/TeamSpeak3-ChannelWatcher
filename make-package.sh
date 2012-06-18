@@ -1,10 +1,20 @@
 #!/bin/bash
 
-cd ../Build/TeamSpeak3-ChannelWatcher
+if [ -d build/ ]
+then
+mkdir build
+fi
 
-rm -rf *
+cd build/
 
-cp -rf ../../TeamSpeak3-ChannelWatcher/* .
+read -p "Version:" VERSION
+
+if [-d $VERSION ]
+then
+mkdir $VERSION
+fi
+
+cp -rf ../../* .
 
 rm -rf doc
 rm -rf tests
@@ -23,7 +33,6 @@ rm -rf nbproject
 #delete this script too
 rm make-package.sh
 
-read -p "Version:" version
 
 cd ../
 
