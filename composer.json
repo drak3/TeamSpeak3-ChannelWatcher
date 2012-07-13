@@ -1,7 +1,7 @@
 
 {
     "require": {
-        "devmx/TeamSpeak3-Library-dev": "master-dev",
+        "devmx/TeamSpeak3-Library": "master-dev",
         "symfony/console": "master-dev",
         "doctrine/dbal": ">=2.2.1",
         "pimple/pimple": "1.0.*",
@@ -13,7 +13,8 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/devMX/TeamSpeak3-Library-dev"
+            "url": "https://github.com/devMX/TeamSpeak3-Library"
         }
-    ]
+    ],
+    "minimum-stability": "dev"
 }
