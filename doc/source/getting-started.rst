@@ -45,6 +45,12 @@ Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
 The TeamSpeak3-ChannelWatcher can run with nearly every major relational database as a backend.
 The easyest way to get things running is to simply enable the SQLite configuration in the config file.
+
+.. Warning::
+    The database IS NOT identical to the database used by the TeamSpeak3-Server. 
+     
+    The TeamSpeak3 ChannelWatcher maintains it own database, so normally there is no need to edit the default settings of the sqlite database.
+
 For other databases see :doc:`The configuration documentation <configuration>`.
 
 The first run
@@ -69,6 +75,8 @@ Deleting channels
 
 To delete channels simply run ``php app.php delete <config_name>``. This will print out all channels that will be deleted and ask for a confirmation.
 Please make sure there are no channels listed which should not be deleted, we give no warranty for accidentally deleted channels.
+Note that to be able to delete channels the TeamSpeak3 ChannelWatcher needs enough data. This data must be obtained by regulary running ``php app.php crawl <config_name>``
+There will be a warning if there are not enough crawls.
 
 Further documentation
 ---------------------
