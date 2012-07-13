@@ -2,7 +2,7 @@
 
 namespace devmx\ChannelWatcher;
 use devmx\Teamspeak3\Query\Command;
-use devmx\Teamspeak3\Query\CommandResponse;
+use devmx\Teamspeak3\Query\Response\CommandResponse;
 
 /**
  * Test class for ChannelDeleter.

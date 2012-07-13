@@ -2,7 +2,7 @@
 namespace devmx\ChannelWatcher;
 use devmx\ChannelWatcher\Storage\InMemoryStorage;
 use devmx\Teamspeak3\Query\Transport\QueryTransportStub;
-use devmx\Teamspeak3\Query\CommandResponse;
+use devmx\Teamspeak3\Query\Response\CommandResponse;
 use devmx\Teamspeak3\Query\Command;
 
 require_once dirname( __FILE__ ) . '/../../../../src/devmx/ChannelWatcher/ChannelCrawler.php';
