@@ -115,7 +115,8 @@ class AppContainer extends \Pimple {
          * The profile loader is a function that tries to include the specific configuration 
          */
         $this['profile.loader'] = function($c) {
-                    return function() use ($c) {
+                    //we cannot use $c here directly because of https://bugs.php.net/bug.php?id=54367 (probably)
+                    return function($c) {
                                 if (file_exists($c['profile.path']) && is_readable($c['profile.path'])) {
                                     include($c['profile.path']);
                                 } else {
