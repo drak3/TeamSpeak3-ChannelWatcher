@@ -4,8 +4,8 @@
         {
             "package": "devmx/Teamspeak3-Library",
             "version": "dev-master",
-            "source-reference": "fe070d84fcfc9ee742072e186f45ece3c106a99b",
-            "commit-date": "1342179325"
+            "source-reference": "571c4e2a09cff42f4679556ccba1b0c197135187",
+            "commit-date": "1342207317"
         },
         {
             "package": "doctrine/common",
@@ -40,14 +40,8 @@
         {
             "package": "symfony/console",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/console",
-            "version": "dev-master",
-            "source-reference": "1438f833e8dd2fcc07683fbfe264d2977e444129",
-            "commit-date": "1342170356"
+            "source-reference": "dc021a50834dcf2a7cb65f38f98d570f6eff3f38",
+            "commit-date": "1342207366"
         }
     ],
     "packages-dev": null,
