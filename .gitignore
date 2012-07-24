@@ -5,3 +5,4 @@ storage/
 nbproject/
 config/local.php
 doc/build/
+build/
