@@ -29,9 +29,8 @@ that other features are more important, we'll probably change the roadmap.
 1.0.0
 ~~~~~
 
-It is planned to release one more beta version (1.0.0-beta.3), and if no bugs occur a rc.1 which will then hopefully be the 1.0.0 release.
-(If any bugs occur we will of course release more betas/rcs)
-
+The current 1.0 release is 1.0.1, it is planned to support this version until 1.2.0 is released.
+    
 1.1.0
 ~~~~~
 
