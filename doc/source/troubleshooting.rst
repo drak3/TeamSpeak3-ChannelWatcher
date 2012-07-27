@@ -19,11 +19,11 @@ Errors
 
 Segfault on crawling (Updating PHP-Version)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you receive a segfault-error on trying to run the TeamSpeak3 ChannelWatcher, you have a too old PHP version prior to 5.3.7.
-Please note that at least PHP 5.3.7 is required to run the ChannelWatcher. **All earlier PHP versions** are not supported.
+If you receive a segfault-error on trying to run the TeamSpeak3 ChannelWatcher, you have a too old PHP version prior to 5.3.3.
+Please note that at least PHP 5.3.3 is required to run the ChannelWatcher. **All earlier PHP versions** are not supported.
 
-To update do a current php-version check your current version via ``php -v`` first. If it's lower than 5.3.7 you need to upgrade your PHP-Version.
-On debian based systems run ``apt-get update && apt-get upgrade`` first and try to upgrade the version automatically. If the version is still lower than 5.3.7 after that, you need to add the `dotdeb-repo`_ to get a newer version:
+To update do a current php-version check your current version via ``php -v`` first. If it's lower than 5.3.3 you need to upgrade your PHP-Version.
+On debian based systems run ``apt-get update && apt-get upgrade`` first and try to upgrade the version automatically. If the version is still lower than 5.3.3 after that, you need to add the `dotdeb-repo`_ to get a newer version:
 
 .. code-block:: bash
 
@@ -32,7 +32,7 @@ On debian based systems run ``apt-get update && apt-get upgrade`` first and try 
     $ wget http://dotdeb.org/dotdeb.gpg
     $ cat dotdeb.gpg | sudo apt-key add -
 
-After that run again ``apt-get update``. Once finished run ``apt-get upgrade`` and ``apt-get dist-upgrade``. If you have installed the updates check your PHP-Version again via ``php -v``. It should now be greater than 5.3.7 (5.3.13). There should be any segfault error anymore.
+After that run again ``apt-get update``. Once finished run ``apt-get upgrade`` and ``apt-get dist-upgrade``. If you have installed the updates check your PHP-Version again via ``php -v``. It should now be greater than 5.3.3 (5.3.13).
 
 
 SQLite: storage not writable
