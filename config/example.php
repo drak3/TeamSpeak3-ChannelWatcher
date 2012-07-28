@@ -38,6 +38,7 @@ $c['ts3']['vserver.port'] = 9987;
 
 /**
  * Login credentials 
+ * Uncomment and fill out if needed
  */
 //$c['ts3']['login.name'] = '';
 //$c['ts3']['login.pass'] = '';
@@ -46,11 +47,11 @@ $c['ts3']['vserver.port'] = 9987;
  * The time after which channels should be deleted 
  */
 $c['watcher']['time_to_live'] = array(
-    'years' =>      0,
-    'months'=>      0,
-    'weeks' =>      0,
-    'days'  =>      0,
-    'hours' =>      0,
+    'years'   =>    0,
+    'months'  =>    0,
+    'weeks'   =>    0,
+    'days'    =>    0,
+    'hours'   =>    0,
     'minutes' =>    0,
     'seconds' =>    0,
 );
@@ -62,7 +63,8 @@ $c['watcher']['time_to_live'] = array(
 $c['watcher']['rule.acl_filter.blacklist'] = array();
 
 /**
- * All rules that should be applied before deleting the channels 
+ * All rules that should be applied before deleting the channels
+ * Uncomment (remove the //) the rules to use. (E.g, the 'rule.acl_filter' is enabled by default.
  */
 $c['watcher']['rules'] = array(
         // this rule saves all channels that have visited parentes
@@ -70,13 +72,26 @@ $c['watcher']['rules'] = array(
         // This rule saves all channels that have visited childs  
         //$c['watcher']['rule.save_parent'],
         // this rule saves channels according to the specified black/whitelist
-        //$c['watcher']['rule.acl_filter'],
+        $c['watcher']['rule.acl_filter'],
         // this rules saves all spacers
         //$c['watcher']['rule.save_spacer'],
 );
 
 //*********** Database Configuration ***********\\
+// By default a SQLite Database is used. Normally there is no need to change anything here.
+// Note that the here configured database is just used by the ChannelWatcher and MUST NOT be identical to the database used by the TeamSpeak3-Server
 // See http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html for configuration details
+
+
+/**
+ * Comment the following out to use another database than SQLITE as database 
+ */
+// /*
+$c['db']['connection.params'] = array(
+  'driver' => 'pdo_sqlite',
+  'path' => $c['storagedir'].$c['profile'].'_db.sqlite',
+);
+// */
 
 /**
  * Uncomment the following to use MYSQL as database 
@@ -94,15 +109,6 @@ $c['watcher']['rules'] = array(
   );
  */
 
-/**
- * Uncomment the following to use SQLITE as database 
- */
-/*
-  $c['db']['connection.params'] = array(
-  'driver' => 'pdo_sqlite',
-  'path' => $c['storagedir'].$c['profile'].'_db.sqlite',
-  );
- */
 
 /**
  * Uncomment the following lines to use POSTGRESQL as database 
