@@ -1,5 +1,5 @@
 {
-    "hash": "8e403b45e914df751bd740425eb71645",
+    "hash": "18e4990415ee3d29408ecdcd7ba88c4a",
     "packages": [
         {
             "package": "devmx/Teamspeak3-Library",
@@ -9,54 +9,28 @@
         },
         {
             "package": "doctrine/common",
-            "version": "dev-master",
-            "alias-pretty-version": "2.3.x-dev",
-            "alias-version": "2.3.9999999.9999999-dev"
-        },
-        {
-            "package": "doctrine/common",
-            "version": "dev-master",
-            "source-reference": "ee3aeae972386d761d8358bab3d67e246f4261ba",
-            "commit-date": "1342078708"
+            "version": "2.2.2"
         },
         {
             "package": "doctrine/dbal",
-            "version": "dev-master",
-            "source-reference": "00ac50c0e721b1dcbcc4924938ab648e28feb4cf",
-            "commit-date": "1341891672"
+            "version": "2.2.2"
         },
         {
             "package": "pimple/pimple",
-            "version": "dev-master",
-            "alias-pretty-version": "1.0.x-dev",
-            "alias-version": "1.0.9999999.9999999-dev"
-        },
-        {
-            "package": "pimple/pimple",
-            "version": "dev-master",
-            "source-reference": "d2cfa2f02f50abef65c238747c753a5f6786f6be",
-            "commit-date": "1341139100"
+            "version": "1.0.0"
         },
         {
             "package": "symfony/console",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/console",
-            "version": "dev-master",
-            "source-reference": "v2.1.0-BETA3",
-            "commit-date": "1342347231"
+            "version": "v2.1.0-BETA4"
         }
     ],
     "packages-dev": null,
     "aliases": [
 
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
         "devmx/teamspeak3-library": 20,
-        "symfony/console": 20
+        "symfony/console": 10
     }
 }
