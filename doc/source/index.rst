@@ -20,5 +20,6 @@ Table of Contents
    troubleshooting
    technical-overview
    releases
+   write-your-own-rule
 
 

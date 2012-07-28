@@ -21,7 +21,7 @@ The TeamSpeak3-ChannelWatcher is a relatively simple App that uses a lot of 3rd-
 
  - `The TeamSpeak3-Library`_ for accessing the TeamSpeak3-Query.
 
-All these libraries are tied together by `composer`_ an dependency manager for php
+All these libraries are tied together by `composer`_ an dependency manager for php.
 
 .. _The Doctrine DBAL database abstraction layer: http://www.doctrine-project.org/projects/dbal.html
 .. _The Symfony Console Component: http://symfony.com/doc/current/components/console.html
@@ -32,7 +32,7 @@ All these libraries are tied together by `composer`_ an dependency manager for p
 Directory Structure
 ~~~~~~~~~~~~~~~~~~~
 
-The source code of the ChannelWatcher can be found in the ``src/`` directory, the (few) unittesets can be found in ``test/``. All classes follwo the psr-0_ naming convention.
+The source code of the ChannelWatcher can be found in the ``src/`` directory, the (few) unittests can be found in ``test/``. All classes follwo the psr-0_ naming convention.
 The documentation written in ReStructuredText is stored in ``doc/``. After a composer installation, the ``vendor/`` directory contains
 the vendor libraries mentioned above
 
@@ -85,12 +85,25 @@ The ChannelWatcher is currently just a thin wrapper around the ChannelCrawler: H
 
 The ChannelDeleter
 ------------------
-to be written...
+The ChannelDeleter is responsible for deleting the unvisited channels. It is called through the DeleteCommand.
+First, the ChannelDeleter fetches all unvisited channels from the storage. Then it filters it with the help of all enabled rules.
+The remaining channels are then (after the user confirms) deleted from the server.
+As of 1.1.0 the storage is cleaned up after a delete to remove unneeded information about crawls and deleted channels. 
+(This action is taken in the DeleteCommand and not in the ChannelDeleter itself)
+
+Rules
+~~~~~
+A rule is a simple Class that is able to decide if a specific channel should be deleted or not.
+See :doc:`Write your own rule <write-your-own-rule>` for a detailed description of how a rule works, and how to implement a new rule.
 
 The Storage
 -----------
-to be written...
+The Storage abstracts the way data gathered by the Crawler is stored and retrieved. A storage must implement the StorageInterface (``\devmx\ChannelWatcher\Storage\StorageInterface``)
+It stores information about each channel and its last visit plus data about every executed crawl.
+The currently used implementation is the DbalStorage, that stores data in a relational database like SQLite or MySQL
 
 The Database
 ~~~~~~~~~~~~
-to be written...
+The DbalStorage uses the Doctrine-Dbal library to communicate with a database.
+There are two tables: <prefix>channels and <prefix>crawl_data. Whereas <prefix> is specified in the AppContainer and has the following scheme: ``devmx_ts3_channelwatcher_<profile>__``
+This makes it possible to reuse a database for several configurations.
