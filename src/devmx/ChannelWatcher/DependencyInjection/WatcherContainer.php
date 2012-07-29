@@ -113,9 +113,9 @@ class WatcherContainer extends \Pimple {
         /**
          * The acl (here implemted as a white/blacklist acl) 
          */
-        $this['rule.acl_filter.acl'] = function($c) {
+        $this['rule.acl_filter.acl'] = $this->share(function($c) {
                     return new \devmx\ChannelWatcher\AccessControl\ListBasedControler($c['rule.acl_filter.blacklist'], $c['rule.acl_filter.whitelist']);
-                };
+             });
 
         /**
          * Includes a list of all channels which must not be deleted 
@@ -127,6 +127,10 @@ class WatcherContainer extends \Pimple {
          * Contains a list of all deletable channels
          */
         $this['rule.acl_filter.whitelist'] = null;
+        
+        $this['rule.save_default_channel'] = $this->share(function($c) {
+            return new \devmx\ChannelWatcher\Rule\SaveDefaultChannelRule();
+        });
     }
 
 }

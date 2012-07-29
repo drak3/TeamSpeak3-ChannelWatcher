@@ -69,12 +69,18 @@ $c['watcher']['rule.acl_filter.blacklist'] = array();
 $c['watcher']['rules'] = array(
         // this rule saves all channels that have visited parentes
         //$c['watcher']['rule.save_childs'],
+        
         // This rule saves all channels that have visited childs  
         //$c['watcher']['rule.save_parent'],
+        
+        // this rule saves all spacers
+        //$c['watcher']['rule.save_spacer'],
+        
         // this rule saves channels according to the specified black/whitelist
         $c['watcher']['rule.acl_filter'],
-        // this rules saves all spacers
-        //$c['watcher']['rule.save_spacer'],
+        
+        // this rule save the default channel 
+        $c['watcher']['rule.save_default_channel'],
 );
 
 // Uncomment the following if you get an error mentioning date.timezone.
