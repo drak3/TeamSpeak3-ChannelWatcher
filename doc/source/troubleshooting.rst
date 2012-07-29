@@ -15,6 +15,13 @@ Troubleshooting
 Errors
 ------
 
+
+Exception "DateTime::__construct(): It is not safe to rely on the system's timezone settings."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you encounter this error, you have to set the date.timezone setting in your php.ini.
+Read more about it in the official php documentation:  http://de2.php.net/manual/datetime.configuration.php
+If you have no access to your php.ini you can uncomment line 83 in the example configuration and adjust your timezone.
+
 .. _update-php:
 
 Segfault on crawling (Updating PHP-Version)

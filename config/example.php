@@ -77,6 +77,11 @@ $c['watcher']['rules'] = array(
         //$c['watcher']['rule.save_spacer'],
 );
 
+// Uncomment the following if you get an error mentioning date.timezone.
+// More information is provided in the troubleshooting documentation: http://docs.devmx.de/teamspeak3-channel-watcher/troubleshooting.html#exception-datetime-construct-it-is-not-safe-to-rely-on-the-system-s-timezone-settings
+// You may adjust this setting with your timezone. A list of all available timezones can be found here: http://www.php.net/manual/timezones.php
+// date_default_timezone_set('UTC');
+
 //*********** Database Configuration ***********\\
 // By default a SQLite Database is used. Normally there is no need to change anything here.
 // Note that the here configured database is just used by the ChannelWatcher and MUST NOT be identical to the database used by the TeamSpeak3-Server
