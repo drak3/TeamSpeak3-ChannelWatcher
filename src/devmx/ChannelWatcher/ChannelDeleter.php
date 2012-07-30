@@ -23,7 +23,6 @@
 namespace devmx\ChannelWatcher;
 
 use devmx\Teamspeak3\Query\Transport\TransportInterface;
-use devmx\ChannelWatcher\AccessControl\AccessControlerInterface;
 use devmx\ChannelWatcher\Storage\StorageInterface;
 use devmx\ChannelWatcher\Rule\RuleInterface;
 use devmx\Teamspeak3\Query\CommandAwareQuery;
