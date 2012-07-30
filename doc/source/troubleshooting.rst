@@ -66,9 +66,11 @@ Try to install the missing packages on your system and enable them in your php.i
 
 
 Error: There were just x.y crawls per hour. At least 2.0 crawls per hour are needed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This error occurs if the ``crawl`` command was not ran regulary enough.
+
 The ``crawl`` command connects to the server and notes down for each channel if it is visited. This data is then used by the delete command to decide which channels should be deleted.
+
 That's why you have to do enough crawls before the ChannelWatcher is able to delete any channels. The amount of minimum crawls is currently configured as a minimum of two crawls per hour in the configured period of ``'time_to_live'`` of a channel.
 That means for example, that if your channels should be deleted after 2 weeks of inactivity ('time_to_live' = two weeks) you need at least 2*24*7 = 336 crawls before the ChannelWatcher can delete anything safely. (This number seems to be huge, but its just needed to run the crawl command every half an hour for two weeks to get this density of crawls)
 
@@ -77,6 +79,7 @@ DBALException: Operation 'Doctrine\DBAL\Platforms\AbstractPlatform::getAlterTabl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This error occurs when you run ``db:migrate`` on a installation that uses SQLite (which is the default).
 If you are forced to run ``db:migrate`` (e.g. because your database wasn't created correctly), make sure you delete the old database in the ``storage/<config>`` folder.
+
 Normally, there is no need to run the ``db:migrate`` command, because the database schema should not change between minor releases.
 
 
