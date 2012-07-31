@@ -8,8 +8,15 @@
 ~ Minor Change
 * Fix
 
+v1.0.1-beta.1
+* Issue #51: simplified example.php
+* Issue #54: added shebang to app.php so it can be run directly
++ Issue #33: added a "Do not delete default channel" rule, that preserves the default channel 
+* Issue #16: cleaned up the code
+* stabilized vendor libraries
+
 v1.0.1
-* fixed bug that prevented the watcher from being run on php older than 5.3.7, now 5.3.3 is supported.
+* fixed bug that prevented the watcher from being run on php older than 5.3.7, now 5.3.3 is supported
 
 v1.0.0
 * removed build script from build (thanks to Ar2rJke from forum.teamspeak.com for reporting)
