@@ -4,7 +4,7 @@
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>
  * Copyright (C) 2012 Maxe <maxe.nr@live.de>
- * 
+ *
  * The Teamspeak3 ChannelWatcher is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 namespace devmx\ChannelWatcher\Storage\DbalStorage;
@@ -28,13 +28,14 @@ use Doctrine\DBAL\Connection;
  *
  * @author drak3
  */
-class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
-
+class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
+{
     protected $connection;
     protected $tableName;
     protected $crawlDateTableName;
 
-    public function __construct(Connection $c, $prefix) {
+    public function __construct(Connection $c, $prefix)
+    {
         $this->connection = $c;
         $this->tableName = $c->quoteIdentifier(DataBaseManager::getChannelTableName( $prefix ));
         $this->crawlDateTableName = $c->quoteIdentifier(DataBaseManager::getCrawlDateTableName( $prefix ));
@@ -43,9 +44,10 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
     /**
      * Updates the last time seen date of a chanel
      * @param $id int the id of the channel
-     * @param $time int the unix timestanp of the last seen time defaults to now 
+     * @param $time int the unix timestanp of the last seen time defaults to now
      */
-    public function update($id, $hasClients, \DateTime $lastSeen = null) {
+    public function update($id, $hasClients, \DateTime $lastSeen = null)
+    {
         $id = (int) $id;
 
         if ($lastSeen === null) {
@@ -66,9 +68,10 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
             $update->execute();
         }
     }
-    
-    public function updateLastCrawlTime($now = null) {
-        if($now === null) {
+
+    public function updateLastCrawlTime($now = null)
+    {
+        if ($now === null) {
             $now = new \DateTime('now');
         }
         $insertQuery = $this->connection->prepare('INSERT INTO '. $this->crawlDateTableName. ' (crawl_time) VALUES (?)' );
@@ -76,18 +79,21 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
         $insertQuery->execute();
     }
 
-    public function has($id) {
+    public function has($id)
+    {
         $statement = $this->connection->prepare('SELECT id FROM ' . $this->tableName . ' WHERE id=?');
         $statement->bindValue(1, $id, 'integer');
         $statement->execute();
+
         return count($statement->fetchAll()) > 0;
     }
 
     /**
-     * Returns all channel ids which are empty for a given time 
-     * @param $time int the time in seconds 
+     * Returns all channel ids which are empty for a given time
+     * @param $time int the time in seconds
      */
-    public function getChannelsEmptyFor(\DateInterval $time, \DateTime $now = null) {
+    public function getChannelsEmptyFor(\DateInterval $time, \DateTime $now = null)
+    {
         if ($now === null) {
             $now = new \DateTime('now');
         }
@@ -99,10 +105,12 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
         $channels = array_map(function($item) {
                     return (int) $item[0];
                 }, $channels);
+
         return $channels;
     }
-    
-    public function getCrawlDatesOccuredIn(\DateInterval $time, \DateTime $now = null) {
+
+    public function getCrawlDatesOccuredIn(\DateInterval $time, \DateTime $now = null)
+    {
         if ($now === null) {
             $now = new \DateTime('now');
         }
@@ -113,9 +121,8 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface {
         $dates = array_map(function($item) {
                     return (int) $item[0];
                 }, $dates);
+
         return $dates;
     }
 
 }
-
-?>

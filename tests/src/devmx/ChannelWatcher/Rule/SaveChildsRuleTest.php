@@ -37,7 +37,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
         $expected[3]['__delete'] = false;
         $this->assertEquals($expected, $rule->filter($channelList));
     }
-    
+
     /**
      * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
      * @todo Implement testFilter().
@@ -67,7 +67,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
         $expected[3]['__delete'] = false;
         $this->assertEquals($expected, $rule->filter($channelList));
     }
-    
+
     /**
      * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
      * @todo Implement testFilter().
@@ -98,7 +98,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
         $expected[3]['__delete'] = false;
         $this->assertEquals($expected, $rule->filter($channelList));
     }
-    
+
     /**
      * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
      * @todo Implement testFilter().
@@ -129,7 +129,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
         $expected[3]['__delete'] = true;
         $this->assertEquals($expected, $rule->filter($channelList));
     }
-    
+
     /**
      * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
      * @todo Implement testFilter().
@@ -183,5 +183,3 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-?>

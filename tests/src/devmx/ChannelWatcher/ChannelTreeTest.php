@@ -10,7 +10,7 @@ require_once dirname( __FILE__ ) . '/../../../../src/devmx/ChannelWatcher/Channe
  */
 class ChannelTreeTest extends \PHPUnit_Framework_TestCase
 {
-    
+
     /**
      * @covers devmx\ChannelWatcher\ChannelTree::channelHasChildWith
      * @todo Implement testChannelHasChildWith().
@@ -79,5 +79,3 @@ class ChannelTreeTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-?>

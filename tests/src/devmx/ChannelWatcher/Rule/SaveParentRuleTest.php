@@ -11,8 +11,8 @@ require_once dirname( __FILE__ ) . '/../../../../../src/devmx/ChannelWatcher/Rul
 class SaveParentRuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    
-    public function testFilter() {
+    public function testFilter()
+    {
         $list = array(
             1 => array(
                 'cid' => 1,
@@ -38,5 +38,3 @@ class SaveParentRuleTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-?>

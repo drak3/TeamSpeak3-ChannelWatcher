@@ -4,7 +4,7 @@
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>
  * Copyright (C) 2012 Maxe <maxe.nr@live.de>
- * 
+ *
  * The Teamspeak3 ChannelWatcher is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,11 +17,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 namespace devmx\ChannelWatcher\Watcher;
-use devmx\Teamspeak3\Query\Transport\TransportInterface;
 use devmx\ChannelWatcher\Storage\StorageInterface;
 
 /**
@@ -32,5 +31,3 @@ interface WatcherInterface
 {
     public function watch(StorageInterface $storage);
 }
-
-?>

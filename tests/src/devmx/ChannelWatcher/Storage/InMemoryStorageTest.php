@@ -25,7 +25,6 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
         $this->storage = new InMemoryStorage();
     }
 
-   
     /**
      * @covers devmx\ChannelWatcher\Storage\InMemoryStorage::update
      * @covers devmx\ChannelWatcher\Storage\InMemoryStorage::getChannels
@@ -57,11 +56,9 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
         $time2 = new \DateTime();
         $time2->setTimeStamp(1234);
         $this->storage->update(12, true, $time);
-        $this->storage->update(13, true, $time2);        
+        $this->storage->update(13, true, $time2);
         $interval = new \DateInterval('PT1H5S');
         $this->assertEquals(array(12), $this->storage->getChannelsEmptyFor($interval,  $time2));
     }
 
 }
-
-?>

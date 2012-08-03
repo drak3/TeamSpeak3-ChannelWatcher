@@ -7,7 +7,5 @@ namespace devmx\ChannelWatcher\Deleter;
  */
 class NotEnoughCrawlsException extends \RuntimeException
 {
-    
-}
 
-?>
+}
