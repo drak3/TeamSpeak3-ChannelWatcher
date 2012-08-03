@@ -4,7 +4,7 @@
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>
  * Copyright (C) 2012 Maxe <maxe.nr@live.de>
- * 
+ *
  * The Teamspeak3 ChannelWatcher is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 namespace devmx\ChannelWatcher;
@@ -31,10 +31,10 @@ use devmx\Teamspeak3\Query\CommandAwareQuery;
  *
  * @author drak3
  */
-class ChannelDeleter {
-
+class ChannelDeleter
+{
     /**
-     * @var array of RuleInterface 
+     * @var array of RuleInterface
      */
     protected $rules = array();
 
@@ -44,16 +44,17 @@ class ChannelDeleter {
     protected $query;
 
     /**
-     * @var StorageInterface 
+     * @var StorageInterface
      */
     protected $storage;
 
     /**
      * Constructor
      * @param TransportInterface $transport
-     * @param StorageInterface $storage 
+     * @param StorageInterface   $storage
      */
-    public function __construct(TransportInterface $transport, StorageInterface $storage) {
+    public function __construct(TransportInterface $transport, StorageInterface $storage)
+    {
         if ($transport instanceof CommandAwareQuery) {
             $this->query = $transport;
         } else {
@@ -65,25 +66,28 @@ class ChannelDeleter {
 
     /**
      * Adds a rule
-     * @param RuleInterface $rule 
+     * @param RuleInterface $rule
      */
-    public function addRule(RuleInterface $rule) {
+    public function addRule(RuleInterface $rule)
+    {
         $this->rules[] = $rule;
     }
 
     /**
      * Sets the rules
-     * @param array $rules 
+     * @param array $rules
      */
-    public function setRules(array $rules) {
+    public function setRules(array $rules)
+    {
         $this->rules = $rules;
     }
 
     /**
      * Removes a specific rule
-     * @param RuleInterface $rule 
+     * @param RuleInterface $rule
      */
-    public function removeRule(RuleInterface $rule) {
+    public function removeRule(RuleInterface $rule)
+    {
         foreach ($this->rules as $name => $r) {
             if ($r === $rule) {
                 unset($this->rules[$name]);
@@ -93,39 +97,47 @@ class ChannelDeleter {
 
     /**
      * Return the currently selected rules
-     * @return array of RuleInterface 
+     * @return array of RuleInterface
      */
-    public function getRules() {
+    public function getRules()
+    {
         return $this->rules;
     }
 
-    public function getIdsToDelete(\DateInterval $emptyFor, \DateTime $now = null) {
+    public function getIdsToDelete(\DateInterval $emptyFor, \DateTime $now = null)
+    {
         $ids = $this->storage->getChannelsEmptyFor($emptyFor, $now);
+
         return $this->filter($ids);
     }
-    
-    public function willDeleteNonEmptyChannel(\DateInterval $emptyFor, \DateTime $now=null) {
+
+    public function willDeleteNonEmptyChannel(\DateInterval $emptyFor, \DateTime $now=null)
+    {
         $ids = $this->getIdsToDelete($emptyFor, $now);
         $channels = $this->query->channelList()->toAssoc('cid');
-        foreach($ids as $cid) {
-            if($this->channelHasClients($channels[$cid], $channels)) {
+        foreach ($ids as $cid) {
+            if ($this->channelHasClients($channels[$cid], $channels)) {
                 return true;
             }
         }
+
         return false;
     }
-    
-    protected function channelHasClients(array $channel, array $channels) {
+
+    protected function channelHasClients(array $channel, array $channels)
+    {
         $tree = new ChannelTree($channels);
+
         return($channel['total_clients'] > 0 || $tree->channelHasChildWith($channel['cid'], function($channel){
             $channel['total_clients'] > 0;
         }));
     }
-    
-    public function delete(\DateInterval $emptyFor, $minimumCrawlsPerHour=null, $force=false, \DateTime $now = null) {
-        if($minimumCrawlsPerHour !== null) {
+
+    public function delete(\DateInterval $emptyFor, $minimumCrawlsPerHour=null, $force=false, \DateTime $now = null)
+    {
+        if ($minimumCrawlsPerHour !== null) {
             $this->checkDataValidity($emptyFor, $minimumCrawlsPerHour, $now);
-        }        
+        }
         $toDelete = $this->getIdsToDelete($emptyFor, $now);
         $list = $this->query->channelList();
         $currentIDs = array_keys($list->toAssoc('cid'));
@@ -136,7 +148,8 @@ class ChannelDeleter {
         }
     }
 
-    protected function deleteChannel($id, $force) {
+    protected function deleteChannel($id, $force)
+    {
         try {
             $this->query->channelDelete($id, $force);
         } catch (\devmx\Teamspeak3\Query\Exception\CommandFailedException $e) {
@@ -151,13 +164,14 @@ class ChannelDeleter {
         }
     }
 
-    protected function filter(array $ids) {
+    protected function filter(array $ids)
+    {
         if ($this->rules === array()) {
             return $ids;
         }
         $channelList = $this->query->channelList()->toAssoc('cid');
-        foreach($channelList as $id => $channel) {
-            if(  in_array( $id, $ids )) {
+        foreach ($channelList as $id => $channel) {
+            if (  in_array( $id, $ids )) {
                 $channelList[$id]['__delete'] = true;
             } else {
                 $channelList[$id]['__delete'] = false;
@@ -172,19 +186,19 @@ class ChannelDeleter {
                 $filteredIds[] = $id;
             }
         }
+
         return $filteredIds;
     }
-    
-    public function checkDataValidity(\DateInterval $crawlsSince, $minimumCrawlsPerHour, $now=null) {
+
+    public function checkDataValidity(\DateInterval $crawlsSince, $minimumCrawlsPerHour, $now=null)
+    {
         $crawls = $this->storage->getCrawlDatesOccuredIn($crawlsSince , $now);
         $seconds = DateConverter::convertIntervalToSeconds($crawlsSince);
         $hours = $seconds / 60 * 60;
         $crawlsPerHour = count($crawls) / $hours;
-        if($crawlsPerHour < $minimumCrawlsPerHour) {
+        if ($crawlsPerHour < $minimumCrawlsPerHour) {
             throw new Deleter\NotEnoughCrawlsException(sprintf('There were just %.1f crawls per hour. At least %.1f crawls per hour are needed', $crawlsPerHour, $minimumCrawlsPerHour));
         }
     }
 
 }
-
-?>

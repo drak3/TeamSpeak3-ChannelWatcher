@@ -4,7 +4,7 @@
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>
  * Copyright (C) 2012 Maxe <maxe.nr@live.de>
- * 
+ *
  * The Teamspeak3 ChannelWatcher is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 namespace devmx\ChannelWatcher\Command;
@@ -29,9 +29,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author drak3
  */
-class CrawlCommand extends ProfileDependentCommand {
-
-    protected function execute(InputInterface $in, OutputInterface $out) {
+class CrawlCommand extends ProfileDependentCommand
+{
+    protected function execute(InputInterface $in, OutputInterface $out)
+    {
         if (!$this->wasInited()) {
             $this->init($out);
         }
@@ -42,11 +43,13 @@ class CrawlCommand extends ProfileDependentCommand {
         $crawler->updateStorage($this->c['watcher']['storage'], $time);
     }
 
-    protected function wasInited() {
+    protected function wasInited()
+    {
         return is_dir($this->c['storagedir']);
     }
 
-    protected function init(OutputInterface $out) {
+    protected function init(OutputInterface $out)
+    {
         $initCommand = $this->c['command.init'];
         $args = array('config' => $this->c['profile']);
         $input = new \Symfony\Component\Console\Input\ArrayInput($args);
@@ -54,5 +57,3 @@ class CrawlCommand extends ProfileDependentCommand {
     }
 
 }
-
-?>

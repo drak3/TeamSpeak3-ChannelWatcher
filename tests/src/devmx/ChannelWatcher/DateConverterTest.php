@@ -9,7 +9,6 @@ namespace devmx\ChannelWatcher;
 class DateConverterTest extends \PHPUnit_Framework_TestCase
 {
 
-
     /**
      * @covers devmx\ChannelWatcher\DateConverter::convertArrayToInterval
      */
@@ -27,8 +26,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P1Y2M25DT5H6M12S');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-    
-    public function testOverflow() {
+
+    public function testOverflow()
+    {
         $spec = array(
             'months' => 13,
             'weeks' => 2,
@@ -40,8 +40,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P13M28DT25H70M70S');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-    
-    public function testFewKeys() {
+
+    public function testFewKeys()
+    {
         $spec = array(
           'weeks' => 12,
           'minutes' => 13
@@ -49,8 +50,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P12WT13M');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-    
-    public function testTimeOnly() {
+
+    public function testTimeOnly()
+    {
         $spec = array(
           'minutes' => 14,
           'hours' => 15,
@@ -58,8 +60,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('PT15H14M');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-    
-    public function testDateOnly() {
+
+    public function testDateOnly()
+    {
         $spec = array(
             'weeks' => 13,
             'years' => 1,
@@ -67,8 +70,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P1Y13W');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-    
-    public function testUppercasedKeys() {
+
+    public function testUppercasedKeys()
+    {
         $spec = array(
             'Weeks' => 13,
             'yearS' => 1,
@@ -76,18 +80,16 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P1Y13W');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-    
+
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testInvalidKey() {
+    public function testInvalidKey()
+    {
         $spec = array(
             'week' => 1
         );
         DateConverter::convertArrayToInterval($spec);
-    } 
-
+    }
 
 }
-
-?>

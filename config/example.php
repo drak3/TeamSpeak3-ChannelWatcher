@@ -4,7 +4,7 @@
  * This file is part of the Teamspeak3 ChannelWatcher.
  * Copyright (C) 2012 drak3 <drak3@live.de>
  * Copyright (C) 2012 Maxe <maxe.nr@live.de>
- * 
+ *
  * The Teamspeak3 ChannelWatcher is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the Teamspeak3 ChannelWatcher.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 /*
@@ -27,7 +27,7 @@
 $c['ts3']['host'] = '';
 
 /**
- * The queryport (not the vserverport) of the TeamSpeak3-Server (10011 by default) 
+ * The queryport (not the vserverport) of the TeamSpeak3-Server (10011 by default)
  */
 $c['ts3']['query.port'] = 10011;
 
@@ -37,14 +37,14 @@ $c['ts3']['query.port'] = 10011;
 $c['ts3']['vserver.port'] = 9987;
 
 /**
- * Login credentials 
+ * Login credentials
  * Uncomment and fill out if needed
  */
 //$c['ts3']['login.name'] = '';
 //$c['ts3']['login.pass'] = '';
 
 /**
- * The time after which channels should be deleted 
+ * The time after which channels should be deleted
  */
 $c['watcher']['time_to_live'] = array(
     'years'   =>    0,
@@ -57,7 +57,7 @@ $c['watcher']['time_to_live'] = array(
 );
 
 /**
- * List of channel-IDs that should not be deleted 
+ * List of channel-IDs that should not be deleted
  * Only applied when rule.acl_filter is enabled
  */
 $c['watcher']['rule.acl_filter.blacklist'] = array();
@@ -69,17 +69,17 @@ $c['watcher']['rule.acl_filter.blacklist'] = array();
 $c['watcher']['rules'] = array(
         // this rule saves all channels that have visited parentes
         //$c['watcher']['rule.save_childs'],
-        
-        // This rule saves all channels that have visited childs  
+
+        // This rule saves all channels that have visited childs
         //$c['watcher']['rule.save_parent'],
-        
+
         // this rule saves all spacers
         //$c['watcher']['rule.save_spacer'],
-        
+
         // this rule saves channels according to the specified black/whitelist
         $c['watcher']['rule.acl_filter'],
-        
-        // this rule save the default channel 
+
+        // this rule save the default channel
         $c['watcher']['rule.save_default_channel'],
 );
 
@@ -93,9 +93,8 @@ $c['watcher']['rules'] = array(
 // Note that the here configured database is just used by the ChannelWatcher and MUST NOT be identical to the database used by the TeamSpeak3-Server
 // See http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html for configuration details
 
-
 /**
- * Comment the following out to use another database than SQLITE as database 
+ * Comment the following out to use another database than SQLITE as database
  */
 // /*
 $c['db']['connection.params'] = array(
@@ -105,7 +104,7 @@ $c['db']['connection.params'] = array(
 // */
 
 /**
- * Uncomment the following to use MYSQL as database 
+ * Uncomment the following to use MYSQL as database
  */
 /*
   $c['db']['connection.params'] = array(
@@ -120,9 +119,8 @@ $c['db']['connection.params'] = array(
   );
  */
 
-
 /**
- * Uncomment the following lines to use POSTGRESQL as database 
+ * Uncomment the following lines to use POSTGRESQL as database
  */
 /*
   $c['db']['connection.params'] = array(
@@ -136,7 +134,7 @@ $c['db']['connection.params'] = array(
  */
 
 /**
- * Uncomment the following lines to use MSSQLSRV as database 
+ * Uncomment the following lines to use MSSQLSRV as database
  */
 /*
   $c['db']['connection.params'] = array(
@@ -148,4 +146,3 @@ $c['db']['connection.params'] = array(
   'driver' => 'pdo_sqlsrv'
   );
  */
-?>

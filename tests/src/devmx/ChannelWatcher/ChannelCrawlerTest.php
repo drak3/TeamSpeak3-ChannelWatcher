@@ -18,12 +18,12 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
      * @var \devmx\ChannelWatcher\ChannelCrawler
      */
     protected $crawler;
-    
+
     /**
      * @var \devmx\Teamspeak3\Query\Transport\QueryTransportStub;
      */
     protected $query;
-    
+
     /**
      * @var \devmx\ChannelWatcher\Storage\InMemoryStorage;
      */
@@ -37,7 +37,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->storage = new InMemoryStorage();
         $this->query = new QueryTransportStub();
-        
+
     }
 
      /**
@@ -49,7 +49,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
         $this->query->addResponse($r,2);
         $this->query->connect();
-        
+
         //first run
         $this->crawler->crawl();
         $time = new \DateTime();
@@ -73,8 +73,9 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
            4 => $time2
         ), $this->storage->getChannels());
     }
-    
-    public function testCrawl_ignoreQueryClients() {
+
+    public function testCrawl_ignoreQueryClients()
+    {
         $this->crawler  = new ChannelCrawler($this->query, true);
         $r = new CommandResponse(new Command('channellist'), $this->getChannelListItems());
         $r2 = new CommandResponse(new Command('clientlist'), $this->getClientListItems());
@@ -84,7 +85,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->crawler->crawl();
         $time = new \DateTime();
         $time->setTimeStamp(123);
-        $this->crawler->updateStorage($this->storage, $time);   
+        $this->crawler->updateStorage($this->storage, $time);
         $this->assertEquals(array(
             1 => $time,
             2 => $time,
@@ -103,8 +104,9 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
            4 => $time
         ), $this->storage->getChannels());
     }
-         
-    protected function getChannelListItems() {
+
+    protected function getChannelListItems()
+    {
         return array(
           array(
               'cid' => 1,
@@ -128,8 +130,9 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
           )
         );
     }
-    
-    protected function getClientListItems() {
+
+    protected function getClientListItems()
+    {
         return array(
             array(
                 'clid' => 12,
@@ -160,5 +163,3 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-?>

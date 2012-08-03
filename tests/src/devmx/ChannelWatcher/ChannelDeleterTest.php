@@ -15,12 +15,12 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
      * @var ChannelDeleter
      */
     protected $deleter;
-    
+
     protected $storage;
-    
+
     /**
      *
-     * @var \devmx\Teamspeak3\Query\Transport\QueryTransportStub 
+     * @var \devmx\Teamspeak3\Query\Transport\QueryTransportStub
      */
     protected $transport;
 
@@ -34,12 +34,12 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
         $this->storage = $this->getMockForAbstractClass('\devmx\ChannelWatcher\Storage\StorageInterface');
         $this->deleter = new ChannelDeleter($this->transport, $this->storage);
     }
-    
-    protected function getRule() {
+
+    protected function getRule()
+    {
         return $this->getMockForAbstractClass('\devmx\ChannelWatcher\Rule\RuleInterface');
     }
 
-    
     /**
      * @covers devmx\ChannelWatcher\ChannelDeleter::addRule
      */
@@ -82,8 +82,9 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
                       ->will($this->returnValue(array(1,2)));
         $this->assertEquals(array(1,2), $this->deleter->getIdsToDelete(new \DateInterval('P1Y')));
     }
-    
-    public function testGetIdsToDelete_Filter() {
+
+    public function testGetIdsToDelete_Filter()
+    {
         $idsToDelete = array(2,6);
         $channelList = array(
             array(
@@ -123,7 +124,7 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
         $expectedIds = array(5,6);
         $rule = $this->getRule();
         $this->deleter->addRule($rule);
-        
+
         $this->storage->expects($this->once())
                       ->method('getChannelsEmptyFor')
                       ->will($this->returnValue($idsToDelete));
@@ -137,5 +138,3 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-?>
