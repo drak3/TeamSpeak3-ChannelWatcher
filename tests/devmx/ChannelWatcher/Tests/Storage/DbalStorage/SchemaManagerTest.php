@@ -62,7 +62,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetChannelTableName() {
         $this->connectionMock->expects($this->once())
-                             ->method('quote')
+                             ->method('quoteIdentifier')
                              ->with($this->equalTo('foochannels'))
                              ->will($this->returnValue('escaped_name'));
         $this->assertEquals('escaped_name', $this->mockedManager->getChannelTableName());
@@ -73,7 +73,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetCrawlDateTableName() {
         $this->connectionMock->expects($this->once())
-                             ->method('quote')
+                             ->method('quoteIdentifier')
                              ->with($this->equalTo('foocrawl_data'))
                              ->will($this->returnValue('escaped_name'));
         $this->assertEquals('escaped_name', $this->mockedManager->getCrawlDateTableName());

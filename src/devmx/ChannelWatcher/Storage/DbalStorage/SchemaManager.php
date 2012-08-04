@@ -77,12 +77,12 @@ class SchemaManager
 
     public function getChannelTableName()
     {
-        return $this->connection->quote($this->prefix.'channels');
+        return $this->connection->quoteIdentifier($this->prefix.'channels');
     }
 
     public function getCrawlDateTableName()
     {
-        return $this->connection->quote($this->prefix.'crawl_data');
+        return $this->connection->quoteIdentifier($this->prefix.'crawl_data');
     }
 
 }
