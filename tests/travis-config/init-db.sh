@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 if [ '$DB' = 'pgsql' ] 
 then 
