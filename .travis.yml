@@ -10,6 +10,12 @@ env:
   - DB=pgsql
 
 before_script:
+
+    - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS devmx_channelwatcher_tests;' -U postgres; fi"
+    - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS devmx_channelwatcher_tests_tmp;' -U postgres; fi"
+    - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'create database devmx_channelwatcher_tests;' -U postgres; fi"
+    - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'create database devmx_channelwatcher_tests_tmp;' -U postgres; fi"
+    - sh -c "if [ '$DB' = 'mysqli' ]; then mysql -e 'create database IF NOT EXISTS devmx_channelwatcher_tests_tmp;create database IF NOT EXISTS devmx_channelwatcher_tests;'; fi"
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar --dev install
 
