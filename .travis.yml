@@ -7,7 +7,7 @@ php:
 env:
   - DB=sqlite
   - DB=mysqli
-  - DB=sqlite
+  - DB=pgsql
 
 before_script:
     - curl -s http://getcomposer.org/installer | php
