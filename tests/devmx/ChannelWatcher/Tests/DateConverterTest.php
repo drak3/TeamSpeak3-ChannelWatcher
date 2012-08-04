@@ -1,6 +1,8 @@
 <?php
 
-namespace devmx\ChannelWatcher;
+namespace devmx\ChannelWatcher\Tests;
+
+use devmx\ChannelWatcher\DateConverter;
 
 /**
  * Test class for DateConverter.

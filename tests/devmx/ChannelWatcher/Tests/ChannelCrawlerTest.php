@@ -1,11 +1,11 @@
 <?php
-namespace devmx\ChannelWatcher;
+namespace devmx\ChannelWatcher\Tests;
 use devmx\ChannelWatcher\Storage\InMemoryStorage;
 use devmx\Teamspeak3\Query\Transport\QueryTransportStub;
 use devmx\Teamspeak3\Query\Response\CommandResponse;
 use devmx\Teamspeak3\Query\Command;
+use devmx\ChannelWatcher\ChannelCrawler;
 
-require_once dirname( __FILE__ ) . '/../../../../src/devmx/ChannelWatcher/ChannelCrawler.php';
 
 /**
  * Test class for Crawler.

@@ -1,6 +1,8 @@
 <?php
 
-namespace devmx\ChannelWatcher\Rule;
+namespace devmx\ChannelWatcher\Tests\Rule;
+
+use devmx\ChannelWatcher\Rule\SaveSpacersRule;
 
 /**
  * Test class for SaveSpacersRule.

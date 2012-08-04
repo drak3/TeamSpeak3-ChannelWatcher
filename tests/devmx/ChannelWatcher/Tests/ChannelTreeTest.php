@@ -1,8 +1,8 @@
 <?php
 
-namespace devmx\ChannelWatcher;
+namespace devmx\ChannelWatcher\Tests;
 
-require_once dirname( __FILE__ ) . '/../../../../src/devmx/ChannelWatcher/ChannelTree.php';
+use devmx\ChannelWatcher\ChannelTree;
 
 /**
  * Test class for ChannelTree.

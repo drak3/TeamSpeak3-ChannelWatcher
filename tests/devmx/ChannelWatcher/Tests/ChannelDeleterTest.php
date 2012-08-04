@@ -1,8 +1,10 @@
 <?php
 
-namespace devmx\ChannelWatcher;
+namespace devmx\ChannelWatcher\Tests;
+
 use devmx\Teamspeak3\Query\Command;
 use devmx\Teamspeak3\Query\Response\CommandResponse;
+use devmx\ChannelWatcher\ChannelDeleter;
 
 /**
  * Test class for ChannelDeleter.

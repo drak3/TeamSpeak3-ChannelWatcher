@@ -1,6 +1,8 @@
 <?php
 
-namespace devmx\ChannelWatcher\AccessControl;
+namespace devmx\ChannelWatcher\Tests\AccessControl;
+
+use devmx\ChannelWatcher\AccessControl\ListBasedControler;
 
 /**
  * Test class for ControlList.

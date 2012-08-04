@@ -1,8 +1,6 @@
 <?php
 
-namespace devmx\ChannelWatcher\Storage;
-
-require_once dirname( __FILE__ ) . '/../../../../../src/devmx/ChannelWatcher/Storage/InMemoryStorage.php';
+namespace devmx\ChannelWatcher\Tests\Storage;
 
 /**
  * Test class for InMemoryStorage.

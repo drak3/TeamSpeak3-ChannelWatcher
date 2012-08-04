@@ -1,8 +1,8 @@
 <?php
 
-namespace devmx\ChannelWatcher\Rule;
+namespace devmx\ChannelWatcher\Tests\Rule;
 
-require_once dirname( __FILE__ ) . '/../../../../../src/devmx/ChannelWatcher/Rule/AccessControlerBasedRule.php';
+use devmx\ChannelWatcher\Rule\AccessControlerBasedRule;
 
 /**
  * Test class for AccessControlerBasedRule.

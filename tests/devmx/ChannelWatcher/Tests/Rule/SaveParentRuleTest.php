@@ -1,8 +1,8 @@
 <?php
 
-namespace devmx\ChannelWatcher\Rule;
+namespace devmx\ChannelWatcher\Tests\Rule;
 
-require_once dirname( __FILE__ ) . '/../../../../../src/devmx/ChannelWatcher/Rule/SaveParentRule.php';
+use devmx\ChannelWatcher\Rule\SaveParentRule;
 
 /**
  * Test class for SaveParentRule.
