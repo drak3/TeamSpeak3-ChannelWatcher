@@ -43,15 +43,15 @@ class DbalContainer extends \Pimple
         /**
          * Manager to create and configure database/tables
          */
-        $this['db_manager'] = $this->share(function($c) {
-                    return new \devmx\ChannelWatcher\Storage\DbalStorage\DataBaseManager;
+        $this['schema_manager'] = $this->share(function($c) {
+                    return new \devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager($c['connection'], $c['prefix']);
                 });
 
         /**
          * The DbalStorage that provides a simple interface to the channel stats
          */
         $this['storage'] = $this->share(function($c) {
-                    return new \devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage($c['connection'], $c['prefix']);
+                    return new \devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage($c['connection'], $c['schema_manager']);
                 });
     }
 

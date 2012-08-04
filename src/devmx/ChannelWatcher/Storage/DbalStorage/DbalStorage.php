@@ -28,17 +28,15 @@ use Doctrine\DBAL\Connection;
  *
  * @author drak3
  */
-class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
+class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface, \devmx\ChannelWatcher\Storage\InitableStorageInterface
 {
     protected $connection;
-    protected $tableName;
-    protected $crawlDateTableName;
+    private $schemaManager;
 
-    public function __construct(Connection $c, $prefix)
+    public function __construct(Connection $c, SchemaManager $manager)
     {
+        $this->schemaManager = $manager;
         $this->connection = $c;
-        $this->tableName = $c->quoteIdentifier(DataBaseManager::getChannelTableName( $prefix ));
-        $this->crawlDateTableName = $c->quoteIdentifier(DataBaseManager::getCrawlDateTableName( $prefix ));
     }
 
     /**
@@ -56,13 +54,13 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
 
         if ($this->has($id)) {
             if ($hasClients) {
-                $update = $this->connection->prepare('UPDATE ' . $this->tableName . ' SET last_seen = ? WHERE id = ?');
+                $update = $this->connection->prepare('UPDATE ' . $this->schemaManager->getChannelTableName() . ' SET last_seen = ? WHERE id = ?');
                 $update->bindValue(1, $lastSeen, 'datetime');
                 $update->bindValue(2, $id, 'integer');
                 $update->execute();
             }
         } else {
-            $update = $this->connection->prepare('INSERT INTO' . $this->tableName . ' (id, last_seen) VALUES (?, ?)');
+            $update = $this->connection->prepare('INSERT INTO ' . $this->schemaManager->getChannelTableName() . ' (id, last_seen) VALUES (?, ?)');
             $update->bindValue(1, $id, 'integer');
             $update->bindValue(2, $lastSeen, 'datetime');
             $update->execute();
@@ -74,14 +72,14 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
         if ($now === null) {
             $now = new \DateTime('now');
         }
-        $insertQuery = $this->connection->prepare('INSERT INTO '. $this->crawlDateTableName. ' (crawl_time) VALUES (?)' );
+        $insertQuery = $this->connection->prepare('INSERT INTO '. $this->schemaManager->getCrawlDateTableName(). ' (crawl_time) VALUES (?)' );
         $insertQuery->bindValue(1, $now, 'datetime');
         $insertQuery->execute();
     }
 
     public function has($id)
     {
-        $statement = $this->connection->prepare('SELECT id FROM ' . $this->tableName . ' WHERE id=?');
+        $statement = $this->connection->prepare('SELECT id FROM ' . $this->schemaManager->getChannelTableName() . ' WHERE id=?');
         $statement->bindValue(1, $id, 'integer');
         $statement->execute();
 
@@ -98,7 +96,7 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
             $now = new \DateTime('now');
         }
         $maxLastSeen = $now->sub($time);
-        $query = $this->connection->prepare('SELECT id FROM ' . $this->tableName . ' WHERE last_seen < ?');
+        $query = $this->connection->prepare('SELECT id FROM ' . $this->schemaManager->getChannelTableName() . ' WHERE last_seen < ?');
         $query->bindValue(1, $maxLastSeen, 'datetime');
         $query->execute();
         $channels = $query->fetchAll(\PDO::FETCH_NUM);
@@ -114,7 +112,7 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
         if ($now === null) {
             $now = new \DateTime('now');
         }
-        $query = $this->connection->prepare('SELECT * FROM ' . $this->crawlDateTableName . ' WHERE crawl_time < ?');
+        $query = $this->connection->prepare('SELECT * FROM ' . $this->schemaManager->getCrawlDateTableName() . ' WHERE crawl_time < ?');
         $query->bindValue(1, $now, 'datetime');
         $query->execute();
         $dates = $query->fetchAll(\PDO::FETCH_NUM);
@@ -123,6 +121,42 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface
                 }, $dates);
 
         return $dates;
+    }
+    
+    public function isInited() 
+    {
+        if($this->schemaManager->getMigrateStatements() === array()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function init() 
+    {
+        $this->schemaManager->createTables();
+    }
+    
+    /**
+     * Setter for the databasemanager (mostly for testing)
+     * @param \devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager $manager
+     */
+    public function setDataBaseManager(SchemaManager $manager) 
+    {
+        $this->dbManager = $manager;
+    }
+    
+    /**
+     * Returns the DataBaseManager
+     * The DataBaseManager is constructed if not set
+     * @return SchemaManager
+     */
+    public function getDataBaseManager() {
+        if($this->dbManager === null) 
+        {
+            $this->dbManager = new SchemaManager();
+        }
+        return $this->dbManager;
     }
 
 }

@@ -31,7 +31,7 @@ class CreateDataBaseCommand extends ProfileDependentCommand
 
     protected function execute(InputInterface $in, OutputInterface $out)
     {
-        $manager = $this->c['db']['db_manager'];
-        $manager->createTable($this->c['db']['connection'], $this->c['db']['prefix']);
+        $manager = $this->c['db']['schema_manager'];
+        $manager->createTables();
     }
 }
