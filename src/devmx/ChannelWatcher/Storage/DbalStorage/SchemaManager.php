@@ -41,6 +41,9 @@ class SchemaManager
         $this->connection  = $c;
     }
     
+    /**
+     * Creates all nessecary tables
+     */
     public function createTables()
     {
         $sql = $this->getMigrateStatements();
@@ -49,21 +52,21 @@ class SchemaManager
         }
     }
     
-    public function getMigrateStatements() {
-        $schema = $this->getSchema();
+    protected function getMigrateStatements() {
+        $schema = static::getSchema($this->getChannelTableName(), $this->getCrawlDateTableName());
         $currentSchema = clone $this->connection->getSchemaManager()->createSchema();
         return $currentSchema->getMigrateToSql($schema, $this->connection->getDatabasePlatform());
     }
 
-    public function getSchema()
+    public static function getSchema($channelTableName, $crawlDataTableName)
     {
         $schema = new Schema();
-        $channelTable = $schema->createTable($this->getChannelTableName());
+        $channelTable = $schema->createTable($channelTableName);
         $channelTable->addColumn('id', 'integer', array('unsinged' => true));
         $channelTable->addColumn('last_seen', 'datetime');
         $channelTable->setPrimaryKey(array('id'));
 
-        $crawlDataTable = $schema->createTable($this->getCrawlDateTableName());
+        $crawlDataTable = $schema->createTable($crawlDataTableName);
         $crawlDataTable->addColumn('id', 'integer', array('unsinged' => true));
         $crawlDataTable->addColumn('crawl_time', 'datetime');
         $crawlDataTable->setPrimaryKey(array('id'));

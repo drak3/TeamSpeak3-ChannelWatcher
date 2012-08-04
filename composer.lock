@@ -1,5 +1,5 @@
 {
-    "hash": "18e4990415ee3d29408ecdcd7ba88c4a",
+    "hash": "7655cb23642688175831b8ec92063e5e",
     "packages": [
         {
             "package": "devmx/Teamspeak3-Library",
@@ -21,7 +21,7 @@
         },
         {
             "package": "symfony/console",
-            "version": "v2.1.0-BETA4"
+            "version": "v2.1.0-RC1"
         }
     ],
     "packages-dev": null,
