@@ -43,15 +43,20 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         $manager = new SchemaManager($conn, 'foo_');
         $manager->createTables();
         $createdSchema = $conn->getSchemaManager()->createSchema();
-                        
+        
+        //fix differences in handling autoincrement        
         if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
             $expectedSchema->getTable('foo_crawl_data')
                            ->getColumn('id')
                            ->setAutoincrement(false);
         }
         
-        $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($createdSchema, $expectedSchema);
+        if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform) {
+            $expectedSchema->createSequence('foo_crawl_data_id_seq');
+        }
         
+        $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($createdSchema, $expectedSchema);
+       
         $emptyDiff = new \Doctrine\DBAL\Schema\SchemaDiff();
                 
         $this->assertEquals($emptyDiff, $diff);
