@@ -35,6 +35,9 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::createTables
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getMigrateStatements
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::__construct
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getSchema
      */
     public function testCreateTables() {
         $expectedSchema = SchemaManager::getSchema('foo_channels', 'foo_crawl_data');

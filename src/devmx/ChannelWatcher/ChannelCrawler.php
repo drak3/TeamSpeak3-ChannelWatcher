@@ -43,12 +43,7 @@ class ChannelCrawler
      */
     protected $storage;
     protected $ignoreQueryClients;
-
-    /**
-     * @var \devmx\ChannelWatcher\AccessControl\AccessControlerInterface
-     */
-    protected $accessControler;
-
+    
     public function __construct(TransportInterface $transport, $ignoreQueryClients = true)
     {
         if ($transport instanceof CommandAwareQuery) {
@@ -58,11 +53,6 @@ class ChannelCrawler
         }
         $this->query->exceptionOnError(true);
         $this->ignoreQueryClients = $ignoreQueryClients;
-    }
-
-    public function setControlList(AccessControlerInterface $a)
-    {
-        $this->accessControler = $a;
     }
 
     public function crawl()

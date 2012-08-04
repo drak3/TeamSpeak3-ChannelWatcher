@@ -42,6 +42,8 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
 
      /**
      * @covers devmx\ChannelWatcher\ChannelCrawler::crawl
+     * @covers devmx\ChannelWatcher\ChannelCrawler::updateStorage
+     * @covers devmx\ChannelWatcher\ChannelCrawler::__construct
      */
     public function testCrawl()
     {
@@ -73,7 +75,12 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
            4 => $time2
         ), $this->storage->getChannels());
     }
-
+    
+    /**
+     * @covers devmx\ChannelWatcher\ChannelCrawler::crawl
+     * @covers devmx\ChannelWatcher\ChannelCrawler::updateStorage
+     * @covers devmx\ChannelWatcher\ChannelCrawler::__construct
+     */
     public function testCrawl_ignoreQueryClients()
     {
         $this->crawler  = new ChannelCrawler($this->query, true);
