@@ -3,6 +3,14 @@ language: php
 php:
   - 5.3
   - 5.4
+
+env:
+  - DB=sqlite
+  - DB=mysqli
+  - DB=sqlite
+
 before_script:
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar --dev install
+
+script: phpunit --configuration tests/travis-config/$DB.travis.xml
