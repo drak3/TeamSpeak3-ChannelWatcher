@@ -61,8 +61,7 @@ class ChannelCrawler
         $channels = $channelResponse->getItems();
         if ($this->ignoreQueryClients) {
             $channels = $channelResponse->toAssoc('cid');
-            $clients = $this->query->clientList();
-            $clients = $clients->getItems();
+            $clients = $this->query->clientList()->getItems();
             foreach ($clients as $client) {
                 if ($client['client_type'] === 1) {
                     $channels[$client['cid']]['total_clients']--;
