@@ -31,7 +31,21 @@ class CreateDataBaseCommand extends ProfileDependentCommand
 
     protected function execute(InputInterface $in, OutputInterface $out)
     {
-        $manager = $this->c['db']['schema_manager'];
-        $manager->createTables();
+        $out->writeln('Warning: This command is deprecated, run the <info>init</info> command instead.');
+        
+        return $this->runInitCommand($out);
+    }
+    
+    private function runInitCommand($out) {
+        $command = $this->c['command.init'];
+        
+        $arguments = array(
+            'command' => $command->getName(),
+            'profile' => $this->c['profile'],
+        );
+
+        $input = new ArrayInput($arguments);
+        
+        return $command->run($input, $out);
     }
 }
