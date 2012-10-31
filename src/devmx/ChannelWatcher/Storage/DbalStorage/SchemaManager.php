@@ -74,6 +74,28 @@ class SchemaManager
 
         return $schema;
     }
+    
+    public function schemaIsCreated() {
+        $expectedSchema = static::getSchema($this->getChannelTableName(), $this->getCrawlDateTableName());
+        
+        //fix differences in handling autoincrement        
+        if($this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
+            $expectedSchema->getTable('foo_crawl_data')
+                           ->getColumn('id')
+                           ->setAutoincrement(false);
+        }
+        
+        if($this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform) {
+            $expectedSchema->createSequence('foo_crawl_data_id_seq');
+        }
+        
+        $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($this->connection->getSchemaManager()->createSchema(), $expectedSchema);
+       
+        $emptyDiff = new \Doctrine\DBAL\Schema\SchemaDiff();
+        
+        return $diff == $emptyDiff;
+        
+    }
 
     public function getChannelTableName()
     {

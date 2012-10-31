@@ -26,7 +26,7 @@ namespace devmx\ChannelWatcher\Storage;
  *
  * @author drak3
  */
-interface InitableStorageInterface
+interface InitableStorageInterface extends StorageInterface
 {
     /**
      * Checks if the storage is inited

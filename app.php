@@ -29,7 +29,7 @@ require_once 'vendor/autoload.php';
 
 $c = new AppContainer;
 
-$c['debug'] = false;
+$c['debug'] = true;
 
 $c['root_dir'] = __DIR__;
 

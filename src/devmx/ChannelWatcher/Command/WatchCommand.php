@@ -32,6 +32,7 @@ class WatchCommand extends ProfileDependentCommand
 {
     protected function execute(InputInterface $in, OutputInterface $out)
     {
+        $this->c['initer']->initEnviroment();
         $this->c['watcher']['watcher']->watch($this->c['watcher']['storage']);
     }
 }

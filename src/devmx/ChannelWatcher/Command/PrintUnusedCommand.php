@@ -33,6 +33,7 @@ class PrintUnusedCommand extends ProfileDependentCommand
 {
     protected function execute(InputInterface $in, OutputInterface $out)
     {
+        $this->c['initer']->initEnviroment();
         $time = $this->c['watcher']['delete_time'];
         $unused = $this->c['watcher']['deleter']->getIdsToDelete($time);
         $channellist = $this->c['ts3']['query']->channelList()->toAssoc('cid');

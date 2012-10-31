@@ -64,6 +64,13 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
                 
         $this->assertEquals($emptyDiff, $diff);
     }
+    
+    public function testSchemaIsCreated_equal() {
+        $conn = TestUtil::getConnection();
+        $manager = new SchemaManager($conn, 'foo_');
+        $manager->createTables();
+        $this->assertTrue($manager->schemaIsCreated());
+    }
 
     /**
      * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getChannelTableName
@@ -75,6 +82,8 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
                              ->will($this->returnValue('escaped_name'));
         $this->assertEquals('escaped_name', $this->mockedManager->getChannelTableName());
     }
+    
+    
 
     /**
      * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getCrawlDateTableName
@@ -86,5 +95,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
                              ->will($this->returnValue('escaped_name'));
         $this->assertEquals('escaped_name', $this->mockedManager->getCrawlDateTableName());
     }
+    
+    
 
 }

@@ -26,6 +26,7 @@ use devmx\ChannelWatcher\Command\CrawlCommand;
 use devmx\ChannelWatcher\Command\DeleteCommand;
 use devmx\ChannelWatcher\Command\PrintUnusedCommand;
 use devmx\ChannelWatcher\Command\CreateDataBaseCommand;
+use devmx\ChannelWatcher\Initializer;
 
 /**
  *
@@ -133,7 +134,11 @@ class AppContainer extends \Pimple
         $this['profile.path'] = function($c) {
                     return $c['root_dir'] . '/config/' . $c['profile'] . '.php';
                 };
-
+        
+        $this['initer'] = $this->share(function($c){
+            return new Initializer($c['storage'], $c['storagedir']);
+        });
+                
         /**
          * The crawl command
          */

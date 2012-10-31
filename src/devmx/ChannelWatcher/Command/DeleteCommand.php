@@ -46,6 +46,8 @@ class DeleteCommand extends ProfileDependentCommand
         $force = $in->getOption('force');
         $deleteNonEmpty = $in->getOption('delete-non-empty');
         $trustCrawls = $in->getOption('trust-crawls');
+        
+        $this->c['initer']->initEnviroment();
 
         $time = $this->c['watcher']['delete_time'];
         $deleter = $this->c['watcher']['deleter'];
