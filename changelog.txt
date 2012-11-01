@@ -8,7 +8,10 @@
 ~ Minor Change
 * Fix
 
-v1.0.1-beta.1
+v1.1.0-beta.1
+
+* Issue #68: rewrote init-system, changes of the database are now properly detected
+* Issue #69: existing tables are no longer deleted on db-initialization
 * Issue #51: simplified example.php
 * Issue #54: added shebang to app.php so it can be run directly
 + Issue #33: added a "Do not delete default channel" rule, that preserves the default channel 
