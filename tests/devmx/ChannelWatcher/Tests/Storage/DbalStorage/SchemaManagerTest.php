@@ -76,13 +76,13 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         
         //fix differences in handling autoincrement        
         if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
-            $expectedSchema->getTable('foo_crawl_data')
+            $expectedSchema->getTable($pref.'crawl_data')
                            ->getColumn('id')
                            ->setAutoincrement(false);
         }
         
         if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform) {
-            $expectedSchema->createSequence('foo_crawl_data_id_seq');
+            $expectedSchema->createSequence($pref.'crawl_data_id_seq');
         }
         
         return $expectedSchema;
@@ -91,11 +91,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     public function testCreateTables_NoOverwrite() {
                         
         $conn = $this->connection;
-        
-        if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
-            $this->markTestSkipped('Creating schema on a Sqlite db is not supported');
-        }
-        
+                
         $expectedSchemaPt1 = $this->getExpectedSchema($conn, 'foo_');
         
         $manager = new SchemaManager($conn, 'foo_');
@@ -117,25 +113,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($emptyDiff, $diff);
                 
     }
-    
-    /**
-     * @expectedException \devmx\ChannelWatcher\Storage\Exception
-     * @expectedExceptionMessage You cannot run the channelwatcher with a non-empty sqlite-db
-     */
-    public function testCreateTables_SqliteExceptionOnOverwrite() {
-        $conn = $this->connection;
-        
-        if(! ($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) ) {
-            $this->markTestSkipped('This test is sqlite specific');
-        }
-        
-        $manager = new SchemaManager($conn, 'foo_');
-        $manager->createTables();
-        
-        $manager2 = new SchemaManager($conn, 'bar_');
-        $manager->createTables();
-    }
-    
+            
     protected function mergeSchemas(Schema $s1, Schema $s2) {
         return new Schema(array_merge($s1->getTables(), $s2->getTables()), array_merge($s1->getSequences(), $s2->getSequences()), null);
     }
