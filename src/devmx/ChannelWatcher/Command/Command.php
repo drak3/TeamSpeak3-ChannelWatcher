@@ -12,7 +12,7 @@ use Symfony\Component\Console\Command\Command as BaseCommand;
 class Command extends BaseCommand {
     
     public function getSynopsis() {
-        return 'Usage: '.parent::getSynopsis();
+        return 'Usage: '.$GLOBALS['argv'][0].' '.parent::getSynopsis();
     }
 }
 
