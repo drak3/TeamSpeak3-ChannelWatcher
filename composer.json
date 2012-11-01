@@ -2,8 +2,8 @@
 {
     "require": {
         "devmx/TeamSpeak3-Library": "master-dev@dev",
-        "symfony/console": "2.1.*@rc",
         "symfony/filesystem": "2.1.*@rc",
+        "symfony/console": "2.1.*",
         "doctrine/dbal": "2.2.*",
         "pimple/pimple": "1.0.*",
         "php": ">=5.3.3"
