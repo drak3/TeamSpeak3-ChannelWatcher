@@ -46,10 +46,17 @@ class SchemaManager
      */
     public function createTables()
     {
-        $sql = $this->getMigrateStatements();
-        foreach ($sql as $statement) {
-            $this->connection->executeQuery($statement);
+        try {
+            $sql = $this->getMigrateStatements();
+            foreach ($sql as $statement) {
+                $this->connection->executeQuery($statement);
+            }
+        } catch(\Doctrine\DBAL\DBALException $e) {
+            if($this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
+                throw new \devmx\ChannelWatcher\Storage\Exception("You cannot run the channelwatcher with a non-empty sqlite-db", $e->getCode(), $e);
+            }
         }
+        
     }
     
     protected function getMigrateStatements() {
@@ -80,13 +87,13 @@ class SchemaManager
         
         //fix differences in handling autoincrement        
         if($this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
-            $expectedSchema->getTable('foo_crawl_data')
+            $expectedSchema->getTable($this->getCrawlDateTableName())
                            ->getColumn('id')
                            ->setAutoincrement(false);
         }
         
         if($this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform) {
-            $expectedSchema->createSequence('foo_crawl_data_id_seq');
+            $expectedSchema->createSequence($this->getCrawlDateTableName().'_id_seq');
         }
         
         $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($this->connection->getSchemaManager()->createSchema(), $expectedSchema);

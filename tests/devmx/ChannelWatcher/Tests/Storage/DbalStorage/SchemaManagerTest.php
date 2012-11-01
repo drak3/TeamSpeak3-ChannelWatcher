@@ -4,6 +4,8 @@ namespace devmx\ChannelWatcher\Tests\Storage\DbalStorage;
 
 use devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager;
 use Doctrine\Tests\TestUtil;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Schema\Schema;
 
 
 /**
@@ -40,12 +42,26 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getSchema
      */
     public function testCreateTables() {
-        $expectedSchema = SchemaManager::getSchema('foo_channels', 'foo_crawl_data');
                 
         $conn = TestUtil::getConnection();
+        
+        $expectedSchema = $this->getExpectedSchema($conn, 'foo_');
+        
         $manager = new SchemaManager($conn, 'foo_');
         $manager->createTables();
         $createdSchema = $conn->getSchemaManager()->createSchema();
+        
+        
+        
+        $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($createdSchema, $expectedSchema);
+       
+        $emptyDiff = new \Doctrine\DBAL\Schema\SchemaDiff();
+                
+        $this->assertEquals($emptyDiff, $diff);
+    }
+    
+    protected function getExpectedSchema(Connection $conn, $pref) {
+        $expectedSchema = SchemaManager::getSchema($pref.'channels', $pref.'crawl_data');
         
         //fix differences in handling autoincrement        
         if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
@@ -58,17 +74,96 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
             $expectedSchema->createSequence('foo_crawl_data_id_seq');
         }
         
+        return $expectedSchema;
+    }
+    
+    public function testCreateTables_NoOverwrite() {
+                        
+        $conn = TestUtil::getConnection();
+        
+        if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
+            $this->markTestSkipped('Creating schema on a Sqlite db is not supported');
+        }
+        
+        $expectedSchemaPt1 = $this->getExpectedSchema($conn, 'foo_');
+        
+        $manager = new SchemaManager($conn, 'foo_');
+        $manager->createTables();
+        
+        $manager2 = new SchemaManager($conn, 'bar_');
+        $manager->createTables();
+        
+        $expectedSchemaPt2 = $this->getExpectedSchema($conn, 'bar_');
+        
+        $expectedSchema = $this->mergeSchemas($expectedSchemaPt1, $expectedSchemaPt2);
+        
+        $createdSchema = $conn->getSchemaManager()->createSchema();
+        
         $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($createdSchema, $expectedSchema);
        
         $emptyDiff = new \Doctrine\DBAL\Schema\SchemaDiff();
-                
+        
         $this->assertEquals($emptyDiff, $diff);
+                
+    }
+    
+    /**
+     * @expectedException \devmx\ChannelWatcher\Storage\Exception
+     * @expectedExceptionMessage You cannot run the channelwatcher with a non-empty sqlite-db
+     */
+    public function testCreateTables_SqliteExceptionOnOverwrite() {
+        $conn = TestUtil::getConnection();
+        
+        if(! ($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) ) {
+            $this->markTestSkipped('This test is sqlite specific');
+        }
+        
+        $manager = new SchemaManager($conn, 'foo_');
+        $manager->createTables();
+        
+        $manager2 = new SchemaManager($conn, 'bar_');
+        $manager->createTables();
+    }
+    
+    protected function mergeSchemas(Schema $s1, Schema $s2) {
+        return new Schema(array_merge($s1->getTables(), $s2->getTables()), array_merge($s1->getSequences(), $s2->getSequences()), null);
     }
     
     public function testSchemaIsCreated_equal() {
         $conn = TestUtil::getConnection();
-        $manager = new SchemaManager($conn, 'foo_');
+        $manager = new SchemaManager($conn, 'barasdf_');
         $manager->createTables();
+        $this->assertTrue($manager->schemaIsCreated());
+    }
+    
+    public function testSchemaIsCreated_nonEqual() {
+        $conn = TestUtil::getConnection();
+        $manager = new SchemaManager($conn, 'barasdf_');
+        
+        $schema = SchemaManager::getSchema($manager->getChannelTableName(), $manager->getCrawlDateTableName());
+        $schema->dropTable($manager->getChannelTableName());
+                
+        $currentSchema = clone $conn->getSchemaManager()->createSchema();
+        $sql = $currentSchema->getMigrateToSql($schema, $conn->getDatabasePlatform());
+        foreach ($sql as $statement) {
+                $conn->executeQuery($statement);
+        }
+        $this->assertFalse($manager->schemaIsCreated());
+    }
+    
+    public function testSchemaIsCreated_additionalTables() {
+        $conn = TestUtil::getConnection();
+        $manager = new SchemaManager($conn, 'barasdf_');
+        
+        $schema = SchemaManager::getSchema($manager->getChannelTableName(), $manager->getCrawlDateTableName());
+        $schema->createTable('foobsdfwirhlkfsf')
+               ->addColumn('id', 'integer', array('unsinged' => true));
+                
+        $currentSchema = clone $conn->getSchemaManager()->createSchema();
+        $sql = $currentSchema->getMigrateToSql($schema, $conn->getDatabasePlatform());
+        foreach ($sql as $statement) {
+                $conn->executeQuery($statement);
+        }
         $this->assertTrue($manager->schemaIsCreated());
     }
 
