@@ -21,6 +21,12 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     protected $connectionMock;
     
     protected $dbManager;
+    
+    /**
+     *
+     * @var Connection
+     */
+    protected $connection;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -32,6 +38,11 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
                                      ->disableOriginalClone()
                                      ->getMock();
         $this->mockedManager = new SchemaManager($this->connectionMock, 'foo');
+        $this->connection = TestUtil::getConnection();
+    }
+    
+    protected function tearDown() {
+        $this->connection->close();
     }
     
 
@@ -43,7 +54,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testCreateTables() {
                 
-        $conn = TestUtil::getConnection();
+        $conn = $this->connection;
         
         $expectedSchema = $this->getExpectedSchema($conn, 'foo_');
         
@@ -79,7 +90,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     
     public function testCreateTables_NoOverwrite() {
                         
-        $conn = TestUtil::getConnection();
+        $conn = $this->connection;
         
         if($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) {
             $this->markTestSkipped('Creating schema on a Sqlite db is not supported');
@@ -112,7 +123,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage You cannot run the channelwatcher with a non-empty sqlite-db
      */
     public function testCreateTables_SqliteExceptionOnOverwrite() {
-        $conn = TestUtil::getConnection();
+        $conn = $this->connection;
         
         if(! ($conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\SqlitePlatform) ) {
             $this->markTestSkipped('This test is sqlite specific');
@@ -130,14 +141,14 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     }
     
     public function testSchemaIsCreated_equal() {
-        $conn = TestUtil::getConnection();
+        $conn = $this->connection;
         $manager = new SchemaManager($conn, 'barasdf_');
         $manager->createTables();
         $this->assertTrue($manager->schemaIsCreated());
     }
     
     public function testSchemaIsCreated_nonEqual() {
-        $conn = TestUtil::getConnection();
+        $conn = $this->connection;
         $manager = new SchemaManager($conn, 'barasdf_');
         
         $schema = SchemaManager::getSchema($manager->getChannelTableName(), $manager->getCrawlDateTableName());
@@ -152,7 +163,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     }
     
     public function testSchemaIsCreated_additionalTables() {
-        $conn = TestUtil::getConnection();
+        $conn = $this->connection;
         $manager = new SchemaManager($conn, 'barasdf_');
         
         $schema = SchemaManager::getSchema($manager->getChannelTableName(), $manager->getCrawlDateTableName());
