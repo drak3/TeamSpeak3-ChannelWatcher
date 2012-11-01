@@ -1,18 +1,18 @@
 {
-    "hash": "e58b71bbde5f9853c730945cfacbe6f1",
+    "hash": "5afb6c75847d012b08345ada0e421c8a",
     "packages": [
         {
-            "name": "devmx/Teamspeak3-Library",
+            "name": "devmx/teamspeak3-library",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/devMX/TeamSpeak3-Library",
-                "reference": "e2ddcb4a2b2ffd5ce4c1cc6acc088dc95e4d203b"
+                "url": "git://github.com/devMX/TeamSpeak3-Library.git",
+                "reference": "f7b3a8a6de91199332abc7ce3d69d697371ce9ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/devMX/TeamSpeak3-Library/zipball/e2ddcb4a2b2ffd5ce4c1cc6acc088dc95e4d203b",
-                "reference": "e2ddcb4a2b2ffd5ce4c1cc6acc088dc95e4d203b",
+                "url": "https://github.com/devMX/TeamSpeak3-Library/zipball/f7b3a8a6de91199332abc7ce3d69d697371ce9ec",
+                "reference": "f7b3a8a6de91199332abc7ce3d69d697371ce9ec",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,7 @@
                 "monolog/monolog": "Provides a logging backend",
                 "symfony/event-dispatcher": "To use the EventEmittingDecorator"
             },
-            "time": "1348832642",
+            "time": "2012-11-01 21:52:44",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -41,11 +41,7 @@
             "license": [
                 "LGPLv3"
             ],
-            "description": "Developement repository of the TeamSpeak3-Library",
-            "support": {
-                "source": "https://github.com/devMX/TeamSpeak3-Library/tree/master",
-                "issues": "https://github.com/devMX/TeamSpeak3-Library/issues"
-            }
+            "description": "Developement repository of the TeamSpeak3-Library"
         },
         {
             "name": "doctrine/common",
