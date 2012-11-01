@@ -44,6 +44,14 @@ $c['ts3']['vserver.port'] = 9987;
 //$c['ts3']['login.pass'] = '';
 
 /**
+ * Nickname the channelwatcher is using when connecting to a server
+ * defaults to "unknown from <ip>"
+ * Note that the default nickname is given by the ts3-server and will be visible at least once, 
+ * before the name is changed to the nick specified here.
+ */
+//$c['ts3']['query.nick'] = '';
+
+/**
  * The time after which channels should be deleted
  */
 $c['watcher']['time_to_live'] = array(
