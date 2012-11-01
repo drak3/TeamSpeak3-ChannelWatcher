@@ -71,7 +71,7 @@ class AppContainer extends \Pimple
         $this['watcher'] = new WatcherContainer();
 
         $this['watcher']['ts3.transport'] = function() use ($that) {
-                    return $that['ts3']['query.transport'];
+                    return $that['ts3']['query'];
                 };
 
         $this['watcher']['storage'] = function() use ($that) {
@@ -79,16 +79,18 @@ class AppContainer extends \Pimple
                 };
 
         /**
-         * The query.transport is preconfigured so it is logged in and on the right server on use
+         * The query is preconfigured so it is logged in and on the right server on use
          */
-        $this['ts3']['query.transport'] = $this['ts3']->share($this['ts3']->extend('query.transport', function($transport, $c) {
-            $transport->connect();
+        $this['ts3']['query'] = $this['ts3']->share($this['ts3']->extend('query', function($query, $c) {
+            $query->connect();
             if (isset($c['login.name']) && $c['login.name'] !== '') {
-                $transport->query('login', array('client_login_name'=>$c['login.name'], 'client_login_password' =>$c['login.pass']));
+                $query->login($c['login.name'], $c['login.pass']);
             }
-            $transport->query('use', array('port'=>$c['vserver.port']), array('virtual'));
-
-            return $transport;
+            $query->useByPort($c['vserver.port']);
+            if(isset($c['query.nick']) && $c['query.nick'] !== '') {
+                $query->changeNickname($c['query.nick']);
+            }
+            return $query;
         }));
 
         /**
