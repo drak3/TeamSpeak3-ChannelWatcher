@@ -122,7 +122,7 @@ $c['db']['connection.params'] = array(
   'host' => '',
   'port' => 3306,
   //'unix_socket' => '',
-  'driver' => 'pdo_mysql',
+  'driver' => 'pdo_mysqli',
   'charset' => 'utf8'
   );
  */
