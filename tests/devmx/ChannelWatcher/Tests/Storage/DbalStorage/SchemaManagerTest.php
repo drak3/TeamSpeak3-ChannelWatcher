@@ -91,7 +91,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         $manager->createTables();
         
         $manager2 = new SchemaManager($conn, 'bar_');
-        $manager->createTables();
+        $manager2->createTables();
         
         $expectedSchemaPt2 = $this->getExpectedSchema($conn, 'bar_');
         
