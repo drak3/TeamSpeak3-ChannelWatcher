@@ -158,7 +158,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         $schema = SchemaManager::getSchema($manager->getChannelTableName(), $manager->getCrawlDateTableName());
         $schema->createTable('foobsdfwirhlkfsf')
                ->addColumn('id', 'integer', array('unsinged' => true));
-                
+                        
         $currentSchema = clone $conn->getSchemaManager()->createSchema();
         $sql = $currentSchema->getMigrateToSql($schema, $conn->getDatabasePlatform());
         foreach ($sql as $statement) {
@@ -171,11 +171,8 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getChannelTableName
      */
     public function testGetChannelTableName() {
-        $this->connectionMock->expects($this->once())
-                             ->method('quoteIdentifier')
-                             ->with($this->equalTo('foochannels'))
-                             ->will($this->returnValue('escaped_name'));
-        $this->assertEquals('escaped_name', $this->mockedManager->getChannelTableName());
+        $m = new SchemaManager($this->connectionMock, 'fsdfwq');
+        $this->assertEquals('fsdfwqchannels', $m->getChannelTableName());
     }
     
     
@@ -184,11 +181,8 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
      * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getCrawlDateTableName
      */
     public function testGetCrawlDateTableName() {
-        $this->connectionMock->expects($this->once())
-                             ->method('quoteIdentifier')
-                             ->with($this->equalTo('foocrawl_data'))
-                             ->will($this->returnValue('escaped_name'));
-        $this->assertEquals('escaped_name', $this->mockedManager->getCrawlDateTableName());
+        $m = new SchemaManager($this->connectionMock, 'fsdfwq');
+        $this->assertEquals('fsdfwqcrawl_data', $m->getCrawlDateTableName());
     }
     
     

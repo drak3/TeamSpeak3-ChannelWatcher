@@ -96,22 +96,25 @@ class SchemaManager
             $expectedSchema->createSequence($this->getCrawlDateTableName().'_id_seq');
         }
         
+                
         $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($this->connection->getSchemaManager()->createSchema(), $expectedSchema);
-       
-        $emptyDiff = new \Doctrine\DBAL\Schema\SchemaDiff();
-        
-        return $diff == $emptyDiff;
-        
+        if(isset($diff->changedTables[$this->getChannelTableName()]) || isset($diff->changedTables[$this->getCrawlDateTableName()])) {
+            return false;
+        }
+        if(isset($diff->newTables[$this->getChannelTableName()]) || isset($diff->newTables[$this->getCrawlDateTableName()])) {
+            return false;
+        }
+        return true;
     }
 
     public function getChannelTableName()
     {
-        return $this->connection->quoteIdentifier($this->prefix.'channels');
+        return $this->prefix.'channels';
     }
 
     public function getCrawlDateTableName()
     {
-        return $this->connection->quoteIdentifier($this->prefix.'crawl_data');
+        return $this->prefix.'crawl_data';
     }
 
 }
