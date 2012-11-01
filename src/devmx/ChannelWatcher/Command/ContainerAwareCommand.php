@@ -22,7 +22,6 @@
 
 namespace devmx\ChannelWatcher\Command;
 
-use Symfony\Component\Console\Command\Command;
 
 /**
  *
