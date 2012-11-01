@@ -62,7 +62,8 @@ class SchemaManager
     protected function getMigrateStatements() {
         $schema = static::getSchema($this->getChannelTableName(), $this->getCrawlDateTableName());
         $currentSchema = clone $this->connection->getSchemaManager()->createSchema();
-        return $currentSchema->getMigrateToSql($schema, $this->connection->getDatabasePlatform());
+        $diff = \Doctrine\DBAL\Schema\Comparator::compareSchemas($currentSchema, $schema);
+        return $diff->toSaveSql($this->connection->getDatabasePlatform());
     }
 
     public static function getSchema($channelTableName, $crawlDataTableName)
