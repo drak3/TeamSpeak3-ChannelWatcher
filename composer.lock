@@ -30,7 +30,7 @@
                 "monolog/monolog": "Provides a logging backend",
                 "symfony/event-dispatcher": "To use the EventEmittingDecorator"
             },
-            "time": "2012-11-01 21:52:44",
+            "time": "1351806764",
             "type": "library",
             "installation-source": "source",
             "autoload": {
