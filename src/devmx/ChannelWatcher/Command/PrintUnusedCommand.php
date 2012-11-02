@@ -31,6 +31,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PrintUnusedCommand extends ProfileDependentCommand
 {
+    
+    protected function configure() {
+        parent::configure();
+        $this->setDescription('Show all unused channels');
+    }
+    
     protected function execute(InputInterface $in, OutputInterface $out)
     {
         $this->c['initer']->initEnviroment();

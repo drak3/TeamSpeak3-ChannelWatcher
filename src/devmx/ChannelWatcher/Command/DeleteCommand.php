@@ -36,9 +36,10 @@ class DeleteCommand extends ProfileDependentCommand
     {
         parent::configure();
         $this
-                ->addOption('force', 'f', InputOption::VALUE_NONE)
-                ->addOption('delete-non-empty', null, InputOption::VALUE_NONE)
-                ->addOption('trust-crawls', null, InputOption::VALUE_NONE);
+                ->setDescription('Delete unused channels based on the collected data')
+                ->addOption('force', 'f', InputOption::VALUE_NONE, 'do not ask for confirmation')
+                ->addOption('delete-non-empty', null, InputOption::VALUE_NONE, 'delete channels that have clients in them')
+                ->addOption('trust-crawls', null, InputOption::VALUE_NONE, 'delete, even if there seems to be not enough data');
     }
 
     public function execute(InputInterface $in, OutputInterface $out)

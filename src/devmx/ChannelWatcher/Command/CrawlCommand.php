@@ -31,6 +31,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CrawlCommand extends ProfileDependentCommand
 {
+    
+    protected function configure() {
+        parent::configure();
+        $this->setDescription('Crawl the given server to collect data about unused channels');
+    }
+    
     protected function execute(InputInterface $in, OutputInterface $out)
     {
         $this->c['initer']->initEnviroment();

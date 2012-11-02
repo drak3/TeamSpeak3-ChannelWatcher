@@ -23,12 +23,17 @@ namespace devmx\ChannelWatcher\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 /**
- *
+ * @deprecated since version 1.1.0
  * @author drak3
  */
 class CreateDataBaseCommand extends ProfileDependentCommand
 {
-
+    
+    protected function configure() {
+        parent::configure();
+        $this->setDescription('Init database (deprecated, use init instead)');
+    }
+    
     protected function execute(InputInterface $in, OutputInterface $out)
     {
         $out->writeln('Warning: This command is deprecated, run the <info>init</info> command instead.');

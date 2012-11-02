@@ -31,6 +31,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InitCommand extends ProfileDependentCommand
 {
+    
+    protected function configure() {
+        parent::configure();
+        $this->setDescription('Initialize the enviroment');
+    }
+
+
     public function execute(InputInterface $in, OutputInterface $out)
     {
         $out->writeln('Initing enviroment');
