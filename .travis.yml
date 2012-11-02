@@ -15,4 +15,5 @@ before_script:
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar --dev install
 
-script: phpunit --configuration tests/travis-config/$DB.travis.xml
+script: phpunit --configuration tests/travis-config/$DB.travis.xml --coverage-text
+ 
