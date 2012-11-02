@@ -19,9 +19,8 @@ Table of Contents
    getting-started
    configuration
    troubleshooting
+   command-line-interface
    technical-overview
    releases
    write-your-own-rule
    faq
-
-
