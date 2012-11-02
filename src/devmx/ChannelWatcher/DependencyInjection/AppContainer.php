@@ -188,13 +188,6 @@ class AppContainer extends \Pimple
                     return $command;
                 };
 
-        $this['command.watch'] = function($c) {
-            $command = new \devmx\ChannelWatcher\Command\WatchCommand('watch');
-            $command->setContainer($c);
-
-            return $command;
-        };
-
         /**
          * The whole application
          */
