@@ -193,7 +193,7 @@ class AppContainer extends \Pimple
          */
         $this['application'] = function($c) {
                     $app = new \Symfony\Component\Console\Application($c['name'], $c['version']);
-                    $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init'], $c['command.watch']));
+                    $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init']));
                     //as of here, the app is responsible for error handling
                     if ($c['debug']) {
                         error_reporting(-1);
