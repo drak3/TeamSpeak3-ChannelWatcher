@@ -192,7 +192,7 @@ class AppContainer extends \Pimple
          * The whole application
          */
         $this['application'] = function($c) {
-                    $app = new \Symfony\Component\Console\Application($c['name'], $c['version']);
+                    $app = new \devmx\ChannelWatcher\Application($c['name'], $c['version']);
                     $app->addCommands(array($c['command.crawl'], $c['command.create_db'], $c['command.print_unused'], $c['command.delete'], $c['command.init']));
                     //as of here, the app is responsible for error handling
                     if ($c['debug']) {
