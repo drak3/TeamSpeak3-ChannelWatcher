@@ -27,14 +27,7 @@ class InitializerTest extends \PHPUnit_Framework_TestCase {
 
     
     /**
-     * @covers devmx\ChannelWatcher\Initializer::initEnviroment
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::__construct
-     * @covers devmx\ChannelWatcher\Initializer::setFileSystem
-     * @covers devmx\ChannelWatcher\Initializer::initStorage
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::storageIsInited
-     * @covers devmx\ChannelWatcher\Initializer::storageDirIsInited
+     * @covers devmx\ChannelWatcher\Initializer
      */
     public function testInitEnviroment_initableStorage() {
         $initer = new Initializer($this->initableStorageMock, 'foo');
@@ -48,14 +41,7 @@ class InitializerTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers devmx\ChannelWatcher\Initializer::initEnviroment
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::__construct
-     * @covers devmx\ChannelWatcher\Initializer::setFileSystem
-     * @covers devmx\ChannelWatcher\Initializer::initStorage
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::storageIsInited
-     * @covers devmx\ChannelWatcher\Initializer::storageDirIsInited
+     * @covers devmx\ChannelWatcher\Initializer
      */
     public function testInitEnviroment_normalStorage() {
         $initer = new Initializer($this->storageMock, 'foo');
@@ -64,14 +50,7 @@ class InitializerTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers devmx\ChannelWatcher\Initializer::initEnviroment
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::__construct
-     * @covers devmx\ChannelWatcher\Initializer::setFileSystem
-     * @covers devmx\ChannelWatcher\Initializer::initStorage
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::storageIsInited
-     * @covers devmx\ChannelWatcher\Initializer::storageDirIsInited
+     * @covers devmx\ChannelWatcher\Initializer
      */
     public function testInitEnviroment_initedStorageDir() {
         $initer = new Initializer($this->storageMock, 'foo');
@@ -86,14 +65,7 @@ class InitializerTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers devmx\ChannelWatcher\Initializer::initEnviroment
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::__construct
-     * @covers devmx\ChannelWatcher\Initializer::setFileSystem
-     * @covers devmx\ChannelWatcher\Initializer::initStorage
-     * @covers devmx\ChannelWatcher\Initializer::initStorageDir
-     * @covers devmx\ChannelWatcher\Initializer::storageIsInited
-     * @covers devmx\ChannelWatcher\Initializer::storageDirIsInited
+     * @covers devmx\ChannelWatcher\Initializer
      */
     protected function expectDirectoryCreation($initer) {
         $initer->setFilesystem($this->fileSystemMock);

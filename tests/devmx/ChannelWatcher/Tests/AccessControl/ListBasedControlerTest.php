@@ -12,7 +12,7 @@ class ControlListTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers devmx\ChannelWatcher\AccessControl\ListBasedControler::canAccess
+     * @covers devmx\ChannelWatcher\AccessControl\ListBasedControler
      * @dataProvider listProvider
      */
     public function testCanAccess($blacklist, $whitelist, $trueItems, $falseItems)

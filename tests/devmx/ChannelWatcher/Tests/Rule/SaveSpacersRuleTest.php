@@ -12,8 +12,7 @@ class SaveSpacersRuleTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveSpacersRule::filter
-     * @todo Implement testFilter().
+     * @covers devmx\ChannelWatcher\Rule\SaveSpacersRule
      */
     public function testFilter()
     {

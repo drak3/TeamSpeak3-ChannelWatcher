@@ -12,8 +12,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
-     * @todo Implement testFilter().
+     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule
      */
     public function testFilter_simple()
     {
@@ -42,8 +41,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
-     * @todo Implement testFilter().
+     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule
      */
     public function testFilter_nested_noExplicitLevel()
     {
@@ -72,8 +70,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
-     * @todo Implement testFilter().
+     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule
      */
     public function testFilter_nested_ExplicitNoLevel()
     {
@@ -103,8 +100,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
-     * @todo Implement testFilter().
+     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule
      */
     public function testFilter_nested_level()
     {
@@ -134,8 +130,7 @@ class SaveChildsRuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule::filter
-     * @todo Implement testFilter().
+     * @covers devmx\ChannelWatcher\Rule\SaveChildsRule
      */
     public function testFilter_nested_deepLevel()
     {

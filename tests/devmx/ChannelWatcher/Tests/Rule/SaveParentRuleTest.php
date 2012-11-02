@@ -10,7 +10,9 @@ use devmx\ChannelWatcher\Rule\SaveParentRule;
  */
 class SaveParentRuleTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @covers \devmx\ChannelWatcher\Rule\SaveParentRule
+     */
     public function testFilter()
     {
         $list = array(

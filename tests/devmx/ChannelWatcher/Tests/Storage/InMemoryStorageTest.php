@@ -26,8 +26,7 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Storage\InMemoryStorage::update
-     * @covers devmx\ChannelWatcher\Storage\InMemoryStorage::getChannels
+     * @covers devmx\ChannelWatcher\Storage\InMemoryStorage
      */
     public function testUpdate()
     {
@@ -46,8 +45,7 @@ class InMemoryStorageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Storage\InMemoryStorage::getChannelsEmptyFor
-     * @todo Implement testGetChannelsEmptyFor().
+     * @covers devmx\ChannelWatcher\Storage\InMemoryStorage
      */
     public function testGetChannelsEmptyFor()
     {

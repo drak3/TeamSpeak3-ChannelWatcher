@@ -12,8 +12,7 @@ class ChannelTreeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers devmx\ChannelWatcher\ChannelTree::channelHasChildWith
-     * @todo Implement testChannelHasChildWith().
+     * @covers devmx\ChannelWatcher\ChannelTree
      */
     public function testChannelHasChildWith()
     {
@@ -47,8 +46,7 @@ class ChannelTreeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\ChannelTree::getChildsOf
-     * @todo Implement testGetChildsOf().
+     * @covers devmx\ChannelWatcher\ChannelTree
      */
     public function testGetChildsOf()
     {

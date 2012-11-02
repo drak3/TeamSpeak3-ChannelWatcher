@@ -12,7 +12,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers devmx\ChannelWatcher\DateConverter::convertArrayToInterval
+     * @covers devmx\ChannelWatcher\DateConverter
      */
     public function testFullConvert()
     {
@@ -28,7 +28,10 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P1Y2M25DT5H6M12S');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-
+    
+    /**
+     * @covers devmx\ChannelWatcher\DateConverter
+     */
     public function testOverflow()
     {
         $spec = array(
@@ -42,7 +45,10 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P13M28DT25H70M70S');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-
+    
+    /**
+     * @covers devmx\ChannelWatcher\DateConverter
+     */
     public function testFewKeys()
     {
         $spec = array(
@@ -52,7 +58,10 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('P12WT13M');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-
+    
+    /**
+     * @covers devmx\ChannelWatcher\DateConverter
+     */
     public function testTimeOnly()
     {
         $spec = array(
@@ -62,7 +71,10 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $interval = new \DateInterval('PT15H14M');
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
-
+    
+    /**
+     * @covers devmx\ChannelWatcher\DateConverter
+     */
     public function testDateOnly()
     {
         $spec = array(
@@ -73,6 +85,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($interval, DateConverter::convertArrayToInterval($spec));
     }
 
+    /**
+     * @covers devmx\ChannelWatcher\DateConverter
+     */
     public function testUppercasedKeys()
     {
         $spec = array(
@@ -85,6 +100,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @covers devmx\ChannelWatcher\DateConverter
      */
     public function testInvalidKey()
     {

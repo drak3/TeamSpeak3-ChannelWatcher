@@ -47,10 +47,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     
 
     /**
-     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::createTables
-     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getMigrateStatements
-     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::__construct
-     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getSchema
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
      */
     public function testCreateTables() {
                 
@@ -88,6 +85,9 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         return $expectedSchema;
     }
     
+    /**
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
+     */
     public function testCreateTables_NoOverwrite() {
                         
         $conn = $this->connection;
@@ -118,6 +118,9 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         return new Schema(array_merge($s1->getTables(), $s2->getTables()), array_merge($s1->getSequences(), $s2->getSequences()), null);
     }
     
+    /**
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
+     */
     public function testSchemaIsCreated_equal() {
         $conn = $this->connection;
         $manager = new SchemaManager($conn, 'barasdf_');
@@ -125,6 +128,9 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($manager->schemaIsCreated());
     }
     
+    /**
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
+     */
     public function testSchemaIsCreated_nonEqual() {
         $conn = $this->connection;
         $manager = new SchemaManager($conn, 'barasdf_');
@@ -140,6 +146,9 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($manager->schemaIsCreated());
     }
     
+    /**
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
+     */
     public function testSchemaIsCreated_additionalTables() {
         $conn = $this->connection;
         $manager = new SchemaManager($conn, 'barasdf_');
@@ -157,7 +166,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getChannelTableName
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
      */
     public function testGetChannelTableName() {
         $m = new SchemaManager($this->connectionMock, 'fsdfwq');
@@ -167,7 +176,7 @@ class SchemaManagerTest extends \PHPUnit_Framework_TestCase {
     
 
     /**
-     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager::getCrawlDateTableName
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager
      */
     public function testGetCrawlDateTableName() {
         $m = new SchemaManager($this->connectionMock, 'fsdfwq');

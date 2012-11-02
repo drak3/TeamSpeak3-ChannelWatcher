@@ -12,7 +12,7 @@ class AccessControlerBasedRuleTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers devmx\ChannelWatcher\Rule\AccessControlerBasedRule::filter
+     * @covers devmx\ChannelWatcher\Rule\AccessControlerBasedRule
      */
     public function testFilter()
     {

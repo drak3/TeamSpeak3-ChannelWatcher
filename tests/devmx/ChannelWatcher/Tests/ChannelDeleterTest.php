@@ -43,7 +43,7 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\ChannelDeleter::addRule
+     * @covers devmx\ChannelWatcher\ChannelDeleter
      */
     public function testAddRule()
     {
@@ -53,7 +53,7 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\ChannelDeleter::setRules
+     * @covers devmx\ChannelWatcher\ChannelDeleter
      */
     public function testSetRules()
     {
@@ -63,7 +63,7 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\ChannelDeleter::removeRule
+     * @covers devmx\ChannelWatcher\ChannelDeleter
      */
     public function testRemoveRule()
     {
@@ -75,7 +75,7 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers devmx\ChannelWatcher\ChannelDeleter::getIdsToDelete
+     * @covers devmx\ChannelWatcher\ChannelDeleter
      */
     public function testGetIdsToDelete_noFilter()
     {
@@ -84,7 +84,10 @@ class ChannelDeleterTest extends \PHPUnit_Framework_TestCase
                       ->will($this->returnValue(array(1,2)));
         $this->assertEquals(array(1,2), $this->deleter->getIdsToDelete(new \DateInterval('P1Y')));
     }
-
+    
+    /**
+     * @covers devmx\ChannelWatcher\ChannelDeleter
+     */
     public function testGetIdsToDelete_Filter()
     {
         $idsToDelete = array(2,6);

@@ -10,7 +10,7 @@ use devmx\ChannelWatcher\Rule\SaveDefaultChannelRule;
 class SaveDefaultChannelRuleTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers devmx\ChannelWatcher\Rule\SaveDefaultChannelRule::filter
+     * @covers devmx\ChannelWatcher\Rule\SaveDefaultChannelRule
      */
     public function testFilter()
     {
