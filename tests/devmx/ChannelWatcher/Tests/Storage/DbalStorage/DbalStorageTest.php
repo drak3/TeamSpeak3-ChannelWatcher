@@ -164,20 +164,22 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(1, $this->storage->getCrawlDatesOccuredIn($threeHours, $t1));
         
         //at $t2
-        //one crawl occured in the last hour
+        //one crawl occured in the last 30 minutes
+        //two crawls occured in the last hour
         //two crawls occured in the last two hours
         //two crawls occured in the last three hours
-        $this->assertCount(1, $this->storage->getCrawlDatesOccuredIn($oneHour, $t2));
+        $this->assertCount(1, $this->storage->getCrawlDatesOccuredIn(new \DateInterval('PT30M')));
+        $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($oneHour, $t2));
         $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($twoHours, $t2));
         $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($threeHours, $t2));
         
         //at $t3
-        //one crawl occured in the last hour
-        //two crawls occured in the last two hours
+        //two crawl occured in the last hour
+        //three crawls occured in the last two hours
         //three crawls occured in the last three hours
         //three crawls occured in the last four hours
-        $this->assertCount(1, $this->storage->getCrawlDatesOccuredIn($oneHour, $t3));
-        $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($twoHours, $t3));
+        $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($oneHour, $t3));
+        $this->assertCount(3, $this->storage->getCrawlDatesOccuredIn($twoHours, $t3));
         $this->assertCount(3, $this->storage->getCrawlDatesOccuredIn($threeHours, $t3));
         $this->assertCount(3, $this->storage->getCrawlDatesOccuredIn($fourHours, $t3));
     }
