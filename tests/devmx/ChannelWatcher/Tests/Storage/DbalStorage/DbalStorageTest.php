@@ -36,7 +36,7 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
        $this->conn = TestUtil::getConnection();
        $this->manager = new \devmx\ChannelWatcher\Storage\DbalStorage\SchemaManager($this->conn, 'asdf_');
        $this->storage = new DbalStorage($this->conn, $this->manager);
-       $this->manager->createTables();
+       
     }
     
     /**
@@ -51,6 +51,7 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
     }
     
     protected function createTestData() {
+        $this->storage->init();
         //simulates 3 subsequent crawls
         $oneHour = new \DateInterval('PT1H');
         
@@ -180,5 +181,21 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(3, $this->storage->getCrawlDatesOccuredIn($threeHours, $t3));
         $this->assertCount(3, $this->storage->getCrawlDatesOccuredIn($fourHours, $t3));
     }
+    
+    /**
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage
+     */
+    public function testIsInited_Functional_EmptyDb() {
+        $this->assertFalse($this->storage->isInited());
+    }
+    
+    /**
+     * @covers devmx\ChannelWatcher\Storage\DbalStorage\DbalStorage
+     */
+    public function testIsInited_Functional_InitedDb() {
+        $this->manager->createTables();
+        $this->assertTrue($this->storage->isInited());
+    }
+     
 
 }
