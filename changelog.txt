@@ -8,6 +8,9 @@
 ~ Minor Change
 * Fix
 
+v1.0.2
+* fixed bug that lead to 'not-enough-crawls' errors even with sufficent data available 
+
 v1.0.1
 * fixed bug that prevented the watcher from being run on php older than 5.3.7, now 5.3.3 is supported.
 
