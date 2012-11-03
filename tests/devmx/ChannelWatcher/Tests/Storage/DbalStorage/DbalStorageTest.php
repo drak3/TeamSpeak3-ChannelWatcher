@@ -55,7 +55,7 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
         //simulates 3 subsequent crawls
         $oneHour = new \DateInterval('PT1H');
         
-        $t1 = new \DateTime('now');
+        $t1 = new \DateTime('00:00:00');
         $t2 = (clone $t1);
         $t2 = $t2->add($oneHour);
         $t3 = clone $t2;

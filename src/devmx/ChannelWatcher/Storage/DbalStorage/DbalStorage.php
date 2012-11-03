@@ -95,6 +95,7 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface, \de
         if ($now === null) {
             $now = new \DateTime('now');
         }
+        $now = clone $now;
         $maxLastSeen = $now->sub($time);
         $query = $this->connection->prepare('SELECT id FROM ' . $this->schemaManager->getChannelTableName() . ' WHERE last_seen <= ?');
         $query->bindValue(1, $maxLastSeen, 'datetime');
