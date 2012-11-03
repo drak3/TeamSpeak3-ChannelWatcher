@@ -113,9 +113,11 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface, \de
         if ($now === null) {
             $now = new \DateTime('now');
         }
+       
         $timeSpan = clone $now;
         $timeSpan = $timeSpan->sub($time);
-        $query = $this->connection->prepare('SELECT * FROM ' . $this->schemaManager->getCrawlDateTableName() . ' WHERE crawl_time <= ? AND crawl_time >= ?');
+
+  	$query = $this->connection->prepare('SELECT * FROM ' . $this->schemaManager->getCrawlDateTableName() . ' WHERE crawl_time <= ? AND crawl_time >= ?');
         $query->bindValue(1, $now, 'datetime');
         $query->bindValue(2, $timeSpan, 'datetime');
         $query->execute();
