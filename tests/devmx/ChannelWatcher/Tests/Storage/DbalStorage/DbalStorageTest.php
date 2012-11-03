@@ -125,13 +125,13 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
         
         //at $t2
         //c3 and c4 has last been seen full (init) one hour ago
-        $this->assertEquals(array(3, 4), $this->storage->getChannelsEmptyFor($oneHour, $t2));
+        $this->assertEquals(array(3, 4), $this->sort($this->storage->getChannelsEmptyFor($oneHour, $t2)));
         
         //at $t3
         //c3 and c4 has last been seen full two hours ago
         //c2, c3 and c4 are  have last been senn full one hour ago
-        $this->assertEquals(array(3, 4), $this->storage->getChannelsEmptyFor($twoHours, $t3));
-        $this->assertEquals(array(2, 3, 4), $this->storage->getChannelsEmptyFor($oneHour, $t3));
+        $this->assertEquals(array(3, 4), $this->sort($this->storage->getChannelsEmptyFor($twoHours, $t3)));
+        $this->assertEquals(array(2, 3, 4), $this->sort($this->storage->getChannelsEmptyFor($oneHour, $t3)));
         
         //at $t3+1hour
         //c3 and c4 has last been seen full three hours ago
@@ -139,9 +139,14 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
         //c1, c2, c3 and c4 have last been seen full one hour ago
         $t4 = clone $t3;
         $t4 = $t4->add($oneHour);
-        $this->assertEquals(array(3, 4), $this->storage->getChannelsEmptyFor($threeHours, $t4));
-        $this->assertEquals(array(2, 3, 4), $this->storage->getChannelsEmptyFor($twoHours, $t4));
-        $this->assertEquals(array(1, 2, 3, 4), $this->storage->getChannelsEmptyFor($oneHour, $t4));
+        $this->assertEquals(array(3, 4), $this->sort($this->storage->getChannelsEmptyFor($threeHours, $t4)));
+        $this->assertEquals(array(2, 3, 4), $this->sort($this->storage->getChannelsEmptyFor($twoHours, $t4)));
+        $this->assertEquals(array(1, 2, 3, 4), $this->sort($this->storage->getChannelsEmptyFor($oneHour, $t4)));
+    }
+    
+    protected function sort($arr) {
+        \sort($arr);
+        return $arr;
     }
     
     /**
