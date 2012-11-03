@@ -125,11 +125,7 @@ class DbalStorage implements \devmx\ChannelWatcher\Storage\StorageInterface, \de
     
     public function isInited() 
     {
-        if($this->schemaManager->getMigrateStatements() === array()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->schemaManager->schemaIsCreated();
     }
     
     public function init() 
