@@ -43,7 +43,7 @@ class AppContainer extends \Pimple {
         /**
          * Current app version 
          */
-        $this['version'] = '1.0.0';
+        $this['version'] = '1.0.2';
 
         $this['debug'] = false;
 
