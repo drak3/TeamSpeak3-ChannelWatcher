@@ -168,7 +168,7 @@ class DbalStorageTest extends \PHPUnit_Framework_TestCase {
         //two crawls occured in the last hour
         //two crawls occured in the last two hours
         //two crawls occured in the last three hours
-        $this->assertCount(1, $this->storage->getCrawlDatesOccuredIn(new \DateInterval('PT30M')));
+        $this->assertCount(1, $this->storage->getCrawlDatesOccuredIn(new \DateInterval('PT30M'), $t2));
         $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($oneHour, $t2));
         $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($twoHours, $t2));
         $this->assertCount(2, $this->storage->getCrawlDatesOccuredIn($threeHours, $t2));
