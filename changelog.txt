@@ -8,6 +8,9 @@
 ~ Minor Change
 * Fix
 
+v1.0.3
+* fixed bug introduced in v1.0.2
+
 v1.0.2
 * fixed bug that lead to 'not-enough-crawls' errors even with sufficent data available 
 
